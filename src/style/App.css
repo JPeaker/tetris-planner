@@ -11,15 +11,15 @@ html {
 }
 
 .block-1 {
-  background-image: url('./block-1.png');
+  background-image: url('../static/block-1.png');
 }
 
 .block-2 {
-  background-image: url('./block-2.png');
+  background-image: url('../static/block-2.png');
 }
 
 .block-3 {
-  background-image: url('./block-3.png');
+  background-image: url('../static/block-3.png');
 }
 
 

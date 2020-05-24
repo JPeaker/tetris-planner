@@ -1,25 +1,45 @@
 import React from 'react';
-import './App.css';
+import './style/App.css';
 import Block from './block';
 import _ from 'lodash';
-import PieceTypes from './piece-types';
+import Piece from './piece-types';
 import movePiece from './move-piece';
 
-class App extends React.Component {
-  constructor(props) {
+interface AppProps {};
+
+enum AppState {
+  PIECE,
+  TOGGLE,
+};
+
+interface ActivePiece {
+  type: Piece,
+  row: number,
+  column: number,
+  orientation: number,
+};
+
+interface AppComponentState {
+  grid: number[][],
+  currentPiece: ActivePiece,
+  state: AppState,
+};
+
+class App extends React.Component<AppProps, AppComponentState> {
+  constructor(props: AppProps) {
     super(props);
 
-    var grid = [];
+    var grid: number[][] = [];
     for (var i = 0; i < 22; i++) {
-      const row = [];
+      const row: number[] = [];
       for (var j = 0; j < 10; j++) {
         row.push(0);
       }
       grid.push(row);
     }
 
-    const currentPiece = {
-      type: PieceTypes.J,
+    const currentPiece: ActivePiece = {
+      type: Piece.J,
       row: 5,
       column: 5,
       orientation: 0,
@@ -29,7 +49,7 @@ class App extends React.Component {
 
     this.state = {
       grid,
-      state: 'PIECE',
+      state: AppState.PIECE,
       currentPiece,
     };
 
@@ -40,19 +60,15 @@ class App extends React.Component {
     document.addEventListener('keyup', this.keyUpHandler);
   }
 
-  getBlock(value) {
-    return <Block value={value} />;
-  }
-
-  toggleBlock(row, column) {
-    if (this.state.state === 'TOGGLE') {
+  toggleBlock(row: number, column: number) {
+    if (this.state.state === AppState.TOGGLE) {
       const grid = _.cloneDeep(this.state.grid);
       grid[row][column] = grid[row][column] ? 0 : 1;
       this.setState({ grid });
     }
   }
 
-  keyUpHandler(event) {
+  keyUpHandler(event: KeyboardEvent) {
     const old = Object.assign({}, this.state.currentPiece);
     const orientationModifier = event.code === 'KeyS' ? -1 : event.code === 'KeyA' ? 1 : 0;
     const columnModifier = event.code === 'ArrowLeft' ? -1 : event.code === 'ArrowRight' ? 1 : 0;
@@ -86,7 +102,7 @@ class App extends React.Component {
                     rowKey >= 2 ?
                       row.map((block, blockKey) => (
                         <div key={rowKey * 20 + blockKey} onClick={this.toggleBlock.bind(this, rowKey, blockKey)} className="bit">
-                          { this.getBlock(block) }
+                          <Block value={block} />
                         </div>
                       )) : null
                   }
