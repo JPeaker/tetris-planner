@@ -22,9 +22,13 @@ html {
   background-image: url('../static/block-3.png');
 }
 
+.show-hover {
+  opacity: 0.5;
+}
 
 .hidden {
-  visibility: hidden;
+  background-image: none;
+  background-color: black;
 }
 
 .grid {
@@ -43,4 +47,8 @@ html {
 .bit {
   display: inline-block;
   border: 0.25rem solid black;
+}
+
+.state-text {
+  font-size: 8rem;
 }

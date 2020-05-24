@@ -1,28 +1,25 @@
 import React from 'react';
-import './style/App.css';
-import Block from './block';
 import _ from 'lodash';
-import Piece from './piece-types';
-import movePiece from './move-piece';
+import './style/App.css';
+import Piece from './piece-enum';
+import { ActivePiece } from './piece-types';
+import { movePiece, getPiece } from './move-piece';
+import { drawGrid } from './draw-grid';
+import inputHandler from './input-handler';
+import filledGrid from './filled-grid';
 
 interface AppProps {};
 
-enum AppState {
+export enum AppState {
+  PLACE,
   PIECE,
-  TOGGLE,
-};
-
-interface ActivePiece {
-  type: Piece,
-  row: number,
-  column: number,
-  orientation: number,
 };
 
 interface AppComponentState {
   grid: number[][],
-  currentPiece: ActivePiece,
+  currentPiece: ActivePiece | null,
   state: AppState,
+  hoverBlock: { row: number, column: number } | null,
 };
 
 class App extends React.Component<AppProps, AppComponentState> {
@@ -38,79 +35,106 @@ class App extends React.Component<AppProps, AppComponentState> {
       grid.push(row);
     }
 
-    const currentPiece: ActivePiece = {
-      type: Piece.J,
-      row: 5,
-      column: 5,
-      orientation: 0,
-    };
-
-    grid = movePiece(currentPiece, grid);
-
     this.state = {
       grid,
-      state: AppState.PIECE,
-      currentPiece,
+      state: AppState.PLACE,
+      currentPiece: null,
+      hoverBlock: null
     };
 
-    this.keyUpHandler = this.keyUpHandler.bind(this);
+    this.keyDownHandler = this.keyDownHandler.bind(this);
+    this.setPieceInPlace = this.setPieceInPlace.bind(this);
+    this.getNewPiece = this.getNewPiece.bind(this);
+    this.setHoverBlock = this.setHoverBlock.bind(this);
+    this.clickBlock = this.clickBlock.bind(this);
+    this.toggleAppState = this.toggleAppState.bind(this);
   }
 
   componentDidMount() {
-    document.addEventListener('keyup', this.keyUpHandler);
+    document.addEventListener('keydown', this.keyDownHandler);
   }
 
-  toggleBlock(row: number, column: number) {
-    if (this.state.state === AppState.TOGGLE) {
-      const grid = _.cloneDeep(this.state.grid);
-      grid[row][column] = grid[row][column] ? 0 : 1;
-      this.setState({ grid });
+  keyDownHandler(event: KeyboardEvent) {
+    const currentPiece = inputHandler(
+      event,
+      this.state.currentPiece,
+      this.state.grid,
+      this.setPieceInPlace,
+      this.getNewPiece,
+      movePiece,
+      this.toggleAppState);
+
+    if (currentPiece) {
+      this.setState({ currentPiece });
     }
   }
 
-  keyUpHandler(event: KeyboardEvent) {
-    const old = Object.assign({}, this.state.currentPiece);
-    const orientationModifier = event.code === 'KeyS' ? -1 : event.code === 'KeyA' ? 1 : 0;
-    const columnModifier = event.code === 'ArrowLeft' ? -1 : event.code === 'ArrowRight' ? 1 : 0;
-    const rowModifier = event.code === 'ArrowUp' ? -1 : event.code === 'ArrowDown' ? 1 : 0;
+  toggleAppState(): void {
+    this.setState({ state: this.state.state === AppState.PIECE ? AppState.PLACE : AppState.PIECE });
+  }
 
-    const currentPiece = Object.assign(
-      {},
-      this.state.currentPiece,
-      {
-        orientation: (this.state.currentPiece.orientation + orientationModifier + 4) % 4,
-        column: Math.min(this.state.currentPiece.column + columnModifier),
-        row: Math.min(this.state.currentPiece.row + rowModifier),
+  setPieceInPlace(): void {
+    const { grid, currentPiece } = this.state;
+
+    if (currentPiece) {
+      const newGrid = _.cloneDeep(grid);
+      currentPiece.blocks.forEach(block => {
+        newGrid[block.row][block.column] = block.value;
+      });
+
+      const completeRows = newGrid.map(row => row.every(block => !!block));
+      completeRows.forEach((isRowComplete, index) => {
+        if (isRowComplete) {
+          newGrid.splice(index, 1);
+          newGrid.unshift(new Array(10).fill(0));
+        }
+      });
+
+      this.setState({ currentPiece: null, grid: newGrid });
+    } else {
+      throw new Error('setPieceInPlace called with null currentPiece');
+    }
+  }
+
+  getNewPiece(type: Piece): ActivePiece {
+    return getPiece({ type, row: 2, column: 5, orientation: 0 });
+  }
+
+  setHoverBlock(row: number, column: number): void {
+    this.setState({ hoverBlock: { row, column } });
+  }
+
+  clickBlock(row: number, column: number): void {
+    const grid = _.cloneDeep(this.state.grid);
+
+    for (var i = 0; i < 22; i++) {
+      if (i > row) {
+        grid[i][column] = filledGrid[i][column];
+      } else {
+        grid[i][column] = 0;
       }
-    );
-    const grid = movePiece(currentPiece, this.state.grid, old);
-    this.setState({
-      currentPiece,
-      grid
-    });
+    }
+
+    this.setState({ grid, hoverBlock: null });
   }
 
   render() {
     return (
-      <div className="grid">
+      <>
+        <div>
           {
-            this.state.grid.map((row, rowKey) => {
-              return (
-                <div key={rowKey} className="row">
-                  {
-                    // Hide the first two rows
-                    rowKey >= 2 ?
-                      row.map((block, blockKey) => (
-                        <div key={rowKey * 20 + blockKey} onClick={this.toggleBlock.bind(this, rowKey, blockKey)} className="bit">
-                          <Block value={block} />
-                        </div>
-                      )) : null
-                  }
-                </div>
-              );
-            })
+            drawGrid(
+              this.state.state,
+              this.state.currentPiece,
+              this.state.grid,
+              this.state.hoverBlock,
+              this.setHoverBlock,
+              this.clickBlock
+            )
           }
-      </div>
+        </div>
+        <div className="state-text">{ this.state.state === AppState.PIECE ? 'Piece' : 'Place' }</div>
+      </>
     );
   }
 }
