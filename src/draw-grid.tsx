@@ -4,15 +4,44 @@ import { ActivePiece } from './piece-types';
 import Block from './block';
 import { AppState } from './App';
 
-export function drawGrid(
-  state: AppState,
-  currentPiece: ActivePiece | null,
+export function drawSetupPlayfield(
   grid: number[][],
   hoverBlock: { row: number, column: number } | null,
   setHoverBlock: (row: number, column: number) => void,
   clickBlock: (row: number, column: number) => void,
 ) {
-  const showHoverState = state === AppState.PLACE;
+  return drawGrid(
+    AppState.FILL_COLUMNS,
+    null,
+    grid,
+    hoverBlock,
+    setHoverBlock,
+    clickBlock);
+}
+
+export function drawPlacePieces(
+  grid: number[][],
+  currentPiece: ActivePiece | null
+) {
+  return drawGrid(
+    AppState.SET_PIECES,
+    currentPiece,
+    grid,
+    null,
+    undefined,
+    undefined,
+  );
+}
+
+function drawGrid(
+  state: AppState,
+  currentPiece: ActivePiece | null,
+  grid: number[][],
+  hoverBlock: { row: number, column: number } | null,
+  setHoverBlock: ((row: number, column: number) => void) | undefined,
+  clickBlock: ((row: number, column: number) => void) | undefined,
+) {
+  const showHoverState = state === AppState.FILL_COLUMNS;
   const drawnGrid: number[][] = _.cloneDeep(grid);
 
   if (currentPiece) {
@@ -32,8 +61,6 @@ export function drawGrid(
                   rowKey >= 2 ?
                     row.map((block, blockKey) => {
                       const showHover = showHoverState && !!hoverBlock && rowKey > hoverBlock.row && blockKey === hoverBlock.column;
-                      const hoverMouseEnter = showHoverState ? () => setHoverBlock(rowKey, blockKey) : undefined;
-                      const hoverClick = showHoverState ? () => clickBlock(rowKey, blockKey) : undefined;
                       return (
                         <div key={rowKey * 20 + blockKey} className="bit">
                           <Block
@@ -41,8 +68,8 @@ export function drawGrid(
                             showHover={showHover}
                             row={rowKey}
                             column={blockKey}
-                            onMouseEnter={hoverMouseEnter}
-                            onClick={hoverClick}
+                            onMouseEnter={setHoverBlock && (() => setHoverBlock(rowKey, blockKey))}
+                            onClick={clickBlock && (() => clickBlock(rowKey, blockKey))}
                           />
                         </div>
                       );

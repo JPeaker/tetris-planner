@@ -18,13 +18,8 @@ export default function inputHandler(
   setPieceInPlace: () => void,
   getNewPiece: (piece: Piece) => ActivePiece,
   movePiece: (grid: number[][], currentPiece: ActivePiece, newPiece: ActivePiece) => ActivePiece,
-  toggleAppState: () => void,
 ): null | ActivePiece {
   event.preventDefault();
-
-  if (event.code === 'Enter') {
-    toggleAppState();
-  }
 
   if (event.code.startsWith('Numpad')) {
     const piece = numpadMap[event.code];
@@ -46,7 +41,8 @@ export default function inputHandler(
   var rowModifier: number;
   if (event.code === 'KeyD') {
     const blockMinRows = currentPiece.blocks.map(block => {
-      const firstBlockInTheWay = grid.map(row => !!row[block.column]).indexOf(true);
+      const firstBlockInTheWay = grid.map((row, rowIndex) =>
+        rowIndex > block.row && !!row[block.column]).indexOf(true);
       return firstBlockInTheWay === -1 ? 22 - block.row : firstBlockInTheWay - block.row;
     });
 

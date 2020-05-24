@@ -1,0 +1,88 @@
+import React from 'react';
+import _ from 'lodash';
+import './style/App.css';
+import Piece from './piece-enum';
+import { ActivePiece } from './piece-types';
+import { movePiece, getPiece } from './move-piece';
+import { drawPlacePieces } from './draw-grid';
+import inputHandler from './input-handler';
+
+interface PlacePiecesProps {
+  grid: number[][];
+  setGrid: (grid: number[][]) => void;
+};
+
+interface ComponentState {
+  currentPiece: ActivePiece | null,
+};
+
+class PlacePieces extends React.Component<PlacePiecesProps, ComponentState> {
+  constructor(props: PlacePiecesProps) {
+    super(props);
+
+    this.state = {
+      currentPiece: null,
+    };
+
+    this.keyDownHandler = this.keyDownHandler.bind(this);
+    this.setPieceInPlace = this.setPieceInPlace.bind(this);
+    this.getNewPiece = this.getNewPiece.bind(this);
+  }
+
+  componentDidMount() {
+    document.addEventListener('keydown', this.keyDownHandler);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.keyDownHandler);
+  }
+
+  keyDownHandler(event: KeyboardEvent) {
+    const currentPiece = inputHandler(
+      event,
+      this.state.currentPiece,
+      this.props.grid,
+      this.setPieceInPlace,
+      this.getNewPiece,
+      movePiece);
+
+    if (currentPiece) {
+      this.setState({ currentPiece });
+    }
+  }
+
+  setPieceInPlace(): void {
+    const { grid } = this.props;
+    const { currentPiece } = this.state;
+
+    if (currentPiece) {
+      const newGrid = _.cloneDeep(grid);
+      currentPiece.blocks.forEach(block => {
+        newGrid[block.row][block.column] = block.value;
+      });
+
+      const completeRows = newGrid.map(row => row.every(block => !!block));
+      completeRows.forEach((isRowComplete, index) => {
+        if (isRowComplete) {
+          newGrid.splice(index, 1);
+          newGrid.unshift(new Array(10).fill(0));
+        }
+      });
+
+      this.setState({ currentPiece: null });
+      this.props.setGrid(newGrid);
+    }
+  }
+
+  getNewPiece(type: Piece): ActivePiece {
+    return getPiece({ type, row: 2, column: 5, orientation: 0 });
+  }
+
+  render() {
+    return (
+      <>{ drawPlacePieces(this.props.grid, this.state.currentPiece) }</>
+    );
+  }
+}
+
+export default PlacePieces;

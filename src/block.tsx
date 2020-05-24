@@ -17,7 +17,12 @@ function Block({ value, showHover, row, column, onMouseEnter, onClick }: BlockPr
     <div
       onMouseEnter={onMouseEnter}
       onClick={onClick}
-      className={classnames({ block: true, hidden: !showHover && !value, [`block-${adjustedValue}`]: true, 'show-hover': showHover })}
+      className={classnames({
+        block: true,
+        hidden: !showHover && !value,
+        [`block-${adjustedValue}`]: true,
+        'show-hover': showHover
+      })}
     />
   );
 }
