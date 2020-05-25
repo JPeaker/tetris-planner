@@ -8,7 +8,7 @@ export function drawGrid(
     <div className="grid" onMouseLeave={onMouseLeave}>
         {
           grid.map((row, rowKey) => {
-            return (
+            return rowKey < 2 ? null : (
               <div key={rowKey} className="row">
                 {
                   // Hide the first two rows

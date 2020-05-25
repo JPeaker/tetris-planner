@@ -45,7 +45,7 @@ class AddHoles extends React.Component<AddHolesProps, ComponentState> {
                 row={row}
                 column={column}
                 value={value}
-                showHover={!!hoverBlock && hoverBlock.row === row && hoverBlock.column === column && !!this.props.grid[row][column]}
+                slightlyHidden={!!hoverBlock && hoverBlock.row === row && hoverBlock.column === column && !!this.props.grid[row][column]}
                 onMouseEnter={() => this.setHoverBlock(row, column)}
                 onClick={() => this.clickBlock(row, column)}
               />

@@ -7,21 +7,23 @@ interface BlockProps {
   row: number;
   column: number;
   value: number;
-  showHover?: boolean;
+  nearInvisible?: boolean;
+  slightlyHidden?: boolean;
   onMouseEnter?: (event: MouseEvent) => void;
   onClick?: (event: MouseEvent) => void;
 }
-function Block({ value, showHover, row, column, onMouseEnter, onClick }: BlockProps) {
-  const adjustedValue = showHover ? filledGrid[row][column] : value;
+function Block({ value, nearInvisible, slightlyHidden, row, column, onMouseEnter, onClick }: BlockProps) {
+  const adjustedValue = slightlyHidden ? filledGrid[row][column] : value;
   return (
     <div
       onMouseEnter={onMouseEnter}
       onClick={onClick}
       className={classnames({
         block: true,
-        hidden: !showHover && !value,
+        hidden: !nearInvisible && !slightlyHidden && !value,
         [`block-${adjustedValue}`]: true,
-        'show-hover': showHover
+        'near-invisible': nearInvisible,
+        'slightly-hidden': slightlyHidden,
       })}
     />
   );

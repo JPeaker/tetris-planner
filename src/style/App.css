@@ -22,8 +22,12 @@ html {
   background-image: url('../static/block-3.png');
 }
 
-.show-hover {
-  opacity: 0.5;
+.near-invisible {
+  opacity: 0.25;
+}
+
+.slightly-hidden {
+  opacity: 0.75;
 }
 
 .hidden {

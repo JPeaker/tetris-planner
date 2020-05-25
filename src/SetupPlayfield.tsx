@@ -51,12 +51,13 @@ class SetupPlayfield extends React.Component<SetupPlayfieldProps, ComponentState
         {
           drawGrid(this.props.grid, (row: number, column: number, value: number) => {
             const { hoverBlock } = this.state;
-            const showHover = !!hoverBlock && row > hoverBlock.row && column === hoverBlock.column;
-            const removeValue = !!hoverBlock && row <= hoverBlock.row && column === hoverBlock.column;
+            const slightlyHidden = !!hoverBlock && row > hoverBlock.row && column === hoverBlock.column;
+            const nearInvisible = !!hoverBlock && row <= hoverBlock.row && column === hoverBlock.column;
             return (
               <Block
-                value={removeValue ? 0 : value}
-                showHover={showHover}
+                value={value}
+                slightlyHidden={slightlyHidden}
+                nearInvisible={nearInvisible}
                 row={row}
                 column={column}
                 onMouseEnter={() => this.setHoverBlock(row, column)}
