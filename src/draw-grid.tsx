@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'lodash';
 
 export function drawGrid(
   grid: number[][],

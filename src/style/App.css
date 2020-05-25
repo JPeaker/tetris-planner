@@ -3,8 +3,8 @@ html {
 }
 
 .block {
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 4rem;
+  height: 4rem;
   vertical-align: middle;
   background-repeat: no-repeat;
   background-size: cover;
@@ -35,18 +35,18 @@ html {
   display: block;
   width: 40.25rem;
   border-bottom: 0.25rem solid black;
+  border-right: 0.25rem solid black;
   background-color: black;
 }
 
 .row {
+  height: 4rem;
   width: 40rem;
   display: block;
-  border-right: 0.25rem solid black;
 }
 
 .bit {
   display: inline-block;
-  border: 0.25rem solid black;
 }
 
 .state-text {
