@@ -2,6 +2,20 @@ html {
   font-size: 8px;
 }
 
+.background {
+  z-index: 0;
+  position: absolute;
+  left: calc(50% - 64rem);
+  top: calc(50% - 56rem);
+}
+
+.playfield {
+  z-index: 1;
+  position: absolute;
+  left: calc(50% - 16.25rem);
+  top: calc(50% - 36rem);
+}
+
 .block {
   width: 4rem;
   height: 4rem;

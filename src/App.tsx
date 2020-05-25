@@ -1,5 +1,7 @@
 import React from 'react';
 import { Dispatch } from 'redux';
+import { Button } from '@material-ui/core';
+import background from './static/background.png';
 import './style/App.css';
 import { connect } from 'react-redux';
 import { RootState } from './store/reducers';
@@ -42,11 +44,18 @@ class App extends React.Component<AppProps, AppComponentState> {
     }
 
     return (
-      <>
-        { playfield }
+      <div>
+        <div className="background">
+          <img src={background} alt="" />
+        </div>
+        <div className="playfield">
+          { playfield }
+        </div>
         <div className="state-text">{ this.props.state }</div>
-        <button onClick={() => this.props.setState((this.props.state + 1) % (Object.keys(AppState).length / 2))}>Next state</button>
-      </>
+        <Button variant="contained" color="default" onClick={() => this.props.setState((this.props.state + 1) % (Object.keys(AppState).length / 2))}>
+          Next state
+        </Button>
+      </div>
     );
   }
 }

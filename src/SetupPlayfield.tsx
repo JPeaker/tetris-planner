@@ -34,7 +34,7 @@ class SetupPlayfield extends React.Component<SetupPlayfieldProps, ComponentState
     const grid = _.cloneDeep(this.props.grid);
 
     for (var i = 0; i < 22; i++) {
-      if (i > row) {
+      if (i >= row) {
         grid[i][column] = filledGrid[i][column];
       } else {
         grid[i][column] = 0;
@@ -51,8 +51,8 @@ class SetupPlayfield extends React.Component<SetupPlayfieldProps, ComponentState
         {
           drawGrid(this.props.grid, (row: number, column: number, value: number) => {
             const { hoverBlock } = this.state;
-            const slightlyHidden = !!hoverBlock && row > hoverBlock.row && column === hoverBlock.column;
-            const nearInvisible = !!hoverBlock && row <= hoverBlock.row && column === hoverBlock.column;
+            const slightlyHidden = !!hoverBlock && row >= hoverBlock.row && column === hoverBlock.column;
+            const nearInvisible = !!hoverBlock && row < hoverBlock.row && column === hoverBlock.column;
             return (
               <Block
                 value={value}
