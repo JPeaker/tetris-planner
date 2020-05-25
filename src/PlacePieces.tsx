@@ -4,8 +4,9 @@ import './style/App.css';
 import Piece from './piece-enum';
 import { ActivePiece } from './piece-types';
 import { movePiece, getPiece } from './move-piece';
-import { drawPlacePieces } from './draw-grid';
+import { drawGrid } from './draw-grid';
 import inputHandler from './input-handler';
+import Block from './block';
 
 interface PlacePiecesProps {
   grid: number[][];
@@ -79,8 +80,24 @@ class PlacePieces extends React.Component<PlacePiecesProps, ComponentState> {
   }
 
   render() {
+    const drawnGrid: number[][] = _.cloneDeep(this.props.grid);
+
+    if (this.state.currentPiece) {
+      this.state.currentPiece.blocks.forEach(block => {
+        drawnGrid[block.row][block.column] = block.value;
+      });
+    }
+
     return (
-      <>{ drawPlacePieces(this.props.grid, this.state.currentPiece) }</>
+      <>
+        {
+          drawGrid(
+            drawnGrid,
+            (row: number, column: number, value: number) =>
+              <Block value={value} row={row} column={column} />
+          )
+        }
+      </>
     );
   }
 }

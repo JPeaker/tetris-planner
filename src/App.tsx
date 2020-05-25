@@ -1,12 +1,11 @@
 import React from 'react';
 import { Dispatch } from 'redux';
 import './style/App.css';
-import { ActivePiece } from './piece-types';
 import { connect } from 'react-redux';
 import { RootState } from './store/reducers';
 import { SET_GRID, SET_STATE } from './store/actions';
 import SetupPlayfield from './SetupPlayfield';
-import FillHoles from './FillHoles';
+import AddHoles from './AddHoles';
 import PlacePieces from './PlacePieces';
 
 interface AppProps {
@@ -22,10 +21,7 @@ export enum AppState {
   SET_PIECES,
 };
 
-interface AppComponentState {
-  currentPiece: ActivePiece | null,
-  hoverBlock: { row: number, column: number } | null,
-};
+interface AppComponentState {};
 
 class App extends React.Component<AppProps, AppComponentState> {
   render() {
@@ -36,7 +32,7 @@ class App extends React.Component<AppProps, AppComponentState> {
         playfield = <SetupPlayfield grid={this.props.grid} setGrid={this.props.setGrid} />;
         break;
       case AppState.ADD_HOLES:
-        playfield = <FillHoles grid={this.props.grid} setGrid={this.props.setGrid} />;
+        playfield = <AddHoles grid={this.props.grid} setGrid={this.props.setGrid} />;
         break;
       case AppState.SET_PIECES:
         playfield = <PlacePieces grid={this.props.grid} setGrid={this.props.setGrid} />
@@ -45,12 +41,11 @@ class App extends React.Component<AppProps, AppComponentState> {
         playfield = <>hello</>;
     }
 
-
     return (
       <>
         { playfield }
         <div className="state-text">{ this.props.state }</div>
-        <button onClick={() => this.props.setState(this.props.state === AppState.SET_PIECES ? AppState.FILL_COLUMNS : AppState.SET_PIECES)}>Toggle state</button>
+        <button onClick={() => this.props.setState((this.props.state + 1) % (Object.keys(AppState).length / 2))}>Next state</button>
       </>
     );
   }

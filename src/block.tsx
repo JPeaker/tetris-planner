@@ -4,12 +4,12 @@ import './style/App.css';
 import filledGrid from './filled-grid';
 
 interface BlockProps {
-  value: number;
-  showHover: boolean;
   row: number;
   column: number;
-  onMouseEnter: ((event: MouseEvent) => void) | undefined;
-  onClick: ((event: MouseEvent) => void) | undefined;
+  value: number;
+  showHover?: boolean;
+  onMouseEnter?: (event: MouseEvent) => void;
+  onClick?: (event: MouseEvent) => void;
 }
 function Block({ value, showHover, row, column, onMouseEnter, onClick }: BlockProps) {
   const adjustedValue = showHover ? filledGrid[row][column] : value;
