@@ -2,13 +2,13 @@ import Piece from './piece-enum';
 import { ActivePiece } from './piece-types';
 
 const numpadMap: { [key: string]: Piece } = {
-  Numpad1: Piece.O,
-  Numpad2: Piece.I,
-  Numpad3: Piece.T,
-  Numpad4: Piece.J,
-  Numpad5: Piece.L,
-  Numpad6: Piece.Z,
-  Numpad7: Piece.S,
+  Numpad5: Piece.I,
+  Numpad4: Piece.O,
+  Numpad6: Piece.T,
+  Numpad7: Piece.L,
+  Numpad9: Piece.J,
+  Numpad1: Piece.S,
+  Numpad3: Piece.Z,
 };
 
 export default function inputHandler(

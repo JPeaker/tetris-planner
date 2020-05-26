@@ -1,9 +1,12 @@
 import { combineReducers } from 'redux';
-import { AppActionTypes, SET_GRID, SET_STATE } from '../actions';
+import { AppActionTypes, SET_GRID, SET_STATE, SET_PRIMARY_PIECE, SET_NEXT_PIECE } from '../actions';
 import { AppState } from '../../App';
+import Piece from '../../piece-enum';
 
 export interface AppReduxState {
   grid: number[][];
+  primaryPiece: Piece| null;
+  nextPiece: Piece | null;
   state: AppState;
 };
 
@@ -18,7 +21,9 @@ for (var i = 0; i < 22; i++) {
 
 export const DefaultState: AppReduxState = {
   grid,
-  state: AppState.FILL_COLUMNS,
+  state: AppState.SETUP_PLAYFIELD,
+  primaryPiece: null,
+  nextPiece: null,
 };
 
 const app = (state = DefaultState, action: AppActionTypes) => {
@@ -27,6 +32,10 @@ const app = (state = DefaultState, action: AppActionTypes) => {
       return Object.assign({}, state, { grid: action.grid });
     case SET_STATE:
       return Object.assign({}, state, { state: action.state });
+    case SET_PRIMARY_PIECE:
+      return Object.assign({}, state, { primaryPiece: action.piece });
+    case SET_NEXT_PIECE:
+      return Object.assign({}, state, { nextPiece: action.piece });
     default:
       return state;
   }

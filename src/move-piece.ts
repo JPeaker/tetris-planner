@@ -21,7 +21,7 @@ export function movePiece(grid: number[][], currentPiece: ActivePiece, newPiece:
   return orientedNewPiece;
 }
 
-const getMap = {
+export const getMap = {
   [Piece.O]: getO,
   [Piece.I]: getI,
   [Piece.T]: getT,

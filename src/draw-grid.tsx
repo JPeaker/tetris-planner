@@ -3,23 +3,22 @@ import React from 'react';
 export function drawGrid(
   grid: number[][],
   getBlock: (row: number, column: number, value: number) => (JSX.Element | null),
-  onMouseLeave?: () => void) {
-  return (
-    <div className="grid" onMouseLeave={onMouseLeave}>
+  onMouseLeave?: () => void,
+  hideTopTwoRows: boolean = true) {
+    return (
+      <div className="grid" onMouseLeave={onMouseLeave}>
         {
           grid.map((row, rowKey) => {
-            return rowKey < 2 ? null : (
-              <div key={rowKey} className="row">
+            return hideTopTwoRows && rowKey < 2 ? null : (
+              <div key={rowKey} className={`row row-${row.length}`}>
                 {
-                  // Hide the first two rows
-                  rowKey >= 2 ?
-                    row.map((block, blockKey) => {
-                      return (
-                        <div key={rowKey * 20 + blockKey} className="bit">
-                          { getBlock(rowKey, blockKey, block) }
-                        </div>
-                      );
-                    }) : null
+                  row.map((block, blockKey) => {
+                    return (
+                      <div key={rowKey * grid.length + blockKey} className="bit">
+                        { getBlock(rowKey, blockKey, block) }
+                      </div>
+                    );
+                  })
                 }
               </div>
             );

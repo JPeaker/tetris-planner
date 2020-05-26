@@ -1,24 +1,41 @@
 html {
-  font-size: 8px;
+  font-size: 16px;
 }
 
 .background {
   z-index: 0;
   position: absolute;
-  left: calc(50% - 64rem);
-  top: calc(50% - 56rem);
+  left: calc(50% - 32rem);
+  top: calc(50% - 28rem);
+}
+
+.instructions {
+  z-index: 1;
+  position: absolute;
+  left: calc(50% - 28rem);
+  top: calc(50% - 12rem);
+  width: 16rem;
+  padding: 0.25rem !important;
 }
 
 .playfield {
   z-index: 1;
   position: absolute;
-  left: calc(50% - 16.25rem);
-  top: calc(50% - 36rem);
+  left: calc(50% - 8.125rem);
+  top: calc(50% - 18rem);
+}
+
+.next-box {
+  z-index: 1;
+  position: absolute;
+  left: calc(50% + 18rem);
+  top: 50%;
+  color: white;
 }
 
 .block {
-  width: 4rem;
-  height: 4rem;
+  width: 2rem;
+  height: 2rem;
   vertical-align: middle;
   background-repeat: no-repeat;
   background-size: cover;
@@ -51,16 +68,32 @@ html {
 
 .grid {
   display: block;
-  width: 40.25rem;
-  border-bottom: 0.25rem solid black;
-  border-right: 0.25rem solid black;
+  border-bottom: 0.125rem solid black;
+  border-right: 0.125rem solid black;
   background-color: black;
 }
 
 .row {
-  height: 4rem;
-  width: 40rem;
+  margin-left: auto;
+  margin-right: auto;
+  height: 2rem;
   display: block;
+}
+
+.row-2 {
+  width: 4rem;
+}
+
+.row-3 {
+  width: 6rem;
+}
+
+.row-4 {
+  width: 8rem;
+}
+
+.row-20 {
+  width: 20rem;
 }
 
 .bit {
@@ -68,5 +101,5 @@ html {
 }
 
 .state-text {
-  font-size: 8rem;
+  font-size: 4rem;
 }
