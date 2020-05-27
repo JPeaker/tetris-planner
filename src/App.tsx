@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dispatch } from 'redux';
-import { Button, Stepper, Step, StepContent, StepLabel, StepButton } from '@material-ui/core';
+import { Button, Stepper, Step, StepContent, StepLabel } from '@material-ui/core';
 import background from './static/background.png';
 import './style/App.css';
 import { connect } from 'react-redux';

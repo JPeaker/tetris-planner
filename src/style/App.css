@@ -23,6 +23,7 @@ html {
   position: absolute;
   left: calc(50% - 8.125rem);
   top: calc(50% - 18rem);
+  width: 20rem;
 }
 
 .next-box {
@@ -66,18 +67,8 @@ html {
   background-color: black;
 }
 
-.grid {
-  display: block;
-  border-bottom: 0.125rem solid black;
-  border-right: 0.125rem solid black;
-  background-color: black;
-}
-
 .row {
-  margin-left: auto;
-  margin-right: auto;
   height: 2rem;
-  display: block;
 }
 
 .row-2 {
@@ -92,8 +83,22 @@ html {
   width: 8rem;
 }
 
-.row-20 {
-  width: 20rem;
+.selectable-piece {
+  display: inline-block;
+  padding: 1rem;
+  border: 1px solid white;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.selected-piece {
+  border: 1px solid green;
+}
+
+.piece-selector-grid-item {
+  text-align: center !important;
+  margin-top: 2rem !important;
+  margin-bottom: 2rem !important;
 }
 
 .bit {

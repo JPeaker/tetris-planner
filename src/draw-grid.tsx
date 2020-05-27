@@ -4,9 +4,11 @@ export function drawGrid(
   grid: number[][],
   getBlock: (row: number, column: number, value: number) => (JSX.Element | null),
   onMouseLeave?: () => void,
+  onClick?: () => void,
+  className?: string,
   hideTopTwoRows: boolean = true) {
     return (
-      <div className="grid" onMouseLeave={onMouseLeave}>
+      <div className={`grid ${className || ''}`} onMouseLeave={onMouseLeave} onClick={onClick}>
         {
           grid.map((row, rowKey) => {
             return hideTopTwoRows && rowKey < 2 ? null : (

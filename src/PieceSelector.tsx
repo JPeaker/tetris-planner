@@ -41,42 +41,33 @@ class PieceSelector extends React.Component<PieceSelectorProps> {
   }
 
   drawPiece(piece: Piece, width: (6 | 12) = 6) {
-    console.log(this.props.piece, piece);
-    const border = this.props.piece === piece ?
-      '1px solid green' :
-      '1px solid white';
     return (
-      <Grid item xs={width} style={{ marginTop: '2rem', marginBottom: '2rem', cursor: 'pointer' }}>
-        <div
-          onClick={() => this.props.setPiece(piece)}
-          style={{ padding: '0.5rem', border }}
-        >
+      <Grid item xs={width} className="piece-selector-grid-item">
           {
             drawGrid(
               this.getPiece(piece),
               (row, column, value) => <Block row={row} column={column} value={value} />,
               undefined,
+              () => this.props.setPiece(piece),
+              `selectable-piece ${this.props.piece === piece ? 'selected-piece' : ''}`,
               false,
             )
           }
-        </div>
       </Grid>
     );
   }
 
   render() {
     return (
-      <div>
-        <Grid container style={{ width: '20rem', marginTop: '4rem' }}>
-            { this.drawPiece(Piece.L) }
-            { this.drawPiece(Piece.J) }
-            { this.drawPiece(Piece.Z) }
-            { this.drawPiece(Piece.S) }
-            { this.drawPiece(Piece.O) }
-            { this.drawPiece(Piece.T) }
-            { this.drawPiece(Piece.I, 12) }
-        </Grid>
-      </div>
+      <Grid container direction="row" justify="space-around" alignItems="center">
+        { this.drawPiece(Piece.L) }
+        { this.drawPiece(Piece.J) }
+        { this.drawPiece(Piece.Z) }
+        { this.drawPiece(Piece.S) }
+        { this.drawPiece(Piece.O) }
+        { this.drawPiece(Piece.T) }
+        { this.drawPiece(Piece.I, 12) }
+      </Grid>
     );
   }
 }

@@ -21,7 +21,7 @@ for (var i = 0; i < 22; i++) {
 
 export const DefaultState: AppReduxState = {
   grid,
-  state: AppState.SETUP_PLAYFIELD,
+  state: AppState.SELECT_CURRENT_PIECE,
   primaryPiece: null,
   nextPiece: null,
 };
