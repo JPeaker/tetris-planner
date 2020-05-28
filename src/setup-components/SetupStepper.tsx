@@ -5,10 +5,15 @@ import '../style/App.css';
 import { connect } from 'react-redux';
 import { RootState } from '../store/reducers';
 import { SetupState, SET_STATE } from '../store/actions/setup';
+import { AppState, SET_APP_STATE } from '../store/actions/app';
+import Piece from '../piece-enum';
 
 interface AppProps {
   state: SetupState;
-  setState: (state: SetupState) => void;
+  currentPiece: Piece | null,
+  nextPiece: Piece | null,
+  setSetupState: (state: SetupState) => void;
+  setAppState: (state: AppState) => void;
 };
 
 interface AppComponentState {};
@@ -19,53 +24,64 @@ interface AppStep {
   description: string;
 }
 
-const steps: AppStep[] = [
-  {
-    key: SetupState.SETUP_PLAYFIELD,
-    label: 'Set up columns',
-    description: 'Click each column to fill it to the point you need. Don\'t worry, you\'ll have chance to add gaps',
-  },
-  {
-    key: SetupState.ADD_HOLES,
-    label: 'Add gaps',
-    description: 'Click each block that you want to remove',
-  },
-  {
-    key: SetupState.SELECT_CURRENT_PIECE,
-    label: 'Select playable piece',
-    description: 'Choose the first piece in your situation',
-  },
-  {
-    key: SetupState.SELECT_NEXT_PIECE,
-    label: 'Select next piece',
-    description: 'Choose the next piece in your situation',
-  },
-  {
-    key: SetupState.SET_PIECES,
-    label: 'Play pieces',
-    description: 'Use the numpad to play any pieces you want, and Space to set them in place',
-  },
-];
-
 class SetupStepper extends React.Component<AppProps, AppComponentState> {
   render() {
     return (
       <Stepper className="instructions" activeStep={this.props.state} orientation="vertical">
-        {steps.map((stepObject) => (
-          <Step key={stepObject.key}>
-            <StepLabel>{stepObject.label}</StepLabel>
-            <StepContent>
-              <div>{stepObject.description}</div>
-              <Button
-                variant="contained"
-                color="default"
-                onClick={() => this.props.setState((this.props.state + 1) % (Object.keys(SetupState).length / 2))}
+        <Step key={SetupState.SETUP_PLAYFIELD}>
+          <StepLabel>Set up columns</StepLabel>
+          <StepContent>
+            <div>Click each column to fill it to the point you need. Don't worry, you'll have chance to add gaps</div>
+            <Button
+              variant="contained"
+              color="default"
+              onClick={() => this.props.setSetupState(SetupState.ADD_HOLES)}
+            >
+              Done
+            </Button>
+          </StepContent>
+        </Step>
+        <Step key={SetupState.ADD_HOLES}>
+          <StepLabel>Add gaps</StepLabel>
+          <StepContent>
+            <div>Click each block that you want to remove</div>
+            <Button
+              variant="contained"
+              color="default"
+              onClick={() => this.props.setSetupState(SetupState.SELECT_CURRENT_PIECE)}
+            >
+              Done
+            </Button>
+          </StepContent>
+        </Step>
+        <Step key={SetupState.SELECT_CURRENT_PIECE}>
+          <StepLabel>Select playable piece</StepLabel>
+          <StepContent>
+            <div>Choose the first piece in your situation</div>
+            <Button
+              variant="contained"
+              color="default"
+              disabled={!this.props.currentPiece}
+              onClick={() => this.props.setSetupState(SetupState.SELECT_NEXT_PIECE)}
               >
-                Done
-              </Button>
-            </StepContent>
-          </Step>
-        ))}
+              Done
+            </Button>
+          </StepContent>
+        </Step>
+        <Step key={SetupState.SELECT_NEXT_PIECE}>
+          <StepLabel>Select next piece</StepLabel>
+          <StepContent>
+            <div>Choose the next piece in your situation</div>
+            <Button
+              variant="contained"
+              color="default"
+              disabled={!this.props.nextPiece}
+              onClick={() => this.props.setAppState(AppState.OPTION_1)}
+            >
+              Done
+            </Button>
+          </StepContent>
+        </Step>
       </Stepper>
     );
   }
@@ -73,10 +89,13 @@ class SetupStepper extends React.Component<AppProps, AppComponentState> {
 
 const mapStateToProps = (state: RootState) => ({
   state: state.setup.state,
+  currentPiece: state.setup.primaryPiece,
+  nextPiece: state.setup.nextPiece,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setState: (state: SetupState) => dispatch({ type: SET_STATE, state }),
-})
+  setSetupState: (state: SetupState) => dispatch({ type: SET_STATE, state }),
+  setAppState: (state: AppState) => dispatch({ type: SET_APP_STATE, state }),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetupStepper);

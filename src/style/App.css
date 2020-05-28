@@ -18,6 +18,26 @@ html {
   padding: 0.25rem !important;
 }
 
+.global-stepper-container {
+  z-index: 1;
+  position: absolute;
+  left: calc(50% - 28rem);
+  top: calc(50% - 23.875rem);
+  width: 16rem;
+}
+
+.global-stepper {
+  text-align: center;
+  background-color: unset !important;
+}
+
+.global-stepper-label {
+  margin-top: -2.25rem;
+  color: white;
+  top: calc(50%);
+  text-align: center;
+}
+
 .playfield {
   z-index: 1;
   position: absolute;

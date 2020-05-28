@@ -3,37 +3,33 @@ import './style/App.css';
 import { connect } from 'react-redux';
 import { RootState } from './store/reducers';
 import { AppState } from './store/actions/app';
-import SetupPlayfield from './setup-components/SetupPlayfield';
+import SetupStepper from './setup-components/SetupStepper';
 
 interface AppProps {
   state: AppState;
 };
 
-function getPlayfield(state: AppState): JSX.Element {
+function getStepper(state: AppState): JSX.Element {
   switch (state) {
     case AppState.SETUP:
-      return <SetupPlayfield />;
+      return <SetupStepper />;
     case AppState.OPTION_1:
-      return <>Option1</>
+      return <>Option1</>;
     case AppState.OPTION_2:
-      return <>Option2</>
+      return <>Option2</>;
     case AppState.COMPARE:
-      return <>Compare</>
+      return <>Compare</>;
     default:
       return <></>;
   }
 }
 
-class ShowPlayfield extends React.Component<AppProps> {
+class LocalStepper extends React.Component<AppProps> {
   render() {
-    return (
-      <div className="playfield">
-        { getPlayfield(this.props.state) }
-      </div>
-    );
+    return getStepper(this.props.state);
   }
 }
 
 const mapStateToProps = (state: RootState) => ({ state: state.app.state });
 
-export default connect(mapStateToProps)(ShowPlayfield);
+export default connect(mapStateToProps)(LocalStepper);
