@@ -7,6 +7,7 @@ import { SetupState } from './store/actions/setup';
 import GlobalStepper from './GlobalStepper';
 import LocalStepper from './LocalStepper';
 import Playfield from './Playfield';
+import NextBox from './NextBox';
 import Piece from './piece-enum';
 
 interface AppProps {
@@ -25,9 +26,7 @@ class App extends React.Component<AppProps> {
         <GlobalStepper />
         <LocalStepper />
         <Playfield />
-        <div className="next-box">
-          { this.props.nextPiece !== null ? <div>{this.props.nextPiece}</div> : null }
-        </div>
+        <NextBox />
       </div>
     );
   }

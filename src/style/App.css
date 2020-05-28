@@ -49,9 +49,15 @@ html {
 .next-box {
   z-index: 1;
   position: absolute;
-  left: calc(50% + 18rem);
+  left: calc(50% + 15.875rem);
+  width: 8rem;
   top: 50%;
   color: white;
+}
+
+.next-box.grid {
+  text-align: center;
+  display: inline-block;
 }
 
 .block {
