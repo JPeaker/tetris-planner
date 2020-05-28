@@ -19,24 +19,36 @@ export default function inputHandler(
   getNewPiece: (piece: Piece) => ActivePiece,
   movePiece: (grid: number[][], currentPiece: ActivePiece, newPiece: ActivePiece) => ActivePiece,
 ): null | ActivePiece {
-  event.preventDefault();
 
   if (event.code.startsWith('Numpad')) {
     const piece = numpadMap[event.code];
 
     if (piece !== undefined) {
+      event.preventDefault();
       return getNewPiece(piece);
     }
   }
 
   if (event.code === 'Space') {
+    event.preventDefault();
     setPieceInPlace();
     return null;
   }
 
-  if (currentPiece === null) {
+  if (
+    currentPiece === null ||
+    (event.code !== 'KeyD' &&
+    event.code !== 'KeyS' &&
+    event.code !== 'KeyA' &&
+    event.code !== 'ArrowUp' &&
+    event.code !== 'ArrowDown' &&
+    event.code !== 'ArrowLeft' &&
+    event.code !== 'ArrowRight')
+  ) {
     return null;
   }
+
+  event.preventDefault();
 
   var rowModifier: number;
   if (event.code === 'KeyD') {
