@@ -1,13 +1,5 @@
-import { SetupActionTypes, SET_GRID, SET_STATE, SET_PRIMARY_PIECE, SET_NEXT_PIECE } from '../actions/setup';
+import { SetupActionTypes, SET_GRID, SET_STATE, SET_PRIMARY_PIECE, SET_NEXT_PIECE, SetupState } from '../actions/setup';
 import Piece from '../../piece-enum';
-
-export enum SetupState {
-  SETUP_PLAYFIELD,
-  ADD_HOLES,
-  SELECT_CURRENT_PIECE,
-  SELECT_NEXT_PIECE,
-  SET_PIECES,
-};
 
 export interface SetupReduxState {
   grid: number[][];

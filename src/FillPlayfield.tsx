@@ -5,7 +5,7 @@ import { drawGrid } from './draw-grid';
 import filledGrid from './filled-grid';
 import Block from './block';
 
-interface SetupPlayfieldProps {
+interface FillPlayfieldProps {
   grid: number[][];
   setGrid: (grid: number[][]) => void;
 };
@@ -14,8 +14,8 @@ interface ComponentState {
   hoverBlock: { row: number, column: number } | null,
 };
 
-class SetupPlayfield extends React.Component<SetupPlayfieldProps, ComponentState> {
-  constructor(props: SetupPlayfieldProps) {
+class FillPlayfield extends React.Component<FillPlayfieldProps, ComponentState> {
+  constructor(props: FillPlayfieldProps) {
     super(props);
 
     this.state = {
@@ -71,4 +71,4 @@ class SetupPlayfield extends React.Component<SetupPlayfieldProps, ComponentState
   }
 }
 
-export default SetupPlayfield;
+export default FillPlayfield;

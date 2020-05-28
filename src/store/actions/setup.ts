@@ -1,5 +1,12 @@
 import Piece from '../../piece-enum';
-import { SetupState } from '../reducers/setup';
+
+export enum SetupState {
+  SETUP_PLAYFIELD,
+  ADD_HOLES,
+  SELECT_CURRENT_PIECE,
+  SELECT_NEXT_PIECE,
+  SET_PIECES,
+};
 
 export const SET_GRID = 'SET_GRID';
 export const SET_STATE = 'SET_STATE';
