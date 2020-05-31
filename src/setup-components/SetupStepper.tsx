@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { RootState } from '../store/reducers';
 import { SetupState, SET_STATE } from '../store/actions/setup';
 import { AppState, SET_APP_STATE } from '../store/actions/app';
+import { INITIALIZE_PLAY_OPTIONS_STATE } from '../store/actions/play-options';
 import Piece from '../piece-enum';
 
 interface AppProps {
@@ -13,18 +14,10 @@ interface AppProps {
   currentPiece: Piece | null,
   nextPiece: Piece | null,
   setSetupState: (state: SetupState) => void;
-  setAppState: (state: AppState) => void;
+  moveToPlayOptions: () => void;
 };
 
-interface AppComponentState {};
-
-interface AppStep {
-  key: SetupState;
-  label: string;
-  description: string;
-}
-
-class SetupStepper extends React.Component<AppProps, AppComponentState> {
+class SetupStepper extends React.Component<AppProps> {
   render() {
     return (
       <Stepper className="instructions" activeStep={this.props.state} orientation="vertical">
@@ -61,7 +54,7 @@ class SetupStepper extends React.Component<AppProps, AppComponentState> {
             <Button
               variant="contained"
               color="default"
-              disabled={!this.props.currentPiece}
+              disabled={this.props.currentPiece === null}
               onClick={() => this.props.setSetupState(SetupState.SELECT_NEXT_PIECE)}
               >
               Done
@@ -75,8 +68,8 @@ class SetupStepper extends React.Component<AppProps, AppComponentState> {
             <Button
               variant="contained"
               color="default"
-              disabled={!this.props.nextPiece}
-              onClick={() => this.props.setAppState(AppState.OPTION_1)}
+              disabled={this.props.nextPiece === null}
+              onClick={() => this.props.moveToPlayOptions()}
             >
               Done
             </Button>
@@ -96,6 +89,9 @@ const mapStateToProps = (state: RootState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   setSetupState: (state: SetupState) => dispatch({ type: SET_STATE, state }),
   setAppState: (state: AppState) => dispatch({ type: SET_APP_STATE, state }),
+  moveToPlayOptions: () => {
+    dispatch({ type: INITIALIZE_PLAY_OPTIONS_STATE });
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetupStepper);

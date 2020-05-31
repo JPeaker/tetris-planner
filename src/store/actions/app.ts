@@ -1,7 +1,6 @@
 export enum AppState {
   SETUP,
-  OPTION_1,
-  OPTION_2,
+  PLAY_OPTIONS,
   COMPARE,
 };
 

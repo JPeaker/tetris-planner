@@ -7,10 +7,17 @@ import { movePiece, getPiece } from './move-piece';
 import { drawGrid } from './draw-grid';
 import inputHandler from './input-handler';
 import Block from './block';
+import { connect } from 'react-redux';
+import { RootState } from './store/reducers';
+import { Dispatch } from 'redux';
+import { SET_GRID, SET_PRIMARY_PIECE } from './store/actions/setup';
+import { SET_APP_STATE, AppState } from './store/actions/app';
 
 interface PlacePiecesProps {
   grid: number[][];
   setGrid: (grid: number[][]) => void;
+  completeStep: (piece: ActivePiece, grid: number[][]) => void;
+  activePiece: Piece | null;
 };
 
 interface ComponentState {
@@ -22,7 +29,7 @@ class PlacePieces extends React.Component<PlacePiecesProps, ComponentState> {
     super(props);
 
     this.state = {
-      currentPiece: null,
+      currentPiece: this.props.activePiece === null ? null : this.getNewPiece(this.props.activePiece),
     };
 
     this.keyDownHandler = this.keyDownHandler.bind(this);
@@ -56,7 +63,7 @@ class PlacePieces extends React.Component<PlacePiecesProps, ComponentState> {
     const { grid } = this.props;
     const { currentPiece } = this.state;
 
-    if (currentPiece) {
+    if (currentPiece !== null) {
       const newGrid = _.cloneDeep(grid);
       currentPiece.blocks.forEach(block => {
         newGrid[block.row][block.column] = block.value;
@@ -70,8 +77,7 @@ class PlacePieces extends React.Component<PlacePiecesProps, ComponentState> {
         }
       });
 
-      this.setState({ currentPiece: null });
-      this.props.setGrid(newGrid);
+      this.props.completeStep(currentPiece, newGrid);
     }
   }
 
@@ -102,4 +108,17 @@ class PlacePieces extends React.Component<PlacePiecesProps, ComponentState> {
   }
 }
 
-export default PlacePieces;
+const mapStateToProps = (state: RootState) => ({
+  grid: state.setup.grid,
+  activePiece: state.setup.primaryPiece,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setGrid: (grid: number[][]) => dispatch({ type: SET_GRID, grid }),
+  completeStep: (piece: ActivePiece, grid: number[][]) => {
+    dispatch({ type: SET_GRID, grid });
+    dispatch({ type: SET_PRIMARY_PIECE, piece: null });
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlacePieces);

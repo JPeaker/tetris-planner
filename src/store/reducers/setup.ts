@@ -19,7 +19,7 @@ for (var i = 0; i < 22; i++) {
 
 export const DefaultState: SetupReduxState = {
   grid,
-  state: SetupState.SELECT_NEXT_PIECE,
+  state: SetupState.SETUP_PLAYFIELD,
   primaryPiece: null,
   nextPiece: null,
 };

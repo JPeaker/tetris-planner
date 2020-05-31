@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { RootState } from './store/reducers';
 import { AppState } from './store/actions/app';
 import SetupPlayfield from './setup-components/SetupPlayfield';
+import PlacePieces from './PlacePieces';
 
 interface AppProps {
   state: AppState;
@@ -13,12 +14,10 @@ function getPlayfield(state: AppState): JSX.Element {
   switch (state) {
     case AppState.SETUP:
       return <SetupPlayfield />;
-    case AppState.OPTION_1:
-      return <>Option1</>
-    case AppState.OPTION_2:
-      return <>Option2</>
+    case AppState.PLAY_OPTIONS:
+      return <PlacePieces />;
     case AppState.COMPARE:
-      return <>Compare</>
+      return <>Compare</>;
     default:
       return <></>;
   }

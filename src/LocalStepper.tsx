@@ -13,10 +13,8 @@ function getStepper(state: AppState): JSX.Element {
   switch (state) {
     case AppState.SETUP:
       return <SetupStepper />;
-    case AppState.OPTION_1:
-      return <>Option1</>;
-    case AppState.OPTION_2:
-      return <>Option2</>;
+    case AppState.PLAY_OPTIONS:
+      return <>Play Options</>;
     case AppState.COMPARE:
       return <>Compare</>;
     default:

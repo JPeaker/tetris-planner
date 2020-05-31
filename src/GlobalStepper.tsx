@@ -13,10 +13,8 @@ function getLabel(state: AppState) {
   switch(state) {
     case AppState.SETUP:
       return 'Set up scenario';
-    case AppState.OPTION_1:
-      return 'Option one';
-    case AppState.OPTION_2:
-      return 'Option two';
+    case AppState.PLAY_OPTIONS:
+      return 'Play options';
     case AppState.COMPARE:
       return 'Compare options';
   }
@@ -30,10 +28,7 @@ class GlobalStepper extends React.Component<AppProps> {
           <Step key={AppState.SETUP}>
             <StepLabel />
           </Step>
-          <Step key={AppState.OPTION_1}>
-            <StepLabel />
-          </Step>
-          <Step key={AppState.OPTION_2}>
+          <Step key={AppState.PLAY_OPTIONS}>
             <StepLabel />
           </Step>
           <Step key={AppState.COMPARE}>

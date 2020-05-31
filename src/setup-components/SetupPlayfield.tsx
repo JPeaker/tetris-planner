@@ -36,7 +36,7 @@ function getPlayfield(
     case SetupState.SELECT_NEXT_PIECE:
       return <SelectNextPiece />;
     case SetupState.SET_PIECES:
-      return <PlacePieces grid={grid} setGrid={setGrid} />;
+      return <PlacePieces />;
     default:
       return <></>;
   }
