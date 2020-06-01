@@ -18,7 +18,11 @@ export default function inputHandler(
   setPieceInPlace: () => void,
   getNewPiece: (piece: Piece) => ActivePiece,
   movePiece: (grid: number[][], currentPiece: ActivePiece, newPiece: ActivePiece) => ActivePiece,
+  disabled?: boolean,
 ): null | ActivePiece {
+  if (disabled) {
+    return null;
+  }
 
   if (event.code.startsWith('Numpad')) {
     const piece = numpadMap[event.code];

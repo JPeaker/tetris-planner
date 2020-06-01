@@ -6,10 +6,12 @@ import {
   SET_PRIMARY_PIECE,
   SET_NEXT_PIECE,
   SET_PLAY_OPTIONS_OPTION,
-  SET_PLAY_OPTIONS_OPTION_PRIMARY_PIECE,
   INITIALIZE_PLAY_OPTIONS_STATE,
   SET_PLAY_OPTIONS_OPTION_STATE,
-  SET_PLAY_OPTIONS_OPTION_POSSIBLITY,
+  SET_PLAY_OPTIONS_OPTION_GRID_AFTER_FIRST_PIECE,
+  SET_PLAY_OPTIONS_OPTION_GRID_AFTER_NEXT_PIECE,
+  SET_PLAY_OPTIONS_OPTION_POSSIBILITY,
+  SET_PLAY_OPTIONS_OPTION_GRID_AFTER_POSSIBILITY,
 }
 from './actions';
 import { AppState, Option, OptionState } from './types';
@@ -41,22 +43,20 @@ export const DefaultState: RootState = {
   options: [],
 };
 
-// Pure funciton to affect option
 function changeOption(
   state: RootState,
-  id: number,
   affectOption: (option: Option) => Option
 ): Option[] {
-  const existingOptionIndex = state.options.findIndex(option => option.id === id);
+  const existingOptionIndex = state.options.findIndex(option => option.id === state.activeOptionId);
 
   if (existingOptionIndex !== -1) {
     const existingOption = state.options[existingOptionIndex];
-
-    return Object.assign(
+    const x = Object.assign(
       [],
       state.options,
       { [existingOptionIndex]: affectOption(existingOption) }
     );
+    return x;
   }
 
   throw new Error('Trying to set primary piece on non-existent option');
@@ -89,48 +89,76 @@ const appReducer = (state = DefaultState, action: ReduxAction) => {
         [Piece.S]: null,
         [Piece.Z]: null,
       }
-      return Object.assign({}, state, { options: [option] });
+      return Object.assign({}, state, { options: [option], activeOptionId: 0 });
     case SET_PLAY_OPTIONS_OPTION_STATE:
       if (state.activeOptionId === null) {
         throw new Error('Cannot change option state when there is no active option');
       }
-
       return Object.assign(
         {},
         state,
-        changeOption(
-          state,
-          state.activeOptionId,
-          (option: Option) => Object.assign({}, option, { state: action.state })
-        )
+        {
+          options: changeOption(
+            state,
+            (option: Option) => Object.assign({}, option, { state: action.state })
+          ),
+        },
       );
-    case SET_PLAY_OPTIONS_OPTION_PRIMARY_PIECE:
+    case SET_PLAY_OPTIONS_OPTION_GRID_AFTER_FIRST_PIECE:
       if (state.activeOptionId === null) {
-        throw new Error('Cannot set primary piece for option state as there is no active open');
+        throw new Error('Cannot change option state when there is no active option');
       }
-
       return Object.assign(
         {},
         state,
-        changeOption(
-          state,
-          state.activeOptionId,
-          (option: Option) => Object.assign({}, option, { [action.piece]: action.grid })
-        )
+        {
+          options: changeOption(
+            state,
+            (option: Option) => Object.assign({}, option, { gridAfterFirstPiece: action.grid }),
+          ),
+        },
       );
-    case SET_PLAY_OPTIONS_OPTION_POSSIBLITY:
+    case SET_PLAY_OPTIONS_OPTION_GRID_AFTER_NEXT_PIECE:
       if (state.activeOptionId === null) {
-        throw new Error('Cannot set possiblity for option state as there is no active open');
+        throw new Error('Cannot change option state when there is no active option');
       }
-
       return Object.assign(
         {},
         state,
-        changeOption(
-          state,
-          state.activeOptionId,
-          (option: Option) => Object.assign({}, option, { currentPossibility: action.piece }),
-        )
+        {
+          options: changeOption(
+            state,
+            (option: Option) => Object.assign({}, option, { gridAfterNextPiece: action.grid }),
+          ),
+        },
+      );
+    case SET_PLAY_OPTIONS_OPTION_POSSIBILITY:
+      if (state.activeOptionId === null) {
+        throw new Error('Cannot change option state when there is no active option');
+      }
+      return Object.assign(
+        {},
+        state,
+        {
+          options: changeOption(
+            state,
+            (option: Option) => Object.assign({}, option, { currentPossibility: action.piece }),
+          ),
+        },
+      );
+    case SET_PLAY_OPTIONS_OPTION_GRID_AFTER_POSSIBILITY:
+      if (state.activeOptionId === null) {
+        throw new Error('Cannot change option state when there is no active option');
+      }
+      return Object.assign(
+        {},
+        state,
+        {
+          options: changeOption(
+            state,
+            (option: Option) => Object.assign({}, option, { [action.piece]: action.grid }),
+          ),
+        },
       );
     default:
       return state;

@@ -12,6 +12,7 @@ interface PlacePiecesProps {
   grid: number[][];
   activePiece: Piece | null;
   setPiece: (grid: number[][]) => void;
+  disabled?: boolean;
 };
 
 interface ComponentState {
@@ -21,7 +22,7 @@ interface ComponentState {
 class PlacePieces extends React.Component<PlacePiecesProps, ComponentState> {
   constructor(props: PlacePiecesProps) {
     super(props);
-
+    console.log('CONSTRUCTOR PLACEPIECES', this.props.activePiece);
     this.state = {
       currentPiece: this.props.activePiece === null ? null : this.getNewPiece(this.props.activePiece),
     };
@@ -46,7 +47,8 @@ class PlacePieces extends React.Component<PlacePiecesProps, ComponentState> {
       this.props.grid,
       this.setPieceInPlace,
       this.getNewPiece,
-      movePiece);
+      movePiece,
+      this.props.disabled);
 
     if (currentPiece) {
       this.setState({ currentPiece });
@@ -94,7 +96,7 @@ class PlacePieces extends React.Component<PlacePiecesProps, ComponentState> {
           drawGrid(
             drawnGrid,
             (row: number, column: number, value: number) =>
-              <Block value={value} row={row} column={column} />
+              <Block value={value} row={row} column={column} disabled={this.props.disabled} />
           )
         }
       </>

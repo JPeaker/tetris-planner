@@ -4,14 +4,26 @@ import { Button, Stepper, Step, StepContent, StepLabel } from '@material-ui/core
 import '../style/App.css';
 import { connect } from 'react-redux';
 import { RootState } from '../store';
-import { AppState } from '../store/types';
-import { setState, setPlayOptionsOptionPossibility } from '../store/actions';
-import Piece from '../piece-enum';
+import { AppState, OptionState } from '../store/types';
+import { setState, setPlayOptionsOptionPossibility, setPlayOptionsOptionState, setPlayOptionsOption } from '../store/actions';
+import Piece, { PieceList } from '../piece-enum';
 
 interface AppProps {
   state: AppState;
+  possibilityGrid: PossibilityGrid;
   setAppState: (state: AppState) => void;
   setActivePieceId: (piece: Piece) => void;
+  completeOption: () => void;
+};
+
+type PossibilityGrid = {
+  [Piece.I]: null | number[][],
+  [Piece.T]: null | number[][],
+  [Piece.O]: null | number[][],
+  [Piece.J]: null | number[][],
+  [Piece.L]: null | number[][],
+  [Piece.Z]: null | number[][],
+  [Piece.S]: null | number[][],
 };
 
 class OptionStepper extends React.Component<AppProps> {
@@ -20,7 +32,7 @@ class OptionStepper extends React.Component<AppProps> {
     return (
       <Stepper className="instructions" activeStep={this.props.state - 5} orientation="vertical">
         <Step key={AppState.OPTIONS_PLACE_PRIMARY_PIECE}>
-          <StepLabel>Place first piece</StepLabel>
+          <StepLabel>Option 1: Place first piece</StepLabel>
           <StepContent>
             <div>Put your first piece in what you think is the best position</div>
             <Button
@@ -33,7 +45,7 @@ class OptionStepper extends React.Component<AppProps> {
           </StepContent>
         </Step>
         <Step key={AppState.OPTIONS_PLACE_NEXT_PIECE}>
-          <StepLabel>Place next piece</StepLabel>
+          <StepLabel>Option 1: Place next piece</StepLabel>
           <StepContent>
             <div>Place your next piece in what you think is the best position</div>
             <Button
@@ -46,20 +58,22 @@ class OptionStepper extends React.Component<AppProps> {
           </StepContent>
         </Step>
         <Step key={AppState.OPTIONS_PLACE_POSSIBILITY}>
-          <StepLabel>Place all possible next pieces</StepLabel>
+          <StepLabel>Option 1: Place all possible next pieces</StepLabel>
           <StepContent>
-            <div onClick={() => this.props.setActivePieceId(Piece.I)}>I</div>
-            <div onClick={() => this.props.setActivePieceId(Piece.O)}>O</div>
-            <div onClick={() => this.props.setActivePieceId(Piece.T)}>T</div>
-            <div onClick={() => this.props.setActivePieceId(Piece.J)}>J</div>
-            <div onClick={() => this.props.setActivePieceId(Piece.L)}>L</div>
-            <div onClick={() => this.props.setActivePieceId(Piece.Z)}>Z</div>
-            <div onClick={() => this.props.setActivePieceId(Piece.S)}>S</div>
+            {
+              PieceList.map(({ value, label }: { value: Piece, label: string }) => (
+                <div key={value} onClick={() => this.props.setActivePieceId(value)}>
+                  { label }
+                  <span>{ this.props.possibilityGrid[value] === null ? '' : 'Done' }</span>
+                </div>
+              ))
+            }
             <Button
               variant="contained"
               color="default"
-              onClick={() => this.props.setAppState(AppState.SETUP_CHOOSE_NEXT_PIECE)}
-              >
+              onClick={() => this.props.completeOption()}
+              disabled={Object.values(this.props.possibilityGrid).some(value => value === null)}
+            >
               Done
             </Button>
           </StepContent>
@@ -69,13 +83,26 @@ class OptionStepper extends React.Component<AppProps> {
   }
 }
 
-const mapStateToProps = (state: RootState) => ({
-  state: state.state,
-});
+const mapStateToProps = (state: RootState) => {
+  const option = state.activeOptionId === null ? null : state.options[state.activeOptionId];
+  const grid: PossibilityGrid = PieceList.reduce((gridSoFar, { value: currentValue }) => {
+    return Object.assign({}, gridSoFar, { [currentValue]: option && option[currentValue] });
+  }, {} as PossibilityGrid);
+
+  return {
+    state: state.state,
+    possibilityGrid: grid,
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   setAppState: (state: AppState) => dispatch(setState(state)),
   setActivePieceId: (piece: Piece) => dispatch(setPlayOptionsOptionPossibility(piece)),
+  completeOption: () => {
+    dispatch(setPlayOptionsOptionState(OptionState.DONE));
+    dispatch(setPlayOptionsOption(null));
+    dispatch(setState(AppState.OPTIONS_SUMMARIZE));
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OptionStepper);

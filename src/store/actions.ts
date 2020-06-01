@@ -52,26 +52,12 @@ export function setNextPiece(piece: Piece): ReduxAction {
 export const SET_PLAY_OPTIONS_OPTION = 'SET_PLAY_OPTIONS_OPTION';
 export interface SetPlayOptionsOptionAction {
   type: typeof SET_PLAY_OPTIONS_OPTION;
-  id: number;
+  id: number | null;
 };
-export function setPlayOptionsOption(id: number): ReduxAction {
+export function setPlayOptionsOption(id: number | null): ReduxAction {
   return {
     type: SET_PLAY_OPTIONS_OPTION,
     id,
-  };
-}
-
-export const SET_PLAY_OPTIONS_OPTION_PRIMARY_PIECE = 'SET_PLAY_OPTIONS_OPTION_PRIMARY_PIECE';
-export interface SetPlayOptionsPrimaryPieceAction {
-  type: typeof SET_PLAY_OPTIONS_OPTION_PRIMARY_PIECE;
-  piece: Piece;
-  grid: number[][];
-};
-export function setPlayOptionsOptionPrimaryPiece(piece: Piece, grid: number[][]): ReduxAction {
-  return {
-    type: SET_PLAY_OPTIONS_OPTION_PRIMARY_PIECE,
-    piece,
-    grid,
   };
 }
 
@@ -95,15 +81,53 @@ export function setPlayOptionsOptionState(state: OptionState): ReduxAction {
   };
 };
 
-export const SET_PLAY_OPTIONS_OPTION_POSSIBLITY = 'SET_PLAY_OPTIONS_OPTION_POSSIBLITY';
-export interface SetPlayOptionsOptionPossiblity {
-  type: typeof SET_PLAY_OPTIONS_OPTION_POSSIBLITY;
+export const SET_PLAY_OPTIONS_OPTION_GRID_AFTER_FIRST_PIECE = 'SET_PLAY_OPTIONS_OPTION_GRID_AFTER_FIRST_PIECE';
+export interface SetPlayOptionsOptionGridAfterFirstPieceAction {
+  type: typeof SET_PLAY_OPTIONS_OPTION_GRID_AFTER_FIRST_PIECE;
+  grid: number[][];
+};
+export function setPlayOptionsOptionGridAfterFirstPiece(grid: number[][]): ReduxAction {
+  return {
+    type: SET_PLAY_OPTIONS_OPTION_GRID_AFTER_FIRST_PIECE,
+    grid,
+  };
+};
+
+export const SET_PLAY_OPTIONS_OPTION_GRID_AFTER_NEXT_PIECE = 'SET_PLAY_OPTIONS_OPTION_GRID_AFTER_NEXT_PIECE';
+export interface SetPlayOptionsOptionGridAfterNextPieceAction {
+  type: typeof SET_PLAY_OPTIONS_OPTION_GRID_AFTER_NEXT_PIECE;
+  grid: number[][];
+};
+export function setPlayOptionsOptionGridAfterNextPiece(grid: number[][]): ReduxAction {
+  return {
+    type: SET_PLAY_OPTIONS_OPTION_GRID_AFTER_NEXT_PIECE,
+    grid,
+  };
+};
+
+export const SET_PLAY_OPTIONS_OPTION_POSSIBILITY = 'SET_PLAY_OPTIONS_OPTION_POSSIBILITY';
+export interface SetPlayOptionsOptionPossibilityAction {
+  type: typeof SET_PLAY_OPTIONS_OPTION_POSSIBILITY;
   piece: Piece;
 };
-export function setPlayOptionsOptionPossibility(piece: Piece) {
+export function setPlayOptionsOptionPossibility(piece: Piece): ReduxAction {
   return {
-    type: SET_PLAY_OPTIONS_OPTION_POSSIBLITY,
+    type: SET_PLAY_OPTIONS_OPTION_POSSIBILITY,
     piece,
+  };
+};
+
+export const SET_PLAY_OPTIONS_OPTION_GRID_AFTER_POSSIBILITY = 'SET_PLAY_OPTIONS_OPTION_GRID_AFTER_POSSIBILITY';
+export interface SetPlayOptionsOptionGridAfterPossibilityAction {
+  type: typeof SET_PLAY_OPTIONS_OPTION_GRID_AFTER_POSSIBILITY;
+  piece: Piece;
+  grid: number[][];
+};
+export function setPlayOptionsOptionGridAfterPossibility(piece: Piece, grid: number[][]): ReduxAction {
+  return {
+    type: SET_PLAY_OPTIONS_OPTION_GRID_AFTER_POSSIBILITY,
+    piece,
+    grid,
   };
 };
 
@@ -113,8 +137,10 @@ export type ReduxAction = (
   SetPrimaryPieceAction |
   SetNextPieceAction |
   SetPlayOptionsOptionAction |
-  SetPlayOptionsPrimaryPieceAction |
   InitializePlayOptionsStateAction |
   SetPlayOptionsOptionStateAction |
-  SetPlayOptionsOptionPossiblity
+  SetPlayOptionsOptionGridAfterFirstPieceAction |
+  SetPlayOptionsOptionGridAfterNextPieceAction |
+  SetPlayOptionsOptionPossibilityAction |
+  SetPlayOptionsOptionGridAfterPossibilityAction
 );

@@ -41,6 +41,7 @@ html {
 .playfield {
   z-index: 1;
   position: absolute;
+  color: white;
   left: calc(50% - 8.125rem);
   top: calc(50% - 18rem);
   width: 20rem;
@@ -133,4 +134,14 @@ html {
 
 .state-text {
   font-size: 4rem;
+}
+
+.option-summarize-container {
+  color: white;
+  text-align: center;
+}
+
+.option-summarize-grid {
+  transform: scale(0.25);
+  height: 25%;
 }
