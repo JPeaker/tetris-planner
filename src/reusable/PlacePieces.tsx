@@ -1,23 +1,17 @@
 import React from 'react';
 import _ from 'lodash';
-import './style/App.css';
-import Piece from './piece-enum';
-import { ActivePiece } from './piece-types';
+import '../style/App.css';
+import Piece from '../piece-enum';
+import { ActivePiece } from '../piece-types';
 import { movePiece, getPiece } from './move-piece';
 import { drawGrid } from './draw-grid';
-import inputHandler from './input-handler';
+import inputHandler from '../input-handler';
 import Block from './block';
-import { connect } from 'react-redux';
-import { RootState } from './store/reducers';
-import { Dispatch } from 'redux';
-import { SET_GRID, SET_PRIMARY_PIECE } from './store/actions/setup';
-import { SET_APP_STATE, AppState } from './store/actions/app';
 
 interface PlacePiecesProps {
   grid: number[][];
-  setGrid: (grid: number[][]) => void;
-  completeStep: (piece: ActivePiece, grid: number[][]) => void;
   activePiece: Piece | null;
+  setPiece: (grid: number[][]) => void;
 };
 
 interface ComponentState {
@@ -77,7 +71,7 @@ class PlacePieces extends React.Component<PlacePiecesProps, ComponentState> {
         }
       });
 
-      this.props.completeStep(currentPiece, newGrid);
+      this.props.setPiece(newGrid);
     }
   }
 
@@ -108,17 +102,4 @@ class PlacePieces extends React.Component<PlacePiecesProps, ComponentState> {
   }
 }
 
-const mapStateToProps = (state: RootState) => ({
-  grid: state.setup.grid,
-  activePiece: state.setup.primaryPiece,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setGrid: (grid: number[][]) => dispatch({ type: SET_GRID, grid }),
-  completeStep: (piece: ActivePiece, grid: number[][]) => {
-    dispatch({ type: SET_GRID, grid });
-    dispatch({ type: SET_PRIMARY_PIECE, piece: null });
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PlacePieces);
+export default PlacePieces;

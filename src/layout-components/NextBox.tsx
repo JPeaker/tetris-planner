@@ -1,10 +1,10 @@
 import React from 'react';
-import './style/App.css';
+import '../style/App.css';
 import { connect } from 'react-redux';
-import Block from './block';
-import { getPieceGrid, drawGrid } from './draw-grid';
-import { RootState } from './store/reducers';
-import Piece from './piece-enum';
+import Block from '../reusable/block';
+import { getPieceGrid, drawGrid } from '../reusable/draw-grid';
+import { RootState } from '../store';
+import Piece from '../piece-enum';
 
 interface NextBoxProps {
   nextPiece: Piece | null;
@@ -30,7 +30,7 @@ class NextBox extends React.Component<NextBoxProps> {
 }
 
 const mapStateToProps = (state: RootState) => ({
-  nextPiece: state.setup.nextPiece,
+  nextPiece: state.nextPiece,
 });
 
 export default connect(mapStateToProps)(NextBox);

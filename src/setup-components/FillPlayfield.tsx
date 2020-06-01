@@ -1,16 +1,21 @@
-import React, { ComponentState } from 'react';
+import React from 'react';
 import _ from 'lodash';
-import './style/App.css';
-import { drawGrid } from './draw-grid';
-import Block from './block';
+import '../style/App.css';
+import { drawGrid } from '../reusable/draw-grid';
+import filledGrid from '../reusable/filled-grid';
+import Block from '../reusable/block';
 
-interface AddHolesProps {
+interface FillPlayfieldProps {
   grid: number[][];
   setGrid: (grid: number[][]) => void;
 };
 
-class AddHoles extends React.Component<AddHolesProps, ComponentState> {
-  constructor(props: AddHolesProps) {
+interface ComponentState {
+  hoverBlock: { row: number, column: number } | null,
+};
+
+class FillPlayfield extends React.Component<FillPlayfieldProps, ComponentState> {
+  constructor(props: FillPlayfieldProps) {
     super(props);
 
     this.state = {
@@ -27,7 +32,14 @@ class AddHoles extends React.Component<AddHolesProps, ComponentState> {
 
   clickBlock(row: number, column: number): void {
     const grid = _.cloneDeep(this.props.grid);
-    grid[row][column] = 0;
+
+    for (var i = 0; i < 22; i++) {
+      if (i >= row) {
+        grid[i][column] = filledGrid[i][column];
+      } else {
+        grid[i][column] = 0;
+      }
+    }
 
     this.setState({ hoverBlock: null });
     this.props.setGrid(grid);
@@ -39,22 +51,24 @@ class AddHoles extends React.Component<AddHolesProps, ComponentState> {
         {
           drawGrid(this.props.grid, (row: number, column: number, value: number) => {
             const { hoverBlock } = this.state;
-
+            const slightlyHidden = !!hoverBlock && row >= hoverBlock.row && column === hoverBlock.column;
+            const nearInvisible = !!hoverBlock && row < hoverBlock.row && column === hoverBlock.column;
             return (
               <Block
+                value={value}
+                slightlyHidden={slightlyHidden}
+                nearInvisible={nearInvisible}
                 row={row}
                 column={column}
-                value={value}
-                slightlyHidden={!!hoverBlock && hoverBlock.row === row && hoverBlock.column === column && !!this.props.grid[row][column]}
                 onMouseEnter={() => this.setHoverBlock(row, column)}
                 onClick={() => this.clickBlock(row, column)}
               />
             );
-          })
+          }, () => (this.setState({ hoverBlock: null })))
         }
       </>
     );
   }
 }
 
-export default AddHoles;
+export default FillPlayfield;

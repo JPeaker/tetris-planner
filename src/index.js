@@ -2,16 +2,27 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import rootReducer from './store/reducers';
+import reducer from './store';
 import './style/index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 
-const store = createStore(
-  rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+function configureStore(preloadedState) {
+  const store = createStore(
+    reducer,
+    preloadedState,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  );
+
+  if (process.env.NODE_ENV !== 'production' && module.hot) {
+    module.hot.accept('./store', () => store.replaceReducer(reducer));
+  }
+
+  return store;
+}
+
+const store = configureStore();
 
 const darkTheme = createMuiTheme({
   palette: {

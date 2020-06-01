@@ -2,41 +2,39 @@ import React from 'react';
 import { Dispatch } from 'redux';
 import '../style/App.css';
 import { connect } from 'react-redux';
-import { RootState } from '../store/reducers';
-import { SetupState, SET_GRID, SET_STATE } from '../store/actions/setup';
-import FillPlayfield from '../FillPlayfield';
-import AddHoles from '../AddHoles';
-import SelectFirstPiece from '../SelectFirstPiece';
-import SelectNextPiece from '../SelectNextPiece';
-import PlacePieces from '../PlacePieces';
+import { setGrid, setState } from '../store/actions';
+import FillPlayfield from './FillPlayfield';
+import AddHoles from './AddHoles';
+import SelectFirstPiece from './SelectFirstPiece';
+import SelectNextPiece from './SelectNextPiece';
 import Piece from '../piece-enum';
+import { RootState } from '../store';
+import { AppState } from '../store/types';
 
 interface AppProps {
   grid: number[][];
-  state: SetupState;
+  state: AppState;
   nextPiece: Piece | null;
   setGrid: (grid: number[][]) => void;
-  setState: (state: SetupState) => void;
+  setState: (state: AppState) => void;
 };
 
 interface AppComponentState {};
 
 function getPlayfield(
-  state: SetupState,
+  state: AppState,
   grid: number[][],
   setGrid: (grid: number[][]) => void
 ): JSX.Element {
   switch (state) {
-    case SetupState.SETUP_PLAYFIELD:
+    case AppState.SETUP_GRID:
       return <FillPlayfield grid={grid} setGrid={setGrid} />;
-    case SetupState.ADD_HOLES:
+    case AppState.SETUP_ADD_HOLES:
       return <AddHoles grid={grid} setGrid={setGrid} />;
-    case SetupState.SELECT_CURRENT_PIECE:
+    case AppState.SETUP_CHOOSE_PRIMARY_PIECE:
       return <SelectFirstPiece />;
-    case SetupState.SELECT_NEXT_PIECE:
+    case AppState.SETUP_CHOOSE_NEXT_PIECE:
       return <SelectNextPiece />;
-    case SetupState.SET_PIECES:
-      return <PlacePieces />;
     default:
       return <></>;
   }
@@ -49,14 +47,14 @@ class SetupPlayfield extends React.Component<AppProps, AppComponentState> {
 }
 
 const mapStateToProps = (state: RootState) => ({
-  grid: state.setup.grid,
-  state: state.setup.state,
-  nextPiece: state.setup.nextPiece,
+  grid: state.grid,
+  state: state.state,
+  nextPiece: state.nextPiece,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setGrid: (grid: number[][]) => dispatch({ type: SET_GRID, grid }),
-  setState: (state: SetupState) => dispatch({ type: SET_STATE, state }),
+  setGrid: (grid: number[][]) => dispatch(setGrid(grid)),
+  setState: (state: AppState) => dispatch(setState(state)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetupPlayfield);

@@ -1,8 +1,8 @@
 import React from 'react';
-import './style/App.css';
+import '../style/App.css';
 import { getPieceGrid, drawGrid } from './draw-grid';
 import Block from './block';
-import Piece from './piece-enum';
+import Piece from '../piece-enum';
 import { Grid } from '@material-ui/core';
 
 interface PieceSelectorProps {

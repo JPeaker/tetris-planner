@@ -1,5 +1,5 @@
-import Piece from './piece-enum';
-import { ActivePiece, BlockPlace } from './piece-types';
+import Piece from '../piece-enum';
+import { ActivePiece, BlockPlace } from '../piece-types';
 
 export function movePiece(grid: number[][], currentPiece: ActivePiece, newPiece: ActivePiece): ActivePiece {
   const orientedNewPiece = getPiece(newPiece);

@@ -1,6 +1,6 @@
 import React, { MouseEvent } from 'react';
 import classnames from 'classnames';
-import './style/App.css';
+import '../style/App.css';
 import filledGrid from './filled-grid';
 
 interface BlockProps {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Piece from './piece-enum';
+import Piece from '../piece-enum';
 import { getMap } from './move-piece';
 
 export function getPieceGrid(piece: Piece): number[][] {
