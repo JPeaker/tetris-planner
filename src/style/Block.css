@@ -1,0 +1,32 @@
+.block {
+  width: 2rem;
+  height: 2rem;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.block-1 {
+  background-image: url('../static/block-1.png');
+}
+
+.block-2 {
+  background-image: url('../static/block-2.png');
+}
+
+.block-3 {
+  background-image: url('../static/block-3.png');
+}
+
+.near-invisible {
+  opacity: 0.25;
+}
+
+.slightly-hidden {
+  opacity: 0.75;
+}
+
+.hidden {
+  background-image: none;
+  background-color: black;
+}
