@@ -1,8 +1,8 @@
 import React, { ComponentState } from 'react';
 import _ from 'lodash';
 import '../style/App.css';
-import { drawGrid } from '../reusable/draw-grid';
-import Block from '../reusable/block';
+import { BlockProps } from '../reusable/block';
+import TetrisGrid from '../reusable/tetris-grid';
 
 interface AddHolesProps {
   grid: number[][];
@@ -19,6 +19,7 @@ class AddHoles extends React.Component<AddHolesProps, ComponentState> {
 
     this.setHoverBlock = this.setHoverBlock.bind(this);
     this.clickBlock = this.clickBlock.bind(this);
+    this.getBlockProps = this.getBlockProps.bind(this);
   }
 
   setHoverBlock(row: number, column: number): void {
@@ -33,30 +34,18 @@ class AddHoles extends React.Component<AddHolesProps, ComponentState> {
     this.props.setGrid(grid);
   }
 
-  render() {
-    return (
-      <>
+  getBlockProps(row: number, column: number, value: number): Partial<BlockProps> {
+    const { hoverBlock } = this.state;
+    return {
+      slightlyHidden: !!hoverBlock && hoverBlock.row === row && hoverBlock.column === column && !!this.props.grid[row][column],
+      onMouseEnter: () => this.setHoverBlock(row, column),
+      onClick: () => this.clickBlock(row, column),
+    }
+  }
 
-      </>
-    );
+  render() {
+    return <TetrisGrid grid={this.props.grid} getBlockProps={this.getBlockProps} />;
   }
 }
 
 export default AddHoles;
-
-// {
-//   drawGrid(this.props.grid, (row: number, column: number, value: number) => {
-//     const { hoverBlock } = this.state;
-
-//     return (
-//       <Block
-//         row={row}
-//         column={column}
-//         value={value}
-//         slightlyHidden={!!hoverBlock && hoverBlock.row === row && hoverBlock.column === column && !!this.props.grid[row][column]}
-//         onMouseEnter={() => this.setHoverBlock(row, column)}
-//         onClick={() => this.clickBlock(row, column)}
-//       />
-//     );
-//   })
-// }

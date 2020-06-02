@@ -1,11 +1,12 @@
 import React from 'react';
 import '../style/App.css';
-import { drawGrid } from '../reusable/draw-grid';
 import { Grid } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { RootState } from '../store';
 import { Option } from '../store/types';
-import Block from '../reusable/block';
+import TetrisGrid from '../reusable/tetris-grid';
+import { getPieceGrid } from '../reusable/move-piece';
+import { PieceList } from '../piece-enum';
 
 interface OptionSummarizeProps {
   options: Option[];
@@ -14,30 +15,31 @@ interface OptionSummarizeProps {
 
 class OptionSummarize extends React.Component<OptionSummarizeProps> {
   render() {
-    return this.props.options.map(option => {
-      var returnGrid = option.gridAfterNextPiece || option.gridAfterFirstPiece || this.props.grid;
-
+    return this.props.options.map((option, optionIndex) => {
       return (
-        <Grid className="option-summarize-container" container direction="row" justify="space-around" alignItems="center">
+        <Grid
+          className="option-summarize-container"
+          key={optionIndex}
+          container
+          direction="row"
+          justify="space-around"
+          alignItems="center"
+        >
           <Grid item xs={12}>Option 1</Grid>
-          <Grid item xs={12}>
-            {
-              // drawGrid(
-              //   returnGrid,
-              //   (row, column, value) => <Block row={row} column={column} value={value} />,
-              //   undefined,
-              //   undefined,
-              //   'option-summarize-grid'
-              // )
-            }
+          <Grid item xs={4}>
+            <TetrisGrid grid={this.props.grid} blockSizeInRem={0.5} />
           </Grid>
-          <Grid item xs={1}>Each piece</Grid>
-          <Grid item xs={1}>Each piece</Grid>
-          <Grid item xs={1}>Each piece</Grid>
-          <Grid item xs={1}>Each piece</Grid>
-          <Grid item xs={1}>Each piece</Grid>
-          <Grid item xs={1}>Each piece</Grid>
-          <Grid item xs={1}>Each piece</Grid>
+          <Grid item xs={4}>
+            { option.gridAfterFirstPiece ? <TetrisGrid grid={option.gridAfterFirstPiece} blockSizeInRem={0.5} /> : null }
+          </Grid>
+          <Grid item xs={4}>
+            { option.gridAfterNextPiece ? <TetrisGrid grid={option.gridAfterNextPiece} blockSizeInRem={0.5} /> : null }
+          </Grid>
+          {
+            PieceList.map(piece => <Grid item xs={1} key={piece.label}>
+              <TetrisGrid grid={getPieceGrid(piece.value)} blockSizeInRem={0.5} hideTopTwoRows={false} />
+            </Grid>)
+          }
         </Grid>
       )
     });

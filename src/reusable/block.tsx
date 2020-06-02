@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import '../style/Block.css';
 import filledGrid from './filled-grid';
 
-interface BlockProps {
+export interface BlockProps {
   row: number;
   column: number;
   value: number;

@@ -4,9 +4,8 @@ import '../style/App.css';
 import Piece from '../piece-enum';
 import { ActivePiece } from '../piece-types';
 import { movePiece, getPiece } from './move-piece';
-import { drawGrid } from './draw-grid';
 import inputHandler from '../input-handler';
-import Block from './block';
+import TetrisGrid from './tetris-grid';
 
 interface PlacePiecesProps {
   grid: number[][];
@@ -29,6 +28,7 @@ class PlacePieces extends React.Component<PlacePiecesProps, ComponentState> {
     this.keyDownHandler = this.keyDownHandler.bind(this);
     this.setPieceInPlace = this.setPieceInPlace.bind(this);
     this.getNewPiece = this.getNewPiece.bind(this);
+    this.getBlockProps = this.getBlockProps.bind(this);
   }
 
   componentDidMount() {
@@ -80,6 +80,10 @@ class PlacePieces extends React.Component<PlacePiecesProps, ComponentState> {
     return getPiece({ type, row: 2, column: 5, orientation: 0 });
   }
 
+  getBlockProps() {
+    return { disabled: this.props.disabled };
+  }
+
   render() {
     const drawnGrid: number[][] = _.cloneDeep(this.props.grid);
 
@@ -89,20 +93,8 @@ class PlacePieces extends React.Component<PlacePiecesProps, ComponentState> {
       });
     }
 
-    return (
-      <>
-
-      </>
-    );
+    return <TetrisGrid grid={drawnGrid} getBlockProps={this.getBlockProps} />;
   }
 }
 
 export default PlacePieces;
-
-// {
-//   drawGrid(
-//     drawnGrid,
-//     (row: number, column: number, value: number) =>
-//       <Block value={value} row={row} column={column} disabled={this.props.disabled} />
-//   )
-// }

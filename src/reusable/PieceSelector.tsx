@@ -1,9 +1,9 @@
 import React from 'react';
 import '../style/App.css';
-import { getPieceGrid, drawGrid } from './draw-grid';
-import Block from './block';
 import Piece from '../piece-enum';
 import { Grid } from '@material-ui/core';
+import TetrisGrid from './tetris-grid';
+import { getPieceGrid } from './move-piece';
 
 interface PieceSelectorProps {
   piece: Piece | null;
@@ -12,7 +12,17 @@ interface PieceSelectorProps {
 
 class PieceSelector extends React.Component<PieceSelectorProps> {
   drawPiece(piece: Piece, width: (6 | 12) = 6) {
-    return null;
+    return (
+      <Grid item xs={width} className="piece-selector-grid-item">
+        <TetrisGrid
+          grid={getPieceGrid(piece)}
+          blockSizeInRem={1.5}
+          onClick={() => this.props.setPiece(piece)}
+          className={`selectable-piece${this.props.piece === piece ? ' selected-piece' : ''}`}
+          hideTopTwoRows={false}
+        />
+      </Grid>
+    );
   }
 
   render() {
@@ -31,18 +41,3 @@ class PieceSelector extends React.Component<PieceSelectorProps> {
 }
 
 export default PieceSelector;
-
-// (
-  //   <Grid item xs={width} className="piece-selector-grid-item">
-  //       {
-  //         drawGrid(
-  //           getPieceGrid(piece),
-  //           (row, column, value) => <Block row={row} column={column} value={value} />,
-  //           undefined,
-  //           () => this.props.setPiece(piece),
-  //           `selectable-piece ${this.props.piece === piece ? 'selected-piece' : ''}`,
-  //           false,
-  //         )
-  //       }
-  //   </Grid>
-  // )

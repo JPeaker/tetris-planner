@@ -3,7 +3,7 @@ import _ from 'lodash';
 import '../style/App.css';
 import filledGrid from '../reusable/filled-grid';
 import TetrisGrid from '../reusable/tetris-grid';
-import Block from '../reusable/block';
+import { BlockProps } from '../reusable/block';
 
 interface FillPlayfieldProps {
   grid: number[][];
@@ -24,7 +24,7 @@ class FillPlayfield extends React.Component<FillPlayfieldProps, ComponentState> 
 
     this.setHoverBlock = this.setHoverBlock.bind(this);
     this.clickBlock = this.clickBlock.bind(this);
-    this.getBlock = this.getBlock.bind(this);
+    this.getBlockProps = this.getBlockProps.bind(this);
   }
 
   setHoverBlock(row: number, column: number): void {
@@ -46,27 +46,22 @@ class FillPlayfield extends React.Component<FillPlayfieldProps, ComponentState> 
     this.props.setGrid(grid);
   }
 
-  getBlock(row: number, column: number, value: number): JSX.Element {
+  getBlockProps(row: number, column: number, value: number): Partial<BlockProps> {
     const { hoverBlock } = this.state;
     const slightlyHidden = !!hoverBlock && row >= hoverBlock.row && column === hoverBlock.column;
     const nearInvisible = !!hoverBlock && row < hoverBlock.row && column === hoverBlock.column;
-    return (
-      <Block
-        value={value}
-        slightlyHidden={slightlyHidden}
-        nearInvisible={nearInvisible}
-        row={row}
-        column={column}
-        onMouseEnter={() => this.setHoverBlock(row, column)}
-        onClick={() => this.clickBlock(row, column)}
-      />
-    );
+    return {
+      slightlyHidden,
+      nearInvisible,
+      onMouseEnter: () => this.setHoverBlock(row, column),
+      onClick: () => this.clickBlock(row, column)
+    };
   }
 
   render() {
     return <TetrisGrid
       grid={this.props.grid}
-      getBlock={this.getBlock}
+      getBlockProps={this.getBlockProps}
       onMouseLeave={() => this.setState({ hoverBlock: null })}
     />;
   }
