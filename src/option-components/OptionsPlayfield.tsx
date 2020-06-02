@@ -7,11 +7,12 @@ import {
   setPlayOptionsOptionState,
   setPlayOptionsOptionGridAfterFirstPiece,
   setPlayOptionsOptionGridAfterNextPiece,
-  setPlayOptionsOptionGridAfterPossibility
+  setPlayOptionsOptionGridAfterPossibility,
+  setPlayOptionsOptionPossibility
 } from '../store/actions';
 import PlacePieces from '../reusable/PlacePieces';
 import OptionSummarize from './OptionSummarize';
-import Piece from '../piece-enum';
+import Piece, { PieceList } from '../piece-enum';
 import { RootState } from '../store';
 import { AppState, OptionState, Option } from '../store/types';
 
@@ -24,6 +25,7 @@ interface AppProps {
   setNextPiece: (grid: number[][]) => void;
   option: Option | null,
   setPossibility: (piece: Piece, grid: number[][]) => void;
+  advancePossibility: (option: Option) => void;
 };
 
 interface AppComponentState {};
@@ -74,7 +76,10 @@ class OptionsPlayfield extends React.Component<AppProps, AppComponentState> {
         }
 
         const currentPossibility = this.props.option.currentPossibility;
-        const setPossibility = (grid: number[][]) => this.props.setPossibility(currentPossibility, grid);
+        const setPossibility = (grid: number[][]) => {
+          this.props.setPossibility(currentPossibility, grid);
+          this.props.advancePossibility(this.props.option as Option);
+        }
         return getPlayfield(
           this.props.option.gridAfterNextPiece,
           currentPossibility,
@@ -119,11 +124,28 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setNextPiece: (grid: number[][]) => {
     dispatch(setPlayOptionsOptionState(OptionState.POSSIBILITIES));
     dispatch(setPlayOptionsOptionGridAfterNextPiece(grid));
+    dispatch(setPlayOptionsOptionPossibility(Piece.I));
     dispatch(setState(AppState.OPTIONS_PLACE_POSSIBILITY));
   },
   setPossibility: (possibility: Piece, grid: number[][]) => {
     dispatch(setPlayOptionsOptionGridAfterPossibility(possibility, grid));
   },
+  advancePossibility: (option: Option) => {
+    const currentPieceIndex = PieceList.findIndex(({ value }) => value === option.currentPossibility);
+
+    if (currentPieceIndex === -1) {
+      dispatch(setPlayOptionsOptionPossibility(Piece.I))
+    } else if (PieceList.every(({ value }) => option[value] !== null)) {
+      dispatch(setState(AppState.OPTIONS_SUMMARIZE));
+    } else {
+      for (const piece of PieceList) {
+        if (option[piece.value] === null) {
+          dispatch(setPlayOptionsOptionPossibility(piece.value));
+          return;
+        }
+      }
+    }
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(OptionsPlayfield);

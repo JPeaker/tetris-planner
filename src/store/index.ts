@@ -114,7 +114,17 @@ const appReducer = (state = DefaultState, action: ReduxAction) => {
         {
           options: changeOption(
             state,
-            (option: Option) => Object.assign({}, option, { gridAfterFirstPiece: action.grid }),
+            (option: Option) => Object.assign({}, option, {
+              gridAfterFirstPiece: action.grid,
+              gridAfterNextPiece: null,
+              [Piece.I]: null,
+              [Piece.T]: null,
+              [Piece.O]: null,
+              [Piece.L]: null,
+              [Piece.J]: null,
+              [Piece.S]: null,
+              [Piece.Z]: null,
+            }),
           ),
         },
       );
@@ -128,7 +138,16 @@ const appReducer = (state = DefaultState, action: ReduxAction) => {
         {
           options: changeOption(
             state,
-            (option: Option) => Object.assign({}, option, { gridAfterNextPiece: action.grid }),
+            (option: Option) => Object.assign({}, option, {
+              gridAfterNextPiece: action.grid,
+              [Piece.I]: null,
+              [Piece.T]: null,
+              [Piece.O]: null,
+              [Piece.L]: null,
+              [Piece.J]: null,
+              [Piece.S]: null,
+              [Piece.Z]: null,
+            }),
           ),
         },
       );

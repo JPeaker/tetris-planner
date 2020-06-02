@@ -18,7 +18,7 @@ class PieceSelector extends React.Component<PieceSelectorProps> {
           grid={getPieceGrid(piece)}
           blockSizeInRem={1.5}
           onClick={() => this.props.setPiece(piece)}
-          className={`selectable-piece${this.props.piece === piece ? ' selected-piece' : ''}`}
+          className={`piece-selector-selectable-piece selectable-piece${this.props.piece === piece ? ' selected-piece' : ''}`}
           hideTopTwoRows={false}
         />
       </Grid>
