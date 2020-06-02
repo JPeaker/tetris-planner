@@ -1,6 +1,5 @@
 import React, { MouseEvent } from 'react';
 import '../style/Block.css';
-import { Box } from '@material-ui/core';
 
 interface RowProps {
   rowKey: number;
@@ -9,7 +8,7 @@ interface RowProps {
 }
 function Row({ rowKey, blocks, getBlock }: RowProps) {
   return (
-    <Box width="100%" height="100%">
+    <div className="row">
       {
         blocks.map((block, blockIndex) => React.cloneElement(getBlock(rowKey, blockIndex, block), {
           row: rowKey,
@@ -18,7 +17,7 @@ function Row({ rowKey, blocks, getBlock }: RowProps) {
           width: blocks.length ? `${100 / blocks.length}%` : 'auto'
         }))
       }
-    </Box>
+    </div>
   );
 }
 

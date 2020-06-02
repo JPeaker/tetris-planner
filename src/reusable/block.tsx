@@ -2,7 +2,6 @@ import React, { MouseEvent } from 'react';
 import classnames from 'classnames';
 import '../style/Block.css';
 import filledGrid from './filled-grid';
-import { Box } from '@material-ui/core';
 
 interface BlockProps {
   row: number;
@@ -18,10 +17,9 @@ interface BlockProps {
 function Block({ value, nearInvisible, slightlyHidden, row, column, onMouseEnter, onClick, disabled, width }: BlockProps) {
   const adjustedValue = slightlyHidden ? filledGrid[row][column] : value;
   return (
-    <Box
+    <div
       key={column}
-      width={width}
-      height="100%"
+      style={{ width }}
       onMouseEnter={onMouseEnter}
       onClick={disabled ? () => {} : onClick}
       className={classnames({

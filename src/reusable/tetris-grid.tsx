@@ -1,5 +1,4 @@
 import Row from './row';
-import { Box } from '@material-ui/core';
 import React from 'react';
 import '../style/Block.css';
 
@@ -16,7 +15,7 @@ function TetrisGrid({ grid, widthInRem, onMouseLeave, getBlock, hideTopTwoRows }
   const numberOfColumns = Math.max(...grid.map(row => row.length));
   const rowHeight = width / numberOfColumns;
   return (
-    <Box height={`${rowHeight}rem`} width={`${width}rem`} onMouseLeave={onMouseLeave}>
+    <div style={{ height: `${rowHeight}rem`, width: `${width}rem` }} onMouseLeave={onMouseLeave}>
       {
         grid.map((row, rowKey) => {
           return hideTopRows && rowKey < 2
@@ -24,7 +23,7 @@ function TetrisGrid({ grid, widthInRem, onMouseLeave, getBlock, hideTopTwoRows }
             : <Row key={rowKey} rowKey={rowKey} blocks={row} getBlock={getBlock} />
         })
       }
-    </Box>
+    </div>
   );
 }
 

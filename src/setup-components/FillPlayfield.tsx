@@ -65,25 +65,12 @@ class FillPlayfield extends React.Component<FillPlayfieldProps, ComponentState> 
   }
 
   render() {
-    return <TetrisGrid grid={this.props.grid} getBlock={this.getBlock} />;
+    return <TetrisGrid
+      grid={this.props.grid}
+      getBlock={this.getBlock}
+      onMouseLeave={() => this.setState({ hoverBlock: null })}
+    />;
   }
 }
 
 export default FillPlayfield;
-
-// drawGrid(this.props.grid, (row: number, column: number, value: number) => {
-//   const { hoverBlock } = this.state;
-//   const slightlyHidden = !!hoverBlock && row >= hoverBlock.row && column === hoverBlock.column;
-//   const nearInvisible = !!hoverBlock && row < hoverBlock.row && column === hoverBlock.column;
-//   return (
-//     <Block
-//       value={value}
-//       slightlyHidden={slightlyHidden}
-//       nearInvisible={nearInvisible}
-//       row={row}
-//       column={column}
-//       onMouseEnter={() => this.setHoverBlock(row, column)}
-//       onClick={() => this.clickBlock(row, column)}
-//     />
-//   );
-// }, () => (this.setState({ hoverBlock: null })))
