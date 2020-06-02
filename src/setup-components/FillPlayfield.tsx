@@ -32,7 +32,6 @@ class FillPlayfield extends React.Component<FillPlayfieldProps, ComponentState> 
   }
 
   clickBlock(row: number, column: number): void {
-    console.log(row, column);
     const grid = _.cloneDeep(this.props.grid);
 
     for (var i = 0; i < 22; i++) {

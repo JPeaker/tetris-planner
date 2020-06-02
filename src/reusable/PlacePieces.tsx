@@ -22,7 +22,6 @@ interface ComponentState {
 class PlacePieces extends React.Component<PlacePiecesProps, ComponentState> {
   constructor(props: PlacePiecesProps) {
     super(props);
-    console.log('CONSTRUCTOR PLACEPIECES', this.props.activePiece);
     this.state = {
       currentPiece: this.props.activePiece === null ? null : this.getNewPiece(this.props.activePiece),
     };

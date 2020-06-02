@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import background from './static/background.png';
 import './style/App.css';
 import { connect } from 'react-redux';
@@ -135,7 +136,7 @@ const gridAfterI = [
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   todoRemoveInitializeStore: () => {
-    const fakeGrid = filledGrid;
+    const fakeGrid = _.cloneDeep(filledGrid);
     for (var i = 0; i < 22; i++) {
 
       if (i < 8) {
