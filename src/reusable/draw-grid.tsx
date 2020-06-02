@@ -1,6 +1,8 @@
 import React from 'react';
 import Piece from '../piece-enum';
 import { getMap } from './move-piece';
+import Row from './row';
+import { Box } from '@material-ui/core';
 
 export function getPieceGrid(piece: Piece): number[][] {
   const pieceGrid = getMap[piece](0, 0, 0);
@@ -31,30 +33,10 @@ export function getPieceGrid(piece: Piece): number[][] {
 
 export function drawGrid(
   grid: number[][],
-  getBlock: (row: number, column: number, value: number) => (JSX.Element | null),
+  widthInRem: number = 20,
   onMouseLeave?: () => void,
   onClick?: () => void,
-  className?: string,
-  hideTopTwoRows: boolean = true) {
-    return (
-      <div className={`grid ${className || ''}`} onMouseLeave={onMouseLeave} onClick={onClick}>
-        {
-          grid.map((row, rowKey) => {
-            return hideTopTwoRows && rowKey < 2 ? null : (
-              <div key={rowKey} className={`row row-${row.length}`}>
-                {
-                  row.map((block, blockKey) => {
-                    return (
-                      <div key={rowKey * grid.length + blockKey} className="bit">
-                        { getBlock(rowKey, blockKey, block) }
-                      </div>
-                    );
-                  })
-                }
-              </div>
-            );
-          })
-        }
-    </div>
-  );
-}
+  hideTopTwoRows: boolean = true,
+) {
+  return null;
+};

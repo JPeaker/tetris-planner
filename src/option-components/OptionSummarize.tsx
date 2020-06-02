@@ -22,13 +22,13 @@ class OptionSummarize extends React.Component<OptionSummarizeProps> {
           <Grid item xs={12}>Option 1</Grid>
           <Grid item xs={12}>
             {
-              drawGrid(
-                returnGrid,
-                (row, column, value) => <Block row={row} column={column} value={value} />,
-                undefined,
-                undefined,
-                'option-summarize-grid'
-              )
+              // drawGrid(
+              //   returnGrid,
+              //   (row, column, value) => <Block row={row} column={column} value={value} />,
+              //   undefined,
+              //   undefined,
+              //   'option-summarize-grid'
+              // )
             }
           </Grid>
           <Grid item xs={1}>Each piece</Grid>

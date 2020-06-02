@@ -61,22 +61,6 @@ html {
   display: inline-block;
 }
 
-.row {
-  height: 2rem;
-}
-
-.row-2 {
-  width: 4rem;
-}
-
-.row-3 {
-  width: 6rem;
-}
-
-.row-4 {
-  width: 8rem;
-}
-
 .selectable-piece {
   display: inline-block;
   padding: 1rem;
@@ -93,10 +77,6 @@ html {
   text-align: center !important;
   margin-top: 2rem !important;
   margin-bottom: 2rem !important;
-}
-
-.bit {
-  display: inline-block;
 }
 
 .state-text {

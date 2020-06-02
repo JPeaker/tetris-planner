@@ -14,7 +14,7 @@ class NextBox extends React.Component<NextBoxProps> {
   render() {
     return (
         <div className="next-box">
-          {
+          {/* {
             this.props.nextPiece !== null ? drawGrid(
               getPieceGrid(this.props.nextPiece),
               (row, column, value) => <Block row={row} column={column} value={value} />,
@@ -23,7 +23,7 @@ class NextBox extends React.Component<NextBoxProps> {
               undefined,
               false
             ) : null
-          }
+          } */}
         </div>
     );
   }

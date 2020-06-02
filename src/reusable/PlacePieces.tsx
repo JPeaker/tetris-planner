@@ -92,16 +92,18 @@ class PlacePieces extends React.Component<PlacePiecesProps, ComponentState> {
 
     return (
       <>
-        {
-          drawGrid(
-            drawnGrid,
-            (row: number, column: number, value: number) =>
-              <Block value={value} row={row} column={column} disabled={this.props.disabled} />
-          )
-        }
+
       </>
     );
   }
 }
 
 export default PlacePieces;
+
+// {
+//   drawGrid(
+//     drawnGrid,
+//     (row: number, column: number, value: number) =>
+//       <Block value={value} row={row} column={column} disabled={this.props.disabled} />
+//   )
+// }

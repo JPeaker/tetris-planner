@@ -1,6 +1,5 @@
 .block {
-  width: 2rem;
-  height: 2rem;
+  display: inline-block;
   vertical-align: middle;
   background-repeat: no-repeat;
   background-size: cover;

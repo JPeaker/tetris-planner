@@ -36,25 +36,27 @@ class AddHoles extends React.Component<AddHolesProps, ComponentState> {
   render() {
     return (
       <>
-        {
-          drawGrid(this.props.grid, (row: number, column: number, value: number) => {
-            const { hoverBlock } = this.state;
 
-            return (
-              <Block
-                row={row}
-                column={column}
-                value={value}
-                slightlyHidden={!!hoverBlock && hoverBlock.row === row && hoverBlock.column === column && !!this.props.grid[row][column]}
-                onMouseEnter={() => this.setHoverBlock(row, column)}
-                onClick={() => this.clickBlock(row, column)}
-              />
-            );
-          })
-        }
       </>
     );
   }
 }
 
 export default AddHoles;
+
+// {
+//   drawGrid(this.props.grid, (row: number, column: number, value: number) => {
+//     const { hoverBlock } = this.state;
+
+//     return (
+//       <Block
+//         row={row}
+//         column={column}
+//         value={value}
+//         slightlyHidden={!!hoverBlock && hoverBlock.row === row && hoverBlock.column === column && !!this.props.grid[row][column]}
+//         onMouseEnter={() => this.setHoverBlock(row, column)}
+//         onClick={() => this.clickBlock(row, column)}
+//       />
+//     );
+//   })
+// }
