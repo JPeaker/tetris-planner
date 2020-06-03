@@ -139,6 +139,66 @@ export function addPlayOptionsOption(): ReduxAction {
   return { type: ADD_PLAY_OPTIONS_OPTION };
 };
 
+export const ADD_COMPARISON = 'ADD_COMPARISON';
+export interface AddComparisonAction {
+  type: typeof ADD_COMPARISON;
+  firstOption: number;
+  secondOption: number;
+};
+export function addComparison(firstOption: number, secondOption: number): ReduxAction {
+  return {
+    type: ADD_COMPARISON,
+    firstOption,
+    secondOption,
+  };
+};
+
+export const SET_COMPARISON_ACTIVE_PIECE = 'SET_COMPARISON_ACTIVE_PIECE';
+export interface SetComparisonActivePieceAction {
+  type: typeof SET_COMPARISON_ACTIVE_PIECE;
+  piece: Piece;
+};
+export function setComparisonActivePiece(piece: Piece): ReduxAction {
+  return {
+    type: SET_COMPARISON_ACTIVE_PIECE,
+    piece,
+  };
+};
+
+export const ADVANCE_COMPARISON_ACTIVE_PIECE = 'ADVANCE_COMPARISON_ACTIVE_PIECE';
+export interface AdvanceComparisonActivePieceAction {
+  type: typeof ADVANCE_COMPARISON_ACTIVE_PIECE;
+};
+export function advanceComparisonActivePiece(): ReduxAction {
+  return {
+    type: ADVANCE_COMPARISON_ACTIVE_PIECE,
+  };
+};
+
+export const SET_ACTIVE_COMPARISON = 'SET_ACTIVE_COMPARISON';
+export interface SetActiveComparisonAction {
+  type: typeof SET_ACTIVE_COMPARISON;
+  id: number;
+};
+export function setActiveComparison(id: number): ReduxAction {
+  return {
+    type: SET_ACTIVE_COMPARISON,
+    id
+  };
+};
+
+export const SET_COMPARISON_PIECE_CHOICE = 'SET_COMPARISON_PIECE_CHOICE';
+export interface SetComparisonPieceChoiceAction {
+  type: typeof SET_COMPARISON_PIECE_CHOICE;
+  id: number;
+};
+export function setComparisonPieceChoice(id: number): ReduxAction {
+  return {
+    type: SET_COMPARISON_PIECE_CHOICE,
+    id
+  };
+};
+
 export type ReduxAction = (
   SetStateAction |
   SetGridAction |
@@ -151,5 +211,10 @@ export type ReduxAction = (
   SetPlayOptionsOptionGridAfterNextPieceAction |
   SetPlayOptionsOptionPossibilityAction |
   SetPlayOptionsOptionGridAfterPossibilityAction |
-  AddPlayOptionsOptionAction
+  AddPlayOptionsOptionAction |
+  AddComparisonAction |
+  SetComparisonActivePieceAction |
+  SetActiveComparisonAction |
+  SetComparisonPieceChoiceAction |
+  AdvanceComparisonActivePieceAction
 );

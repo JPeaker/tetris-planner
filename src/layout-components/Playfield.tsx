@@ -5,6 +5,7 @@ import { RootState } from '../store';
 import { AppStateCategory, getAppStateCategory } from '../store/types';
 import SetupPlayfield from '../setup-components/SetupPlayfield';
 import OptionsPlayfield from '../option-components/OptionsPlayfield';
+import ComparePlayfield from '../compare-components/ComparePlayfield';
 
 interface AppProps {
   stateCategory: AppStateCategory;
@@ -17,7 +18,7 @@ function getPlayfield(category: AppStateCategory): JSX.Element {
     case AppStateCategory.OPTIONS:
       return <OptionsPlayfield />;
     case AppStateCategory.COMPARE:
-      return <>Compare</>;
+      return <ComparePlayfield />;
     default:
       return <></>;
   }

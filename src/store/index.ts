@@ -1,4 +1,4 @@
-import Piece from '../piece-enum';
+import Piece, { PieceList } from '../piece-enum';
 import {
   ReduxAction,
   SET_STATE,
@@ -13,9 +13,14 @@ import {
   SET_PLAY_OPTIONS_OPTION_POSSIBILITY,
   SET_PLAY_OPTIONS_OPTION_GRID_AFTER_POSSIBILITY,
   ADD_PLAY_OPTIONS_OPTION,
+  ADD_COMPARISON,
+  SET_COMPARISON_ACTIVE_PIECE,
+  SET_ACTIVE_COMPARISON,
+  SET_COMPARISON_PIECE_CHOICE,
+  ADVANCE_COMPARISON_ACTIVE_PIECE,
 }
 from './actions';
-import { AppState, Option, OptionState } from './types';
+import { AppState, Option, OptionState, Comparison } from './types';
 
 export interface RootState {
   state: AppState,
@@ -24,6 +29,8 @@ export interface RootState {
   nextPiece: Piece | null,
   activeOptionId: number | null,
   options: Option[],
+  activeComparisonId: number | null,
+  comparisons: Comparison[],
 };
 
 const grid: number[][] = [];
@@ -42,6 +49,8 @@ export const DefaultState: RootState = {
   nextPiece: null,
   activeOptionId: null,
   options: [],
+  activeComparisonId: null,
+  comparisons: [],
 };
 
 function changeOption(
@@ -69,6 +78,20 @@ const getNewOption = (id: number): Option => ({
   gridAfterFirstPiece: null,
   gridAfterNextPiece: null,
   currentPossibility: null,
+  [Piece.I]: null,
+  [Piece.T]: null,
+  [Piece.O]: null,
+  [Piece.L]: null,
+  [Piece.J]: null,
+  [Piece.S]: null,
+  [Piece.Z]: null,
+});
+
+const getNewComparison = (id: number, firstOption: Option, secondOption: Option): Comparison => ({
+  id,
+  firstOption,
+  secondOption,
+  activePiece: null,
   [Piece.I]: null,
   [Piece.T]: null,
   [Piece.O]: null,
@@ -191,6 +214,79 @@ const appReducer = (state = DefaultState, action: ReduxAction) => {
           activeOptionId: newId,
         },
       );
+    case ADD_COMPARISON:
+      const firstOption = state.options.find(option => option.id === action.firstOption);
+      const secondOption = state.options.find(option => option.id === action.secondOption);
+      const newComparisonId = Math.max(0, ...state.comparisons.map(comparison => comparison.id)) + 1;
+
+      if (firstOption === undefined || secondOption === undefined) {
+        return state;
+      }
+
+      return Object.assign(
+        {},
+        state,
+        {
+          activeComparisonId: newComparisonId,
+          comparisons: [...state.comparisons, getNewComparison(newComparisonId, firstOption, secondOption)]
+        }
+      )
+    case SET_COMPARISON_ACTIVE_PIECE:
+      const comparison = state.comparisons.find(comparison => comparison.id === state.activeComparisonId);
+      if (comparison === undefined) {
+        return state;
+      }
+      return Object.assign(
+        {},
+        state,
+        {
+          comparisons: [
+            Object.assign({}, comparison, { activePiece: action.piece }),
+            ...state.comparisons.filter(c => c.id !== comparison.id)
+          ],
+        }
+      )
+    case ADVANCE_COMPARISON_ACTIVE_PIECE:
+      const advanceComparison = state.comparisons.find(comparison => comparison.id === state.activeComparisonId);
+      if (advanceComparison === undefined) {
+        return state;
+      }
+
+      if (PieceList.every(piece => advanceComparison[piece.value] !== null)) {
+        return Object.assign({}, state, { state: AppState.COMPARE_COMPLETE });
+      }
+
+      const activePiece = advanceComparison.activePiece === null
+        ? Piece.I as Piece
+        : PieceList[(PieceList.findIndex(p => p.value === advanceComparison.activePiece) + PieceList.length + 1) % PieceList.length].value;
+      console.log('Advancing to', activePiece);
+      return Object.assign(
+        {},
+        state,
+        {
+          comparisons: [
+            Object.assign({}, advanceComparison, { activePiece }),
+            ...state.comparisons.filter(c => c.id !== advanceComparison.id)
+          ],
+        }
+      )
+    case SET_ACTIVE_COMPARISON:
+      return Object.assign({}, state, { activeComparisonId: action.id });
+    case SET_COMPARISON_PIECE_CHOICE:
+      const thisComparison = state.comparisons.find(comparison => comparison.id === state.activeComparisonId);
+      if (thisComparison === undefined || thisComparison.activePiece === null) {
+        return state;
+      }
+      return Object.assign(
+        {},
+        state,
+        {
+          comparisons: [
+            Object.assign({}, thisComparison, { [thisComparison.activePiece]: action.id }),
+            ...state.comparisons.filter(c => c.id !== thisComparison.id)
+          ],
+        }
+      )
     default:
       return state;
   }

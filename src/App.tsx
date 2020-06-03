@@ -22,7 +22,8 @@ import {
   setPlayOptionsOptionGridAfterFirstPiece,
   setPlayOptionsOptionGridAfterNextPiece,
   setPlayOptionsOptionPossibility,
-  setPlayOptionsOptionGridAfterPossibility
+  setPlayOptionsOptionGridAfterPossibility,
+  addPlayOptionsOption
 } from './store/actions';
 import filledGrid from './reusable/filled-grid';
 
@@ -149,34 +150,76 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
       fakeGrid[i][9] = 0;
     }
-    dispatch(setGrid(fakeGrid));
-    dispatch(setState(AppState.SETUP_CHOOSE_PRIMARY_PIECE));
-    dispatch(setPrimaryPiece(Piece.J));
-    dispatch(setNextPiece(Piece.L));
-    dispatch(initializePlayOptionsState());
-    dispatch(setState(AppState.OPTIONS_PLACE_PRIMARY_PIECE));
-    dispatch(setPlayOptionsOptionState(OptionState.NEXT_PIECE));
-    dispatch(setPlayOptionsOptionGridAfterFirstPiece(gridAfterFirstPiece));
-    dispatch(setState(AppState.OPTIONS_PLACE_NEXT_PIECE));
-    dispatch(setPlayOptionsOptionState(OptionState.POSSIBILITIES));
-    dispatch(setPlayOptionsOptionGridAfterNextPiece(gridAfterNextPiece));
-    dispatch(setState(AppState.OPTIONS_PLACE_POSSIBILITY));
-    dispatch(setPlayOptionsOptionPossibility(Piece.I));
-    dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.I, gridAfterI))
-    dispatch(setPlayOptionsOptionPossibility(Piece.O));
-    dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.O, gridAfterI))
-    dispatch(setPlayOptionsOptionPossibility(Piece.T));
-    dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.T, gridAfterI))
-    dispatch(setPlayOptionsOptionPossibility(Piece.J));
-    dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.J, gridAfterI))
-    dispatch(setPlayOptionsOptionPossibility(Piece.L));
-    dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.L, gridAfterI))
-    dispatch(setPlayOptionsOptionPossibility(Piece.S));
-    dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.S, gridAfterI))
-    dispatch(setPlayOptionsOptionPossibility(Piece.Z));
-    dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.Z, gridAfterI))
-    dispatch(setPlayOptionsOptionState(OptionState.DONE));
-    dispatch(setState(AppState.OPTIONS_SUMMARIZE));
+    // dispatch(setGrid(fakeGrid));
+    // dispatch(setState(AppState.SETUP_CHOOSE_PRIMARY_PIECE));
+    // dispatch(setPrimaryPiece(Piece.J));
+    // dispatch(setNextPiece(Piece.L));
+    // dispatch(initializePlayOptionsState());
+    // dispatch(setState(AppState.OPTIONS_PLACE_PRIMARY_PIECE));
+    // dispatch(setPlayOptionsOptionState(OptionState.NEXT_PIECE));
+    // dispatch(setPlayOptionsOptionGridAfterFirstPiece(gridAfterFirstPiece));
+    // dispatch(setState(AppState.OPTIONS_PLACE_NEXT_PIECE));
+    // dispatch(setPlayOptionsOptionState(OptionState.POSSIBILITIES));
+    // dispatch(setPlayOptionsOptionGridAfterNextPiece(gridAfterNextPiece));
+    // dispatch(setState(AppState.OPTIONS_PLACE_POSSIBILITY));
+    // dispatch(setPlayOptionsOptionPossibility(Piece.I));
+    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.I, gridAfterI))
+    // dispatch(setPlayOptionsOptionPossibility(Piece.O));
+    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.O, gridAfterI))
+    // dispatch(setPlayOptionsOptionPossibility(Piece.T));
+    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.T, gridAfterI))
+    // dispatch(setPlayOptionsOptionPossibility(Piece.J));
+    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.J, gridAfterI))
+    // dispatch(setPlayOptionsOptionPossibility(Piece.L));
+    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.L, gridAfterI))
+    // dispatch(setPlayOptionsOptionPossibility(Piece.S));
+    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.S, gridAfterI))
+    // dispatch(setPlayOptionsOptionPossibility(Piece.Z));
+    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.Z, gridAfterI))
+    // dispatch(setPlayOptionsOptionState(OptionState.DONE));
+    // dispatch(addPlayOptionsOption());
+    // dispatch(setPlayOptionsOptionGridAfterFirstPiece(gridAfterFirstPiece));
+    // dispatch(setState(AppState.OPTIONS_PLACE_NEXT_PIECE));
+    // dispatch(setPlayOptionsOptionState(OptionState.POSSIBILITIES));
+    // dispatch(setPlayOptionsOptionGridAfterNextPiece(gridAfterNextPiece));
+    // dispatch(setState(AppState.OPTIONS_PLACE_POSSIBILITY));
+    // dispatch(setPlayOptionsOptionPossibility(Piece.I));
+    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.I, gridAfterI))
+    // dispatch(setPlayOptionsOptionPossibility(Piece.O));
+    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.O, gridAfterI))
+    // dispatch(setPlayOptionsOptionPossibility(Piece.T));
+    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.T, gridAfterI))
+    // dispatch(setPlayOptionsOptionPossibility(Piece.J));
+    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.J, gridAfterI))
+    // dispatch(setPlayOptionsOptionPossibility(Piece.L));
+    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.L, gridAfterI))
+    // dispatch(setPlayOptionsOptionPossibility(Piece.S));
+    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.S, gridAfterI))
+    // dispatch(setPlayOptionsOptionPossibility(Piece.Z));
+    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.Z, gridAfterI))
+    // dispatch(setPlayOptionsOptionState(OptionState.DONE));
+    // dispatch(addPlayOptionsOption());
+    // dispatch(setPlayOptionsOptionGridAfterFirstPiece(gridAfterFirstPiece));
+    // dispatch(setState(AppState.OPTIONS_PLACE_NEXT_PIECE));
+    // dispatch(setPlayOptionsOptionState(OptionState.POSSIBILITIES));
+    // dispatch(setPlayOptionsOptionGridAfterNextPiece(gridAfterNextPiece));
+    // dispatch(setState(AppState.OPTIONS_PLACE_POSSIBILITY));
+    // dispatch(setPlayOptionsOptionPossibility(Piece.I));
+    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.I, gridAfterI))
+    // dispatch(setPlayOptionsOptionPossibility(Piece.O));
+    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.O, gridAfterI))
+    // dispatch(setPlayOptionsOptionPossibility(Piece.T));
+    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.T, gridAfterI))
+    // dispatch(setPlayOptionsOptionPossibility(Piece.J));
+    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.J, gridAfterI))
+    // dispatch(setPlayOptionsOptionPossibility(Piece.L));
+    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.L, gridAfterI))
+    // dispatch(setPlayOptionsOptionPossibility(Piece.S));
+    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.S, gridAfterI))
+    // dispatch(setPlayOptionsOptionPossibility(Piece.Z));
+    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.Z, gridAfterI))
+    // dispatch(setPlayOptionsOptionState(OptionState.DONE));
+    // dispatch(setState(AppState.COMPARE));
   },
 });
 

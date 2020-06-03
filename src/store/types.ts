@@ -16,6 +16,8 @@ export enum AppState {
   OPTIONS_PLACE_NEXT_PIECE,
   OPTIONS_PLACE_POSSIBILITY,
   COMPARE,
+  COMPARE_ACTIVE,
+  COMPARE_COMPLETE,
 };
 
 export enum OptionState {
@@ -54,6 +56,22 @@ export function getAppStateCategory(state: AppState): AppStateCategory {
     case AppState.OPTIONS_PLACE_POSSIBILITY:
       return AppStateCategory.OPTIONS;
     case AppState.COMPARE:
+    case AppState.COMPARE_ACTIVE:
+    case AppState.COMPARE_COMPLETE:
       return AppStateCategory.COMPARE;
   }
+};
+
+export interface Comparison {
+  id: number;
+  firstOption: Option;
+  secondOption: Option;
+  activePiece: Piece | null;
+  [Piece.I]: number | null;
+  [Piece.T]: number | null;
+  [Piece.O]: number | null;
+  [Piece.L]: number | null;
+  [Piece.J]: number | null;
+  [Piece.S]: number | null;
+  [Piece.Z]: number | null;
 }
