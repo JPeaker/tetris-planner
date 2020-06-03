@@ -259,7 +259,7 @@ const appReducer = (state = DefaultState, action: ReduxAction) => {
       const activePiece = advanceComparison.activePiece === null
         ? Piece.I as Piece
         : PieceList[(PieceList.findIndex(p => p.value === advanceComparison.activePiece) + PieceList.length + 1) % PieceList.length].value;
-      console.log('Advancing to', activePiece);
+
       return Object.assign(
         {},
         state,

@@ -51,8 +51,16 @@ html {
   z-index: 1;
   position: absolute;
   color: white;
+  width: 20rem;
   top: calc(50% - 24.5rem);
-  left: calc(50% - 13rem);
+  left: calc(50% - 8rem);
+}
+
+/* Sorry, I'm lazy */
+@media (min-width: 600px) {
+  .MuiTab-root {
+      min-width: initial !important;
+  }
 }
 
 .next-box {

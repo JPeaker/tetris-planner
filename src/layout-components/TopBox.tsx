@@ -2,7 +2,7 @@ import React from 'react';
 import '../style/App.css';
 import { connect } from 'react-redux';
 import { RootState } from '../store';
-import { Tabs, Tab } from '@material-ui/core';
+import { Tabs, Tab, Theme, makeStyles } from '@material-ui/core';
 import { getAppStateCategory, AppStateCategory, AppState, OptionState } from '../store/types';
 import { setState } from '../store/actions';
 import { Dispatch } from 'redux';
@@ -17,22 +17,22 @@ interface TopBoxProps {
 class TopBox extends React.Component<TopBoxProps> {
   render() {
     return (
-        <Tabs variant="fullWidth" value={this.props.category} className="top-box">
-          <Tab
-            value={AppStateCategory.SETUP}
-            onClick={() => this.props.goToCategory(AppStateCategory.SETUP)} label="SETUP"
-          />
-          <Tab
-            value={AppStateCategory.OPTIONS}
-            onClick={() => this.props.goToCategory(AppStateCategory.OPTIONS)} label="SIMULATE"
-            disabled={this.props.optionsDisabled}
-          />
-          <Tab
-            value={AppStateCategory.COMPARE}
-            onClick={() => this.props.goToCategory(AppStateCategory.COMPARE)} label="COMPARE"
-            disabled={this.props.compareDisabled}
-          />
-        </Tabs>
+      <Tabs variant="fullWidth" width="10rem" value={this.props.category} className="top-box">
+        <Tab
+          value={AppStateCategory.SETUP}
+          onClick={() => this.props.goToCategory(AppStateCategory.SETUP)} label="SETUP"
+        />
+        <Tab
+          value={AppStateCategory.OPTIONS}
+          onClick={() => this.props.goToCategory(AppStateCategory.OPTIONS)} label="SIMULATE"
+          disabled={this.props.optionsDisabled}
+        />
+        <Tab
+          value={AppStateCategory.COMPARE}
+          onClick={() => this.props.goToCategory(AppStateCategory.COMPARE)} label="COMPARE"
+          disabled={this.props.compareDisabled}
+        />
+      </Tabs>
     );
   }
 }
