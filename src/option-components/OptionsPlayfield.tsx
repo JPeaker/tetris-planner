@@ -52,7 +52,7 @@ class OptionsPlayfield extends React.Component<AppProps, AppComponentState> {
         return getPlayfield(this.props.grid, this.props.activePiece, this.props.setPrimaryPiece);
       case AppState.OPTIONS_PLACE_NEXT_PIECE:
         if (this.props.option === null || this.props.option.gridAfterFirstPiece === null) {
-          return <>456</>;
+          throw new Error(`Option: ${this.props.option}, GridAfterFirstPiece: ${this.props.option?.gridAfterFirstPiece} for OPTIONS_PLACE_NEXT_PIECE`);
         }
         return getPlayfield(this.props.option.gridAfterFirstPiece, this.props.nextPiece, this.props.setNextPiece);
       case AppState.OPTIONS_PLACE_POSSIBILITY:
@@ -61,7 +61,12 @@ class OptionsPlayfield extends React.Component<AppProps, AppComponentState> {
           this.props.option.currentPossibility === null ||
           this.props.option.gridAfterNextPiece === null
         ) {
-          return <>123</>;
+          throw new Error(`
+            Option: ${this.props.option},
+            CurrentPossibility: ${this.props.option?.currentPossibility},
+            GridAfterFirstPiece: ${this.props.option?.gridAfterFirstPiece} for
+            OPTIONS_PLACE_POSSIBILITY
+          `);
         }
 
         const possibilityGrid = this.props.option[this.props.option.currentPossibility];

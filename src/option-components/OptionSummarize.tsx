@@ -22,23 +22,40 @@ interface OptionSummarizeProps {
   addOption: () => void;
 };
 
-class OptionSummarize extends React.Component<OptionSummarizeProps> {
+interface OptionSummarizeState {
+  selectedOption: number | null;
+};
+
+class OptionSummarize extends React.Component<OptionSummarizeProps, OptionSummarizeState> {
   constructor(props: OptionSummarizeProps) {
     super(props);
 
+    this.state = {
+      selectedOption: this.props.options.length > 0 ? this.props.options[0].id : null,
+    };
+
+    this.toggleExpansion = this.toggleExpansion.bind(this);
     this.getOptionPanel = this.getOptionPanel.bind(this);
+  }
+
+  toggleExpansion(id: number) {
+    if (this.state.selectedOption === id) {
+      this.setState({ selectedOption: null });
+    } else {
+      this.setState({ selectedOption: id });
+    }
   }
 
   getOptionPanel(option: Option, index: number) {
     const { grid } = this.props;
-    const gridAfterFirstPiece = (option.gridAfterFirstPiece || grid).filter(row => row.some(block => block !== 0));
-    const gridAfterNextPiece = (option.gridAfterNextPiece || gridAfterFirstPiece).filter(row => row.some(block => block !== 0));
+    const gridAfterFirstPiece = option.gridAfterFirstPiece || grid;
+    const gridAfterNextPiece = option.gridAfterNextPiece || gridAfterFirstPiece;
     const containerClasses = classnames({
       'option-summarize-container': true,
       'option-complete': option.state === OptionState.DONE,
     })
     return (
-      <ExpansionPanel key={`expansion-panel-${index}`} defaultExpanded>
+      <ExpansionPanel key={`expansion-panel-${index}`} expanded={this.state.selectedOption === index} onClick={() => this.toggleExpansion(index)}>
         <ExpansionPanelSummary expandIcon={<ArrowDropDown />}>
           Option { index + 1 }
           { option.state === OptionState.DONE ? <Check color="primary" /> : null}
@@ -57,7 +74,7 @@ class OptionSummarize extends React.Component<OptionSummarizeProps> {
             <Grid item xs={6}>
               <TetrisGrid
                 grid={gridAfterFirstPiece}
-                className={classnames({ 'grid-disabled': option.gridAfterFirstPiece })}
+                className={classnames({ 'grid-disabled': option.gridAfterFirstPiece, 'mini-grid': true })}
                 blockSizeInRem={0.5}
                 hideTopTwoRows={false}
                 />
@@ -65,7 +82,7 @@ class OptionSummarize extends React.Component<OptionSummarizeProps> {
             <Grid item xs={6}>
               <TetrisGrid
                 grid={gridAfterNextPiece}
-                className={classnames({ 'grid-disabled': option.gridAfterNextPiece })}
+                className={classnames({ 'grid-disabled': option.gridAfterNextPiece, 'mini-grid': true })}
                 blockSizeInRem={0.5}
                 hideTopTwoRows={false}
               />
