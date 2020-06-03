@@ -4,7 +4,7 @@ import '../style/App.css';
 import { connect } from 'react-redux';
 import { RootState } from '../store';
 import { AppState, Option, Comparison } from '../store/types';
-import { addComparison, setState, setComparisonActivePiece, setActiveComparison, setComparisonPieceChoice, advanceComparisonActivePiece } from '../store/actions';
+import { addComparison, setState, setComparisonActivePiece, setComparisonPieceChoice, advanceComparisonActivePiece } from '../store/actions';
 import { ListItem, ListItemText, List, ListItemIcon, Checkbox } from '@material-ui/core';
 import Piece, { PieceList } from '../piece-enum';
 import TetrisGrid from '../reusable/tetris-grid';
@@ -102,8 +102,9 @@ class ComparePlayfield extends React.Component<ComparePlayfieldProps, ComparePla
         </>;
       case AppState.COMPARE_COMPLETE:
         const preferences = PieceList.map(piece => this.props.activeComparison![piece.value]);
-        const firstCount = preferences.filter(p => p === this.props.activeComparison!.firstOption.id);
-        const secondCount = preferences.filter(p => p === this.props.activeComparison!.secondOption.id);
+        console.log(preferences, this.props.activeComparison!.firstOption.id, this.props.activeComparison!.secondOption.id);
+        const firstCount = preferences.filter(p => p === this.props.activeComparison!.firstOption.id).length;
+        const secondCount = preferences.filter(p => p === this.props.activeComparison!.secondOption.id).length;
         if (firstCount > secondCount) {
           return 'You preferred the first option';
         } else if (firstCount === secondCount) {

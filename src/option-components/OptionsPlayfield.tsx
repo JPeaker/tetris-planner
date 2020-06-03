@@ -37,7 +37,7 @@ function getPlayfield(
   disabled?: boolean,
 ): JSX.Element {
   return <PlacePieces
-    key={`${activePiece}`}
+    key={`${grid.map(row => row.map(block => `${block}`).join(',')).join(',')} ${activePiece}`}
     grid={grid}
     activePiece={activePiece}
     setPiece={setPiece}

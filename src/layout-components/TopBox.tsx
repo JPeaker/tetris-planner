@@ -2,7 +2,7 @@ import React from 'react';
 import '../style/App.css';
 import { connect } from 'react-redux';
 import { RootState } from '../store';
-import { Tabs, Tab, Theme, makeStyles } from '@material-ui/core';
+import { Tabs, Tab } from '@material-ui/core';
 import { getAppStateCategory, AppStateCategory, AppState, OptionState } from '../store/types';
 import { setState } from '../store/actions';
 import { Dispatch } from 'redux';
