@@ -1,6 +1,22 @@
 import Piece from '../piece-enum';
 import { AppState, OptionState } from './types';
 
+export const RESET_SCENARIO = 'RESET_SCENARIO';
+export interface ResetScenarioAction {
+  type: typeof RESET_SCENARIO;
+};
+export function resetScenario(): ReduxAction {
+  return { type: RESET_SCENARIO };
+}
+
+export const RESET_SCENARIO_EXCEPT_PRIMARY_PIECE = 'RESET_SCENARIO_EXCEPT_PRIMARY_PIECE';
+export interface ResetScenarioExceptPrimaryPieceAction {
+  type: typeof RESET_SCENARIO_EXCEPT_PRIMARY_PIECE;
+};
+export function resetScenarioExceptPrimaryPiece(): ReduxAction {
+  return { type: RESET_SCENARIO_EXCEPT_PRIMARY_PIECE };
+}
+
 export const SET_STATE = 'SET_STATE';
 export interface SetStateAction {
   type: typeof SET_STATE;
@@ -28,9 +44,9 @@ export function setGrid(grid: number[][]): ReduxAction {
 export const SET_PRIMARY_PIECE = 'SET_PRIMARY_PIECE';
 export interface SetPrimaryPieceAction {
   type: typeof SET_PRIMARY_PIECE;
-  piece: Piece;
+  piece: Piece | null;
 };
-export function setPrimaryPiece(piece: Piece): ReduxAction {
+export function setPrimaryPiece(piece: Piece | null): ReduxAction {
   return {
     type: SET_PRIMARY_PIECE,
     piece,
@@ -40,9 +56,9 @@ export function setPrimaryPiece(piece: Piece): ReduxAction {
 export const SET_NEXT_PIECE = 'SET_NEXT_PIECE';
 export interface SetNextPieceAction {
   type: typeof SET_NEXT_PIECE;
-  piece: Piece;
+  piece: Piece | null;
 };
-export function setNextPiece(piece: Piece): ReduxAction {
+export function setNextPiece(piece: Piece | null): ReduxAction {
   return {
     type: SET_NEXT_PIECE,
     piece,
@@ -200,6 +216,8 @@ export function setComparisonPieceChoice(id: number): ReduxAction {
 };
 
 export type ReduxAction = (
+  ResetScenarioAction |
+  ResetScenarioExceptPrimaryPieceAction |
   SetStateAction |
   SetGridAction |
   SetPrimaryPieceAction |

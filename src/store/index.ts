@@ -18,6 +18,8 @@ import {
   SET_ACTIVE_COMPARISON,
   SET_COMPARISON_PIECE_CHOICE,
   ADVANCE_COMPARISON_ACTIVE_PIECE,
+  RESET_SCENARIO,
+  RESET_SCENARIO_EXCEPT_PRIMARY_PIECE,
 }
 from './actions';
 import { AppState, Option, OptionState, Comparison } from './types';
@@ -103,6 +105,23 @@ const getNewComparison = (id: number, firstOption: Option, secondOption: Option)
 
 const appReducer = (state = DefaultState, action: ReduxAction) => {
   switch (action.type) {
+    case RESET_SCENARIO:
+      return Object.assign({}, state, {
+        primaryPiece: null,
+        nextPiece: null,
+        activeOptionId: null,
+        options: [],
+        activeComparisonId: null,
+        comparisons: [],
+      });
+    case RESET_SCENARIO_EXCEPT_PRIMARY_PIECE:
+      return Object.assign({}, state, {
+        nextPiece: null,
+        activeOptionId: null,
+        options: [],
+        activeComparisonId: null,
+        comparisons: [],
+      });
     case SET_STATE:
       return Object.assign({}, state, { state: action.state });
     case SET_GRID:

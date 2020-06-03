@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 import '../style/App.css';
 import { connect } from 'react-redux';
 import { RootState } from '../store';
-import { AppState, Option, Comparison } from '../store/types';
+import { AppState, Option, Comparison, OptionState } from '../store/types';
 import { addComparison, setState, setComparisonActivePiece, setComparisonPieceChoice, advanceComparisonActivePiece } from '../store/actions';
 import { ListItem, ListItemText, List, ListItemIcon, Checkbox } from '@material-ui/core';
 import Piece, { PieceList } from '../piece-enum';
@@ -53,7 +53,7 @@ class ComparePlayfield extends React.Component<ComparePlayfieldProps, ComparePla
         return (
           <List>
             {
-              this.props.options.map(option =>
+              this.props.options.filter(option => option.state === OptionState.DONE).map(option =>
                 <ListItem button onClick={() => this.toggleOption(option.id)}>
                   <ListItemIcon>
                     <Checkbox

@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { RootState } from '../store';
-import { setPrimaryPiece } from '../store/actions';
+import { setPrimaryPiece, resetScenario } from '../store/actions';
 import Piece from '../piece-enum';
 import PieceSelector from '../reusable/PieceSelector';
 
@@ -10,7 +10,10 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setPiece: (piece: Piece) => dispatch(setPrimaryPiece(piece)),
+  setPiece: (piece: Piece) => {
+    dispatch(resetScenario());
+    dispatch(setPrimaryPiece(piece))
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PieceSelector);

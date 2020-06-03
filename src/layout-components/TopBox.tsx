@@ -40,7 +40,7 @@ class TopBox extends React.Component<TopBoxProps> {
 const mapStateToProps = (state: RootState) => ({
   category: getAppStateCategory(state.state),
   optionsDisabled: state.grid === null || state.primaryPiece === null || state.nextPiece === null,
-  compareDisabled: state.options.length < 2 || state.options.some(option => option.state !== OptionState.DONE),
+  compareDisabled: state.options.length < 2 || state.options.filter(option => option.state === OptionState.DONE).length < 2,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

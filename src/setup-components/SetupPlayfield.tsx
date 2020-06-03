@@ -2,7 +2,7 @@ import React from 'react';
 import { Dispatch } from 'redux';
 import '../style/App.css';
 import { connect } from 'react-redux';
-import { setGrid, setState } from '../store/actions';
+import { setGrid, setState, resetScenario } from '../store/actions';
 import FillPlayfield from './FillPlayfield';
 import AddHoles from './AddHoles';
 import SelectFirstPiece from './SelectFirstPiece';
@@ -53,7 +53,10 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setGrid: (grid: number[][]) => dispatch(setGrid(grid)),
+  setGrid: (grid: number[][]) => {
+    dispatch(resetScenario());
+    dispatch(setGrid(grid));
+  },
   setState: (state: AppState) => dispatch(setState(state)),
 })
 
