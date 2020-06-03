@@ -9,6 +9,7 @@ import GlobalStepper from './layout-components/GlobalStepper';
 import LocalStepper from './layout-components/LocalStepper';
 import Playfield from './layout-components/Playfield';
 import NextBox from './layout-components/NextBox';
+import TopBox from './layout-components/TopBox';
 import Piece from './piece-enum';
 import { Dispatch } from 'redux';
 import {
@@ -47,6 +48,7 @@ class App extends React.Component<AppProps> {
         <LocalStepper />
         <Playfield />
         <NextBox />
+        <TopBox />
       </div>
     );
   }
@@ -147,33 +149,34 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
       fakeGrid[i][9] = 0;
     }
-    // dispatch(setGrid(fakeGrid));
-    // dispatch(setState(AppState.SETUP_CHOOSE_PRIMARY_PIECE));
-    // dispatch(setPrimaryPiece(Piece.J));
-    // dispatch(setNextPiece(Piece.L));
-    // dispatch(initializePlayOptionsState());
-    // dispatch(setState(AppState.OPTIONS_PLACE_PRIMARY_PIECE));
-    // dispatch(setPlayOptionsOptionState(OptionState.NEXT_PIECE));
-    // dispatch(setPlayOptionsOptionGridAfterFirstPiece(gridAfterFirstPiece));
-    // dispatch(setState(AppState.OPTIONS_PLACE_NEXT_PIECE));
-    // dispatch(setPlayOptionsOptionState(OptionState.POSSIBILITIES));
-    // dispatch(setPlayOptionsOptionGridAfterNextPiece(gridAfterNextPiece));
-    // dispatch(setState(AppState.OPTIONS_PLACE_POSSIBILITY));
-    // dispatch(setPlayOptionsOptionPossibility(Piece.I));
-    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.I, gridAfterI))
-    // dispatch(setPlayOptionsOptionPossibility(Piece.O));
-    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.O, gridAfterI))
-    // dispatch(setPlayOptionsOptionPossibility(Piece.T));
-    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.T, gridAfterI))
-    // dispatch(setPlayOptionsOptionPossibility(Piece.J));
-    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.J, gridAfterI))
-    // dispatch(setPlayOptionsOptionPossibility(Piece.L));
-    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.L, gridAfterI))
-    // dispatch(setPlayOptionsOptionPossibility(Piece.S));
-    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.S, gridAfterI))
-    // dispatch(setPlayOptionsOptionPossibility(Piece.Z));
-    // dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.Z, gridAfterI))
-    // dispatch(setState(AppState.OPTIONS_SUMMARIZE));
+    dispatch(setGrid(fakeGrid));
+    dispatch(setState(AppState.SETUP_CHOOSE_PRIMARY_PIECE));
+    dispatch(setPrimaryPiece(Piece.J));
+    dispatch(setNextPiece(Piece.L));
+    dispatch(initializePlayOptionsState());
+    dispatch(setState(AppState.OPTIONS_PLACE_PRIMARY_PIECE));
+    dispatch(setPlayOptionsOptionState(OptionState.NEXT_PIECE));
+    dispatch(setPlayOptionsOptionGridAfterFirstPiece(gridAfterFirstPiece));
+    dispatch(setState(AppState.OPTIONS_PLACE_NEXT_PIECE));
+    dispatch(setPlayOptionsOptionState(OptionState.POSSIBILITIES));
+    dispatch(setPlayOptionsOptionGridAfterNextPiece(gridAfterNextPiece));
+    dispatch(setState(AppState.OPTIONS_PLACE_POSSIBILITY));
+    dispatch(setPlayOptionsOptionPossibility(Piece.I));
+    dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.I, gridAfterI))
+    dispatch(setPlayOptionsOptionPossibility(Piece.O));
+    dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.O, gridAfterI))
+    dispatch(setPlayOptionsOptionPossibility(Piece.T));
+    dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.T, gridAfterI))
+    dispatch(setPlayOptionsOptionPossibility(Piece.J));
+    dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.J, gridAfterI))
+    dispatch(setPlayOptionsOptionPossibility(Piece.L));
+    dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.L, gridAfterI))
+    dispatch(setPlayOptionsOptionPossibility(Piece.S));
+    dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.S, gridAfterI))
+    dispatch(setPlayOptionsOptionPossibility(Piece.Z));
+    dispatch(setPlayOptionsOptionGridAfterPossibility(Piece.Z, gridAfterI))
+    dispatch(setPlayOptionsOptionState(OptionState.DONE));
+    dispatch(setState(AppState.OPTIONS_SUMMARIZE));
   },
 });
 

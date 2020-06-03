@@ -136,6 +136,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     if (currentPieceIndex === -1) {
       dispatch(setPlayOptionsOptionPossibility(Piece.I))
     } else if (PieceList.every(({ value }) => option[value] !== null)) {
+      dispatch(setPlayOptionsOptionState(OptionState.DONE));
       dispatch(setState(AppState.OPTIONS_SUMMARIZE));
     } else {
       for (const piece of PieceList) {

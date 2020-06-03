@@ -12,6 +12,7 @@ import {
   SET_PLAY_OPTIONS_OPTION_GRID_AFTER_NEXT_PIECE,
   SET_PLAY_OPTIONS_OPTION_POSSIBILITY,
   SET_PLAY_OPTIONS_OPTION_GRID_AFTER_POSSIBILITY,
+  ADD_PLAY_OPTIONS_OPTION,
 }
 from './actions';
 import { AppState, Option, OptionState } from './types';
@@ -62,6 +63,21 @@ function changeOption(
   throw new Error('Trying to set primary piece on non-existent option');
 }
 
+const getNewOption = (id: number): Option => ({
+  id,
+  state: OptionState.UNSTARTED,
+  gridAfterFirstPiece: null,
+  gridAfterNextPiece: null,
+  currentPossibility: null,
+  [Piece.I]: null,
+  [Piece.T]: null,
+  [Piece.O]: null,
+  [Piece.L]: null,
+  [Piece.J]: null,
+  [Piece.S]: null,
+  [Piece.Z]: null,
+});
+
 const appReducer = (state = DefaultState, action: ReduxAction) => {
   switch (action.type) {
     case SET_STATE:
@@ -75,21 +91,7 @@ const appReducer = (state = DefaultState, action: ReduxAction) => {
     case SET_PLAY_OPTIONS_OPTION:
       return Object.assign({}, state, { activeOptionId: action.id });
     case INITIALIZE_PLAY_OPTIONS_STATE:
-      const option: Option = {
-        id: 0,
-        state: OptionState.UNSTARTED,
-        gridAfterFirstPiece: null,
-        gridAfterNextPiece: null,
-        currentPossibility: null,
-        [Piece.I]: null,
-        [Piece.T]: null,
-        [Piece.O]: null,
-        [Piece.L]: null,
-        [Piece.J]: null,
-        [Piece.S]: null,
-        [Piece.Z]: null,
-      }
-      return Object.assign({}, state, { options: [option], activeOptionId: 0 });
+      return Object.assign({}, state, { options: [getNewOption(0)], activeOptionId: 0 });
     case SET_PLAY_OPTIONS_OPTION_STATE:
       if (state.activeOptionId === null) {
         throw new Error('Cannot change option state when there is no active option');
@@ -177,6 +179,16 @@ const appReducer = (state = DefaultState, action: ReduxAction) => {
             state,
             (option: Option) => Object.assign({}, option, { [action.piece]: action.grid }),
           ),
+        },
+      );
+    case ADD_PLAY_OPTIONS_OPTION:
+      const newId = Math.max(...state.options.map(o => o.id)) + 1;
+      return Object.assign(
+        {},
+        state,
+        {
+          options: [...state.options, getNewOption(newId)],
+          activeOptionId: newId,
         },
       );
     default:

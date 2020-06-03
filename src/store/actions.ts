@@ -131,6 +131,14 @@ export function setPlayOptionsOptionGridAfterPossibility(piece: Piece, grid: num
   };
 };
 
+export const ADD_PLAY_OPTIONS_OPTION = 'ADD_PLAY_OPTIONS_OPTION';
+export interface AddPlayOptionsOptionAction {
+  type: typeof ADD_PLAY_OPTIONS_OPTION;
+};
+export function addPlayOptionsOption(): ReduxAction {
+  return { type: ADD_PLAY_OPTIONS_OPTION };
+};
+
 export type ReduxAction = (
   SetStateAction |
   SetGridAction |
@@ -142,5 +150,6 @@ export type ReduxAction = (
   SetPlayOptionsOptionGridAfterFirstPieceAction |
   SetPlayOptionsOptionGridAfterNextPieceAction |
   SetPlayOptionsOptionPossibilityAction |
-  SetPlayOptionsOptionGridAfterPossibilityAction
+  SetPlayOptionsOptionGridAfterPossibilityAction |
+  AddPlayOptionsOptionAction
 );

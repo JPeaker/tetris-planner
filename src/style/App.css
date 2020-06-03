@@ -47,6 +47,14 @@ html {
   width: 20rem;
 }
 
+.top-box {
+  z-index: 1;
+  position: absolute;
+  color: white;
+  top: calc(50% - 24.5rem);
+  left: calc(50% - 13rem);
+}
+
 .next-box {
   z-index: 1;
   position: absolute;
@@ -94,6 +102,12 @@ html {
 .option-summarize-container {
   color: white;
   text-align: center;
+}
+
+.option-complete {
+  padding: 1rem;
+  border: 1px solid green;
+  border-radius: 0.5rem;
 }
 
 .option-summarize-full-grid {
