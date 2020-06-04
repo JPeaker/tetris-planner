@@ -97,12 +97,21 @@ class ComparePlayfield extends React.Component<ComparePlayfieldProps, ComparePla
             <TetrisGrid grid={getPieceGrid(this.props.activeComparison.activePiece)} blockSizeInRem={0.75} hideTopTwoRows={false} />
             piece?
           </span>
-          <TetrisGrid onClick={() => this.props.chooseOption(this.props.activeComparison!.firstOption.id)} grid={firstGrid} blockSizeInRem={0.75} />
-          <TetrisGrid onClick={() => this.props.chooseOption(this.props.activeComparison!.secondOption.id)} grid={secondGrid} blockSizeInRem={0.75} />
+          <TetrisGrid
+            onClick={() => this.props.chooseOption(this.props.activeComparison!.firstOption.id)}
+            grid={firstGrid}
+            className="mini-grid"
+            blockSizeInRem={0.75}
+          />
+          <TetrisGrid
+            onClick={() => this.props.chooseOption(this.props.activeComparison!.secondOption.id)}
+            grid={secondGrid}
+            className="mini-grid"
+            blockSizeInRem={0.75}
+          />
         </>;
       case AppState.COMPARE_COMPLETE:
         const preferences = PieceList.map(piece => this.props.activeComparison![piece.value]);
-        console.log(preferences, this.props.activeComparison!.firstOption.id, this.props.activeComparison!.secondOption.id);
         const firstCount = preferences.filter(p => p === this.props.activeComparison!.firstOption.id).length;
         const secondCount = preferences.filter(p => p === this.props.activeComparison!.secondOption.id).length;
         if (firstCount > secondCount) {

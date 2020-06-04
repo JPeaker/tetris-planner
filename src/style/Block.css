@@ -6,7 +6,7 @@
 .block {
   height: 100%;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: top;
   background-repeat: no-repeat;
   background-size: cover;
 }

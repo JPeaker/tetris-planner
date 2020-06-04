@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dispatch } from 'redux';
-import { Button, Stepper, Step, StepContent, StepLabel } from '@material-ui/core';
+import { Stepper, Step, StepContent, StepLabel } from '@material-ui/core';
 import '../style/App.css';
 import { connect } from 'react-redux';
 import { RootState } from '../store';
@@ -21,57 +21,27 @@ class SetupStepper extends React.Component<AppProps> {
     return (
       <Stepper className="instructions" activeStep={this.props.state} orientation="vertical">
         <Step key={AppState.SETUP_GRID}>
-          <StepLabel>Set up columns</StepLabel>
+          <StepLabel>Set up the stack</StepLabel>
           <StepContent>
-            <div>Click each column to fill it to the point you need. Don't worry, you'll have chance to add gaps</div>
-            <Button
-              variant="contained"
-              color="default"
-              onClick={() => this.props.setAppState(AppState.SETUP_ADD_HOLES)}
-            >
-              Done
-            </Button>
+            <div>Click each column to match the stack that you want to analyze. Don't worry, there will be chance to add gaps next. Press Space when you're done</div>
           </StepContent>
         </Step>
         <Step key={AppState.SETUP_ADD_HOLES}>
           <StepLabel>Add gaps</StepLabel>
           <StepContent>
-            <div>Click each block that you want to remove</div>
-            <Button
-              variant="contained"
-              color="default"
-              onClick={() => this.props.setAppState(AppState.SETUP_CHOOSE_PRIMARY_PIECE)}
-            >
-              Done
-            </Button>
+            <div>Click each block that you want to remove. Press Space when you're done</div>
           </StepContent>
         </Step>
         <Step key={AppState.SETUP_CHOOSE_PRIMARY_PIECE}>
           <StepLabel>Select playable piece</StepLabel>
           <StepContent>
-            <div>Choose the first piece in your situation</div>
-            <Button
-              variant="contained"
-              color="default"
-              disabled={this.props.currentPiece === null}
-              onClick={() => this.props.setAppState(AppState.SETUP_CHOOSE_NEXT_PIECE)}
-              >
-              Done
-            </Button>
+            <div>Choose the piece you first have to place. Press Space when you're done</div>
           </StepContent>
         </Step>
         <Step key={AppState.SETUP_CHOOSE_NEXT_PIECE}>
           <StepLabel>Select next piece</StepLabel>
           <StepContent>
-            <div>Choose the next piece in your situation</div>
-            <Button
-              variant="contained"
-              color="default"
-              disabled={this.props.nextPiece === null}
-              onClick={() => this.props.moveToPlayOptions()}
-            >
-              Done
-            </Button>
+            <div>Choose the next piece you have to place. Press Space when you're done</div>
           </StepContent>
         </Step>
       </Stepper>

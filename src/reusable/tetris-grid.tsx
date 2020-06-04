@@ -34,9 +34,9 @@ function getRow(row: number, blocks: number[], blockSizeInRem: number, getBlockP
   );
 }
 
-function TetrisGrid({ grid, blockSizeInRem = 2, onClick, onMouseLeave, getBlockProps, hideTopTwoRows, className }: TetrisGridProps) {
-  const hideTopRows = hideTopTwoRows === undefined ? true : hideTopTwoRows;
-  const numberOfRows = grid.length;
+function TetrisGrid({ grid, blockSizeInRem = 2, onClick, onMouseLeave, getBlockProps, hideTopTwoRows = true, className }: TetrisGridProps) {
+  const numberOfRows = grid.length - (hideTopTwoRows ? 2 : 0);
+  console.log(numberOfRows);
   const numberOfColumns = Math.max(...grid.map(row => row.length));
   const width = blockSizeInRem * numberOfColumns;
   const height = blockSizeInRem * numberOfRows;
@@ -44,7 +44,7 @@ function TetrisGrid({ grid, blockSizeInRem = 2, onClick, onMouseLeave, getBlockP
     <div style={{ height: `${height}rem`, width: `${width}rem`, margin: 'auto' }} onClick={onClick} onMouseLeave={onMouseLeave} className={className}>
       {
         grid.map((row, rowKey) => {
-          return hideTopRows && rowKey < 2
+          return hideTopTwoRows && rowKey < 2
             ? null
             : getRow(rowKey, row, blockSizeInRem, getBlockProps)
         })

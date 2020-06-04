@@ -76,7 +76,6 @@ class OptionSummarize extends React.Component<OptionSummarizeProps, OptionSummar
                 grid={gridAfterFirstPiece}
                 className={classnames({ 'grid-disabled': option.gridAfterFirstPiece, 'mini-grid': true })}
                 blockSizeInRem={0.5}
-                hideTopTwoRows={false}
                 />
             </Grid>
             <Grid item xs={6}>
@@ -84,7 +83,6 @@ class OptionSummarize extends React.Component<OptionSummarizeProps, OptionSummar
                 grid={gridAfterNextPiece}
                 className={classnames({ 'grid-disabled': option.gridAfterNextPiece, 'mini-grid': true })}
                 blockSizeInRem={0.5}
-                hideTopTwoRows={false}
               />
             </Grid>
             {
