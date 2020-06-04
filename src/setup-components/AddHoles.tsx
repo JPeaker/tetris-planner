@@ -3,6 +3,7 @@ import _ from 'lodash';
 import '../style/App.css';
 import { BlockProps } from '../reusable/block';
 import TetrisGrid from '../reusable/tetris-grid';
+import filledGrid from '../reusable/filled-grid';
 
 interface AddHolesProps {
   grid: number[][];
@@ -28,7 +29,12 @@ class AddHoles extends React.Component<AddHolesProps, ComponentState> {
 
   clickBlock(row: number, column: number): void {
     const grid = _.cloneDeep(this.props.grid);
-    grid[row][column] = 0;
+
+    if (grid[row][column] === 0) {
+      grid[row][column] = filledGrid[row][column];
+    } else {
+      grid[row][column] = 0;
+    }
 
     this.setState({ hoverBlock: null });
     this.props.setGrid(grid);

@@ -29,5 +29,17 @@ export default function inputHandler(
         }
         break;
     }
+  } else if (event.code === 'Backspace') {
+    switch(state) {
+      case AppState.SETUP_ADD_HOLES:
+        setState(AppState.SETUP_GRID);
+        break;
+      case AppState.SETUP_CHOOSE_PRIMARY_PIECE:
+        setState(AppState.SETUP_ADD_HOLES);
+        break;
+      case AppState.SETUP_CHOOSE_NEXT_PIECE:
+        setState(AppState.SETUP_CHOOSE_PRIMARY_PIECE);
+        break;
+    }
   }
 };

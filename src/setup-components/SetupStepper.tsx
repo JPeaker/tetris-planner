@@ -27,9 +27,9 @@ class SetupStepper extends React.Component<AppProps> {
           </StepContent>
         </Step>
         <Step key={AppState.SETUP_ADD_HOLES}>
-          <StepLabel>Add gaps</StepLabel>
+          <StepLabel>Toggle individual blocks</StepLabel>
           <StepContent>
-            <div>Click each block that you want to remove. Press Space when you're done</div>
+            <div>Click each block that you want to add/remove. Press Space when you're done</div>
           </StepContent>
         </Step>
         <Step key={AppState.SETUP_CHOOSE_PRIMARY_PIECE}>
