@@ -27,11 +27,6 @@ class TopBox extends React.Component<TopBoxProps> {
           onClick={() => this.props.goToCategory(AppStateCategory.OPTIONS)} label="SIMULATE"
           disabled={this.props.optionsDisabled}
         />
-        <Tab
-          value={AppStateCategory.COMPARE}
-          onClick={() => this.props.goToCategory(AppStateCategory.COMPARE)} label="COMPARE"
-          disabled={this.props.compareDisabled}
-        />
       </Tabs>
     );
   }
@@ -53,7 +48,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         dispatch(setState(AppState.OPTIONS_SUMMARIZE));
         break;
       case AppStateCategory.COMPARE:
-        dispatch(setState(AppState.COMPARE));
+        dispatch(setState(AppState.OPTIONS_SUMMARIZE));
         break;
     }
   },
