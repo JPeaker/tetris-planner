@@ -33,12 +33,6 @@ export default function inputHandler(
     }
   }
 
-  if (event.code === 'Space') {
-    event.preventDefault();
-    setPieceInPlace();
-    return null;
-  }
-
   if (
     currentPiece === null ||
     (event.code !== 'KeyD' &&
@@ -47,7 +41,8 @@ export default function inputHandler(
     event.code !== 'ArrowUp' &&
     event.code !== 'ArrowDown' &&
     event.code !== 'ArrowLeft' &&
-    event.code !== 'ArrowRight')
+    event.code !== 'ArrowRight' &&
+    event.code !== 'Space')
   ) {
     return null;
   }
@@ -55,7 +50,7 @@ export default function inputHandler(
   event.preventDefault();
 
   var rowModifier: number;
-  if (event.code === 'KeyD') {
+  if (event.code === 'KeyD' || event.code === 'Space') {
     const blockMinRows = currentPiece.blocks.map(block => {
       const firstBlockInTheWay = grid.map((row, rowIndex) =>
         rowIndex > block.row && !!row[block.column]).indexOf(true);
@@ -63,6 +58,11 @@ export default function inputHandler(
     });
 
     rowModifier = Math.min(...blockMinRows) - 1;
+
+    if (rowModifier === 0 && event.code === 'Space') {
+      setPieceInPlace();
+      return null;
+    }
   } else {
     rowModifier = event.code === 'ArrowUp' ? -1 : event.code === 'ArrowDown' ? 1 : 0;
   }
