@@ -20,6 +20,7 @@ import {
   ADVANCE_COMPARISON_ACTIVE_PIECE,
   RESET_SCENARIO,
   RESET_SCENARIO_EXCEPT_PRIMARY_PIECE,
+  CLEAR_COMPARISON,
 }
 from './actions';
 import { AppState, Option, OptionState, Comparison } from './types';
@@ -303,6 +304,31 @@ const appReducer = (state = DefaultState, action: ReduxAction) => {
           comparisons: [
             Object.assign({}, thisComparison, { [thisComparison.activePiece]: action.id }),
             ...state.comparisons.filter(c => c.id !== thisComparison.id)
+          ],
+        }
+      )
+    case CLEAR_COMPARISON:
+      const clearComparison = state.comparisons.find(comparison => comparison.id === action.id);
+      if (clearComparison === undefined) {
+        return state;
+      }
+
+      return Object.assign(
+        {},
+        state,
+        {
+          comparisons: [
+            Object.assign({}, clearComparison, {
+              activePiece:  null,
+              [Piece.I]: null,
+              [Piece.T]: null,
+              [Piece.O]: null,
+              [Piece.L]: null,
+              [Piece.J]: null,
+              [Piece.S]: null,
+              [Piece.Z]: null,
+            }),
+            ...state.comparisons.filter(c => c.id !== clearComparison.id)
           ],
         }
       )

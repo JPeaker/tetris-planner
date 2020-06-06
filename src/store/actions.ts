@@ -215,6 +215,18 @@ export function setComparisonPieceChoice(id: number): ReduxAction {
   };
 };
 
+export const CLEAR_COMPARISON = 'CLEAR_COMPARISON';
+export interface ClearComparisonAction {
+  type: typeof CLEAR_COMPARISON;
+  id: number;
+};
+export function clearComparison(id: number): ReduxAction {
+  return {
+    type: CLEAR_COMPARISON,
+    id
+  };
+};
+
 export type ReduxAction = (
   ResetScenarioAction |
   ResetScenarioExceptPrimaryPieceAction |
@@ -234,5 +246,6 @@ export type ReduxAction = (
   SetComparisonActivePieceAction |
   SetActiveComparisonAction |
   SetComparisonPieceChoiceAction |
-  AdvanceComparisonActivePieceAction
+  AdvanceComparisonActivePieceAction |
+  ClearComparisonAction
 );
