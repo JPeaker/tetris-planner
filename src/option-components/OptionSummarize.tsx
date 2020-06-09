@@ -30,6 +30,8 @@ interface OptionSummarizeState {
   checked: number[];
   selectedOption: number | null;
   visibleOption: Option | null;
+  before: boolean;
+  beforeIntervalId: NodeJS.Timeout;
 };
 
 class OptionSummarize extends React.Component<OptionSummarizeProps, OptionSummarizeState> {
@@ -40,6 +42,8 @@ class OptionSummarize extends React.Component<OptionSummarizeProps, OptionSummar
       selectedOption: this.props.options.length > 0 ? this.props.options[0].id : null,
       visibleOption: null,
       checked: [],
+      before: true,
+      beforeIntervalId: setInterval(() => this.setState({ before: !this.state.before }), 1000),
     };
 
     this.toggleExpansion = this.toggleExpansion.bind(this);
@@ -47,6 +51,12 @@ class OptionSummarize extends React.Component<OptionSummarizeProps, OptionSummar
     this.showOption = this.showOption.bind(this);
     this.hideOption = this.hideOption.bind(this);
     this.getTooltip = this.getTooltip.bind(this);
+  }
+
+  componentWillUnmount() {
+    if (this.state.beforeIntervalId) {
+      clearInterval(this.state.beforeIntervalId);
+    }
   }
 
   toggleExpansion(id: number) {
@@ -104,27 +114,28 @@ class OptionSummarize extends React.Component<OptionSummarizeProps, OptionSummar
     >
       <Grid item xs={6}>
         <TetrisGrid
-          grid={gridAfterFirstPiece}
+          grid={this.state.before ? grid : gridAfterFirstPiece}
           className={classnames({ 'grid-disabled': option.gridAfterFirstPiece, 'mini-grid': true })}
           blockSizeInRem={0.5}
           />
       </Grid>
-      <Grid item xs={6}>
-        <TetrisGrid
-          grid={gridAfterNextPiece}
-          className={classnames({ 'grid-disabled': option.gridAfterNextPiece, 'mini-grid': true })}
-          blockSizeInRem={0.5}
-        />
-      </Grid>
-      {
-        PieceList.map(piece => <Grid item xs={1} key={piece.label}>
+      { gridAfterFirstPiece ? <Grid item xs={6}>
           <TetrisGrid
-            grid={getPieceGrid(piece.value)}
+            grid={this.state.before ? gridAfterFirstPiece : gridAfterNextPiece}
+            className={classnames({ 'grid-disabled': option.gridAfterNextPiece, 'mini-grid': true })}
+            blockSizeInRem={0.5}
+          />
+        </Grid> : undefined
+      }
+      {
+        PieceList.map(piece => option[piece.value] ? <Grid item xs={4} key={piece.label}>
+          <TetrisGrid
+            grid={this.state.before ? gridAfterNextPiece : option[piece.value]!}
             blockSizeInRem={0.5}
             hideTopTwoRows={false}
             className={`${option[piece.value] ? 'grid-disabled' : ''}`}
           />
-        </Grid>)
+        </Grid> : undefined)
       }
     </Grid>
   }
