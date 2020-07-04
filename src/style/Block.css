@@ -35,3 +35,7 @@
   background-image: none;
   background-color: black;
 }
+
+.grid-disabled .block {
+  opacity: 0.25;
+}

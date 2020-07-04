@@ -16,6 +16,11 @@ html {
   top: calc(50% - 12rem);
   width: 16rem;
   padding: 0.25rem !important;
+  color: white;
+}
+
+.option-step-piece {
+  padding: 0.25rem;
 }
 
 .global-stepper-container {

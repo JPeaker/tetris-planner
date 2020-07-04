@@ -36,7 +36,6 @@ function getRow(row: number, blocks: number[], blockSizeInRem: number, getBlockP
 
 function TetrisGrid({ grid, blockSizeInRem = 2, onClick, onMouseLeave, getBlockProps, hideTopTwoRows = true, className }: TetrisGridProps) {
   const numberOfRows = grid.length - (hideTopTwoRows ? 2 : 0);
-  console.log(numberOfRows);
   const numberOfColumns = Math.max(...grid.map(row => row.length));
   const width = blockSizeInRem * numberOfColumns;
   const height = blockSizeInRem * numberOfRows;

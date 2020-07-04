@@ -1,16 +1,15 @@
 import React from 'react';
 import classnames from 'classnames';
 import '../style/App.css';
-import { ListItem, List, ListItemText, ListItemIcon, Checkbox, ListItemSecondaryAction, IconButton, Grid, Tooltip } from '@material-ui/core';
+import { ListItem, List, Checkbox, IconButton, Grid, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, FormControlLabel } from '@material-ui/core';
 import Add from '@material-ui/icons/Add';
 import CompareArrows from '@material-ui/icons/CompareArrows';
 import Edit from '@material-ui/icons/Edit';
-import Visibility from '@material-ui/icons/Visibility';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { connect } from 'react-redux';
 import { RootState } from '../store';
 import { Option, AppState, OptionState, Comparison } from '../store/types';
 import TetrisGrid from '../reusable/tetris-grid';
-import { getPieceGrid } from '../reusable/move-piece';
 import Piece, { PieceList } from '../piece-enum';
 import { Dispatch } from 'redux';
 import { setState, setPlayOptionsOption, addPlayOptionsOption, addComparison, setComparisonActivePiece, setActiveComparison, clearComparison } from '../store/actions';
@@ -19,6 +18,8 @@ interface OptionSummarizeProps {
   options: Option[];
   comparisons: Comparison[];
   grid: number[][];
+  primaryPiece: Piece | null;
+  nextPiece: Piece | null;
   setState: (state: AppState) => void;
   goToOption: (id: number) => void;
   addOption: () => void;
@@ -67,7 +68,9 @@ class OptionSummarize extends React.Component<OptionSummarizeProps, OptionSummar
     }
   }
 
-  toggleChecked(id: number) {
+  toggleChecked(event: React.MouseEvent<HTMLLabelElement>, id: number) {
+    event.stopPropagation();
+
     if (this.state.checked.includes(id)) {
       this.setState({ checked: this.state.checked.filter(checkedId => checkedId !== id) });
       return;
@@ -140,55 +143,86 @@ class OptionSummarize extends React.Component<OptionSummarizeProps, OptionSummar
     </Grid>
   }
 
+  // getOptionPanel(option: Option, index: number) {
+  //   return (
+  //     <ListItem dense key={index}>
+  //       <ListItemIcon>
+  //         <IconButton>
+  //           <Checkbox
+  //             disabled={option.state !== OptionState.DONE}
+  //             checked={this.state.checked.includes(option.id)}
+  //             onClick={() => this.toggleChecked(option.id)}
+  //             edge="start"
+  //             tabIndex={-1}
+  //             disableRipple
+  //           />
+  //         </IconButton>
+  //       </ListItemIcon>
+  //       <ListItemText primary={`Option ${index + 1}`} />
+  //       <ListItemSecondaryAction>
+  //         <Tooltip title={this.getTooltip(option, index)}>
+  //           <IconButton onMouseEnter={() => this.showOption(option)} onMouseLeave={() => this.hideOption()}>
+  //             <Visibility />
+  //           </IconButton>
+  //         </Tooltip>
+  //         <IconButton onClick={() => this.props.goToOption(option.id)}>
+  //           <Edit />
+  //         </IconButton>
+  //       </ListItemSecondaryAction>
+  //     </ListItem>
+  //   );
+  // }
+
   getOptionPanel(option: Option, index: number) {
+    const { grid } = this.props;
+    const gridAfterFirstPiece = option.gridAfterFirstPiece || grid;
+    const gridAfterNextPiece = option.gridAfterNextPiece || gridAfterFirstPiece;
+
     return (
-      <ListItem dense key={index}>
-        <ListItemIcon>
-          <IconButton>
-            <Checkbox
-              disabled={option.state !== OptionState.DONE}
-              checked={this.state.checked.includes(option.id)}
-              onClick={() => this.toggleChecked(option.id)}
-              edge="start"
-              tabIndex={-1}
-              disableRipple
-            />
-          </IconButton>
-        </ListItemIcon>
-        <ListItemText primary={`Option ${index + 1}`} />
-        <ListItemSecondaryAction>
-          <Tooltip title={this.getTooltip(option, index)}>
-            <IconButton onMouseEnter={() => this.showOption(option)} onMouseLeave={() => this.hideOption()}>
-              <Visibility />
-            </IconButton>
-          </Tooltip>
+      <ExpansionPanel expanded={this.state.selectedOption === option.id} onClick={() => this.toggleExpansion(option.id)}>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <FormControlLabel
+            onClick={(event) => this.toggleChecked(event, option.id)}
+            control={<Checkbox disabled={option.state !== OptionState.DONE} />}
+            label={`Option ${index + 1}`}
+          />
           <IconButton onClick={() => this.props.goToOption(option.id)}>
-            <Edit />
-          </IconButton>
-        </ListItemSecondaryAction>
-      </ListItem>
+              <Edit />
+            </IconButton>
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails>
+          <Grid container>
+            <Grid item xs={6}>
+              <TetrisGrid
+                grid={gridAfterFirstPiece}
+                className="mini-grid"
+                blockSizeInRem={0.5}
+                />
+            </Grid>
+            { gridAfterFirstPiece ? <Grid item xs={6}>
+                <TetrisGrid
+                  grid={gridAfterNextPiece}
+                  className="mini-grid"
+                  blockSizeInRem={0.5}
+                />
+              </Grid> : undefined
+            }
+          </Grid>
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
     );
   }
 
   render() {
     const [option1, option2] = this.state.checked.length === 2 ? this.state.checked : [null, null];
-    const existingComparison = option1 !== null && option2 !== null ? this.props.comparisons.find(comparison =>
-      (comparison.firstOption.id === option1 && comparison.secondOption.id === option2) ||
-      (comparison.secondOption.id === option1 && comparison.firstOption.id === option2)
-    ) : undefined;
 
-    const compareMessage = existingComparison ? 'Edit comparison' : 'Compare selected options';
-    const compareMethod = existingComparison ? () => this.props.editComparison(existingComparison.id) : () => this.props.addComparison(option1!, option2!);
+    const compareMethod = this.state.checked.length === 2 ? () => this.props.addComparison(option1!, option2!) : undefined;
 
     return (
       <List>
-        {
-          this.state.checked.length === 2 ?
-            <ListItem key="compare" role={undefined} dense button onClick={compareMethod}>
-              <CompareArrows />{ compareMessage }
-            </ListItem> :
-            undefined
-        }
+        <ListItem key="compare" role={undefined} dense button onClick={compareMethod} disabled={!compareMethod}>
+          <CompareArrows />Compare selected options
+        </ListItem>
         <ListItem key="add" role={undefined} dense button onClick={this.props.addOption}><Add />Add Option</ListItem>
         { this.props.options.map((option, optionIndex) => this.getOptionPanel(option, optionIndex)) }
       </List>
@@ -200,6 +234,8 @@ const mapStateToProps = (state: RootState) => ({
   options: state.options,
   comparisons: state.comparisons,
   grid: state.grid,
+  primaryPiece: state.primaryPiece,
+  nextPiece: state.nextPiece,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
