@@ -101,11 +101,13 @@ export const SET_PLAY_OPTIONS_OPTION_GRID_AFTER_FIRST_PIECE = 'SET_PLAY_OPTIONS_
 export interface SetPlayOptionsOptionGridAfterFirstPieceAction {
   type: typeof SET_PLAY_OPTIONS_OPTION_GRID_AFTER_FIRST_PIECE;
   grid: number[][];
+  gridBeforeClear: number[][];
 };
-export function setPlayOptionsOptionGridAfterFirstPiece(grid: number[][]): ReduxAction {
+export function setPlayOptionsOptionGridAfterFirstPiece(grid: number[][], gridBeforeClear: number[][]): ReduxAction {
   return {
     type: SET_PLAY_OPTIONS_OPTION_GRID_AFTER_FIRST_PIECE,
     grid,
+    gridBeforeClear,
   };
 };
 
@@ -113,11 +115,13 @@ export const SET_PLAY_OPTIONS_OPTION_GRID_AFTER_NEXT_PIECE = 'SET_PLAY_OPTIONS_O
 export interface SetPlayOptionsOptionGridAfterNextPieceAction {
   type: typeof SET_PLAY_OPTIONS_OPTION_GRID_AFTER_NEXT_PIECE;
   grid: number[][];
+  gridBeforeClear: number[][];
 };
-export function setPlayOptionsOptionGridAfterNextPiece(grid: number[][]): ReduxAction {
+export function setPlayOptionsOptionGridAfterNextPiece(grid: number[][], gridBeforeClear: number[][]): ReduxAction {
   return {
     type: SET_PLAY_OPTIONS_OPTION_GRID_AFTER_NEXT_PIECE,
     grid,
+    gridBeforeClear,
   };
 };
 
@@ -138,12 +142,14 @@ export interface SetPlayOptionsOptionGridAfterPossibilityAction {
   type: typeof SET_PLAY_OPTIONS_OPTION_GRID_AFTER_POSSIBILITY;
   piece: Piece;
   grid: number[][];
+  gridBeforeClear: number[][];
 };
-export function setPlayOptionsOptionGridAfterPossibility(piece: Piece, grid: number[][]): ReduxAction {
+export function setPlayOptionsOptionGridAfterPossibility(piece: Piece, grid: number[][], gridBeforeClear: number[][]): ReduxAction {
   return {
     type: SET_PLAY_OPTIONS_OPTION_GRID_AFTER_POSSIBILITY,
     piece,
     grid,
+    gridBeforeClear,
   };
 };
 

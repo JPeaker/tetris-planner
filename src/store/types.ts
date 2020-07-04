@@ -33,6 +33,8 @@ export interface Option {
   state: OptionState;
   gridAfterFirstPiece: number[][] | null;
   gridAfterNextPiece: number[][] | null;
+  gridAfterFirstPieceBeforeClear: number[][] | null;
+  gridAfterNextPieceBeforeClear: number[][] | null;
   currentPossibility: Piece | null;
   [Piece.I]: number[][] | null;
   [Piece.T]: number[][] | null;

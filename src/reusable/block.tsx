@@ -11,10 +11,11 @@ export interface BlockProps {
   disabled?: boolean;
   nearInvisible?: boolean;
   slightlyHidden?: boolean;
+  showDiff?: boolean;
   onMouseEnter?: (event: MouseEvent) => void;
   onClick?: (event: MouseEvent) => void;
 }
-function Block({ value, nearInvisible, slightlyHidden, row, column, onMouseEnter, onClick, disabled, width }: BlockProps) {
+function Block({ value, nearInvisible, slightlyHidden, showDiff, row, column, onMouseEnter, onClick, disabled, width }: BlockProps) {
   const adjustedValue = slightlyHidden ? filledGrid[row][column] : value;
   return (
     <div
@@ -28,6 +29,7 @@ function Block({ value, nearInvisible, slightlyHidden, row, column, onMouseEnter
         [`block-${adjustedValue}`]: true,
         'near-invisible': nearInvisible,
         'slightly-hidden': slightlyHidden || disabled,
+        'show-diff': showDiff,
       })}
     />
   );

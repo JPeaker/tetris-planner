@@ -39,3 +39,7 @@
 .grid-disabled .block {
   opacity: 0.25;
 }
+
+.show-diff {
+  opacity: 0.5;
+}

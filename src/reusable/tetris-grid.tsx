@@ -7,6 +7,7 @@ type GetBlockFunction = (row: number, column: number, value: number) => Partial<
 
 interface TetrisGridProps {
   grid: number[][];
+  beforeGrid?: number[][] | null;
   getBlockProps?: GetBlockFunction;
   blockSizeInRem?: number;
   onClick?: () => void;
@@ -15,7 +16,7 @@ interface TetrisGridProps {
   hideTopTwoRows?: boolean;
 }
 
-function getRow(row: number, blocks: number[], blockSizeInRem: number, getBlockProps: GetBlockFunction | undefined) {
+function getRow(row: number, blocks: number[], beforeBlocks: number[] | null, blockSizeInRem: number, getBlockProps: GetBlockFunction | undefined) {
   const width = blocks.length ? `${100 / blocks.length}%` : 'auto';
   return (
     <div className="row" key={row} style={{ height: `${blockSizeInRem}rem` }}>
@@ -27,6 +28,7 @@ function getRow(row: number, blocks: number[], blockSizeInRem: number, getBlockP
             column={blockIndex}
             value={block}
             width={width}
+            showDiff={!!beforeBlocks && !!block && !beforeBlocks[blockIndex]}
             {...(getBlockProps === undefined ? undefined : getBlockProps(row, blockIndex, block))}
           />)
       }
@@ -34,7 +36,7 @@ function getRow(row: number, blocks: number[], blockSizeInRem: number, getBlockP
   );
 }
 
-function TetrisGrid({ grid, blockSizeInRem = 2, onClick, onMouseLeave, getBlockProps, hideTopTwoRows = true, className }: TetrisGridProps) {
+function TetrisGrid({ grid, beforeGrid = null, blockSizeInRem = 2, onClick, onMouseLeave, getBlockProps, hideTopTwoRows = true, className }: TetrisGridProps) {
   const numberOfRows = grid.length - (hideTopTwoRows ? 2 : 0);
   const numberOfColumns = Math.max(...grid.map(row => row.length));
   const width = blockSizeInRem * numberOfColumns;
@@ -45,7 +47,7 @@ function TetrisGrid({ grid, blockSizeInRem = 2, onClick, onMouseLeave, getBlockP
         grid.map((row, rowKey) => {
           return hideTopTwoRows && rowKey < 2
             ? null
-            : getRow(rowKey, row, blockSizeInRem, getBlockProps)
+            : getRow(rowKey, row, beforeGrid ? beforeGrid[rowKey] : null, blockSizeInRem, getBlockProps)
         })
       }
     </div>

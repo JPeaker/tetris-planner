@@ -8,7 +8,6 @@ import { addComparison, setState, setComparisonActivePiece, setComparisonPieceCh
 import { ListItem, ListItemText, List, ListItemIcon, Checkbox, Grid } from '@material-ui/core';
 import Piece, { PieceList } from '../piece-enum';
 import TetrisGrid from '../reusable/tetris-grid';
-import { getPieceGrid } from '../reusable/move-piece';
 
 interface ComparePlayfieldProps {
   state: AppState;
@@ -48,16 +47,8 @@ class ComparePlayfield extends React.Component<ComparePlayfieldProps, ComparePla
   }
 
   getOptionGroup(option: Option, grid: number[][]) {
-    const linesInGrid = grid.filter(row => row.some(value => value !== 0)).length;
-    const linesOriginallyInGrid = option.gridAfterNextPiece!.filter(row => row.some(value => value !== 0)).length;
-
-    const hasClearedLines = linesOriginallyInGrid - linesInGrid > 0;
-
     return <Grid container>
-      <Grid xs={4}>
-        <div>Lines cleared: { hasClearedLines ? linesOriginallyInGrid - linesInGrid : 0 }</div>
-      </Grid>
-      <Grid xs={8}>
+      <Grid xs={12}>
         <TetrisGrid
           onClick={() => this.props.chooseOption(this.props.activeComparison!.firstOption.id)}
           grid={grid}

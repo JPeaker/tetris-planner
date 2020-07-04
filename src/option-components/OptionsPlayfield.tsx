@@ -21,10 +21,10 @@ interface AppProps {
   state: AppState;
   activePiece: Piece | null;
   nextPiece: Piece | null;
-  setPrimaryPiece: (grid: number[][]) => void;
-  setNextPiece: (grid: number[][]) => void;
+  setPrimaryPiece: (grid: number[][], gridBeforeClear: number[][]) => void;
+  setNextPiece: (grid: number[][], gridBeforeClear: number[][]) => void;
   option: Option | null,
-  setPossibility: (piece: Piece, grid: number[][]) => void;
+  setPossibility: (piece: Piece, grid: number[][], gridBeforeClear: number[][]) => void;
   advancePossibility: (option: Option) => void;
 };
 
@@ -33,7 +33,7 @@ interface AppComponentState {};
 function getPlayfield(
   grid: number[][],
   activePiece: Piece | null,
-  setPiece: (grid: number[][]) => void,
+  setPiece: (grid: number[][], gridBeforeClear: number[][]) => void,
   disabled?: boolean,
 ): JSX.Element {
   return <PlacePieces
@@ -81,8 +81,8 @@ class OptionsPlayfield extends React.Component<AppProps, AppComponentState> {
         }
 
         const currentPossibility = this.props.option.currentPossibility;
-        const setPossibility = (grid: number[][]) => {
-          this.props.setPossibility(currentPossibility, grid);
+        const setPossibility = (grid: number[][], gridBeforeClear: number[][]) => {
+          this.props.setPossibility(currentPossibility, grid, gridBeforeClear);
           this.props.advancePossibility(this.props.option as Option);
         }
         return getPlayfield(
@@ -121,19 +121,19 @@ const mapStateToProps = (state: RootState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setPrimaryPiece: (grid: number[][]) => {
+  setPrimaryPiece: (grid: number[][], gridBeforeClear: number[][]) => {
     dispatch(setPlayOptionsOptionState(OptionState.NEXT_PIECE));
-    dispatch(setPlayOptionsOptionGridAfterFirstPiece(grid));
+    dispatch(setPlayOptionsOptionGridAfterFirstPiece(grid, gridBeforeClear));
     dispatch(setState(AppState.OPTIONS_PLACE_NEXT_PIECE));
   },
-  setNextPiece: (grid: number[][]) => {
+  setNextPiece: (grid: number[][], gridBeforeClear: number[][]) => {
     dispatch(setPlayOptionsOptionState(OptionState.POSSIBILITIES));
-    dispatch(setPlayOptionsOptionGridAfterNextPiece(grid));
+    dispatch(setPlayOptionsOptionGridAfterNextPiece(grid, gridBeforeClear));
     dispatch(setPlayOptionsOptionPossibility(Piece.I));
     dispatch(setState(AppState.OPTIONS_PLACE_POSSIBILITY));
   },
-  setPossibility: (possibility: Piece, grid: number[][]) => {
-    dispatch(setPlayOptionsOptionGridAfterPossibility(possibility, grid));
+  setPossibility: (possibility: Piece, grid: number[][], gridBeforeClear: number[][]) => {
+    dispatch(setPlayOptionsOptionGridAfterPossibility(possibility, grid, gridBeforeClear));
   },
   advancePossibility: (option: Option) => {
     const currentPieceIndex = PieceList.findIndex(({ value }) => value === option.currentPossibility);

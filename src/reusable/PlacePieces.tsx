@@ -10,7 +10,7 @@ import TetrisGrid from './tetris-grid';
 interface PlacePiecesProps {
   grid: number[][];
   activePiece: Piece | null;
-  setPiece: (grid: number[][]) => void;
+  setPiece: (grid: number[][], gridBeforeClear: number[][]) => void;
   disabled?: boolean;
 };
 
@@ -63,6 +63,7 @@ class PlacePieces extends React.Component<PlacePiecesProps, ComponentState> {
       currentPiece.blocks.forEach(block => {
         newGrid[block.row][block.column] = block.value;
       });
+      const gridAfterPlaceBeforeClear = _.cloneDeep(newGrid);
 
       const completeRows = newGrid.map(row => row.every(block => !!block));
       completeRows.forEach((isRowComplete, index) => {
@@ -72,7 +73,7 @@ class PlacePieces extends React.Component<PlacePiecesProps, ComponentState> {
         }
       });
 
-      this.props.setPiece(newGrid);
+      this.props.setPiece(newGrid, gridAfterPlaceBeforeClear);
     }
   }
 
