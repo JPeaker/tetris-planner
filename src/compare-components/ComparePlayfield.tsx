@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { RootState } from '../store';
 import { AppState, Option, Comparison, OptionState } from '../store/types';
 import { addComparison, setState, setComparisonActivePiece, setComparisonPieceChoice, advanceComparisonActivePiece } from '../store/actions';
-import { ListItem, ListItemText, List, ListItemIcon, Checkbox } from '@material-ui/core';
+import { ListItem, ListItemText, List, ListItemIcon, Checkbox, Grid } from '@material-ui/core';
 import Piece, { PieceList } from '../piece-enum';
 import TetrisGrid from '../reusable/tetris-grid';
 import { getPieceGrid } from '../reusable/move-piece';
@@ -15,7 +15,7 @@ interface ComparePlayfieldProps {
   options: Option[];
   activeComparison: Comparison | null;
   addComparison: (firstOption: number, secondOption: number) => void;
-  chooseOption: (id: number) => void;
+  chooseOption: (id: number | null) => void;
 };
 
 interface ComparePlayfieldState {
@@ -45,6 +45,27 @@ class ComparePlayfield extends React.Component<ComparePlayfieldProps, ComparePla
     }
 
     this.setState({ checked: [this.state.checked[1], id] });
+  }
+
+  getOptionGroup(option: Option, grid: number[][]) {
+    const linesInGrid = grid.filter(row => row.some(value => value !== 0)).length;
+    const linesOriginallyInGrid = option.gridAfterNextPiece!.filter(row => row.some(value => value !== 0)).length;
+
+    const hasClearedLines = linesOriginallyInGrid - linesInGrid > 0;
+
+    return <Grid container>
+      <Grid xs={4}>
+        <div>Lines cleared: { hasClearedLines ? linesOriginallyInGrid - linesInGrid : 0 }</div>
+      </Grid>
+      <Grid xs={8}>
+        <TetrisGrid
+          onClick={() => this.props.chooseOption(this.props.activeComparison!.firstOption.id)}
+          grid={grid}
+          className="mini-grid"
+          blockSizeInRem={0.75}
+        />
+      </Grid>
+    </Grid>
   }
 
   render() {
@@ -92,23 +113,11 @@ class ComparePlayfield extends React.Component<ComparePlayfieldProps, ComparePla
         }
 
         return <>
-          <span>
-            Which is better after using the
-            <TetrisGrid grid={getPieceGrid(this.props.activeComparison.activePiece)} blockSizeInRem={0.75} hideTopTwoRows={false} />
-            piece?
-          </span>
-          <TetrisGrid
-            onClick={() => this.props.chooseOption(this.props.activeComparison!.firstOption.id)}
-            grid={firstGrid}
-            className="mini-grid"
-            blockSizeInRem={0.75}
-          />
-          <TetrisGrid
-            onClick={() => this.props.chooseOption(this.props.activeComparison!.secondOption.id)}
-            grid={secondGrid}
-            className="mini-grid"
-            blockSizeInRem={0.75}
-          />
+          { this.getOptionGroup(this.props.activeComparison.firstOption, firstGrid) }
+          { this.getOptionGroup(this.props.activeComparison.secondOption, secondGrid) }
+          <div onClick={() => this.props.chooseOption(null)}>
+            They're the same
+          </div>
         </>;
       case AppState.COMPARE_COMPLETE:
         const preferences = PieceList.map(piece => this.props.activeComparison![piece.value]);
@@ -142,7 +151,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(setComparisonActivePiece(Piece.I));
     dispatch(setState(AppState.COMPARE_ACTIVE));
   },
-  chooseOption: (id: number) => {
+  chooseOption: (id: number | null) => {
     dispatch(setComparisonPieceChoice(id));
     dispatch(advanceComparisonActivePiece());
   },

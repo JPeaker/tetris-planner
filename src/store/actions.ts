@@ -206,9 +206,9 @@ export function setActiveComparison(id: number): ReduxAction {
 export const SET_COMPARISON_PIECE_CHOICE = 'SET_COMPARISON_PIECE_CHOICE';
 export interface SetComparisonPieceChoiceAction {
   type: typeof SET_COMPARISON_PIECE_CHOICE;
-  id: number;
+  id: number | null;
 };
-export function setComparisonPieceChoice(id: number): ReduxAction {
+export function setComparisonPieceChoice(id: number | null): ReduxAction {
   return {
     type: SET_COMPARISON_PIECE_CHOICE,
     id

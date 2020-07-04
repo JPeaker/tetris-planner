@@ -5,6 +5,7 @@ import { RootState } from '../store';
 import { AppStateCategory, getAppStateCategory } from '../store/types';
 import SetupStepper from '../setup-components/SetupStepper';
 import OptionStepper from '../option-components/OptionStepper';
+import CompareStepper from '../compare-components/CompareStepper';
 
 interface AppProps {
   category: AppStateCategory;
@@ -17,7 +18,7 @@ function getStepper(category: AppStateCategory): JSX.Element {
     case AppStateCategory.OPTIONS:
       return <OptionStepper />;
     case AppStateCategory.COMPARE:
-      return <>Compare</>;
+      return <CompareStepper />;
     default:
       return <></>;
   }
