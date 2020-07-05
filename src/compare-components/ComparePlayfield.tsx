@@ -19,7 +19,15 @@ interface ComparePlayfieldProps {
 
 interface ComparePlayfieldState {
   checked: number[];
+  compareState: CompareState;
+  beforeIntervalId: NodeJS.Timeout;
 }
+
+enum CompareState {
+  START,
+  PLACE,
+  CLEAR,
+};
 
 class ComparePlayfield extends React.Component<ComparePlayfieldProps, ComparePlayfieldState> {
   constructor(props: ComparePlayfieldProps) {
@@ -27,6 +35,10 @@ class ComparePlayfield extends React.Component<ComparePlayfieldProps, ComparePla
 
     this.state = {
       checked: [],
+      compareState: CompareState.START,
+      beforeIntervalId: setInterval(() => this.setState({
+        compareState: this.state.compareState === CompareState.START ? CompareState.PLACE : this.state.compareState === CompareState.PLACE ? CompareState.CLEAR : CompareState.START,
+      }), 1000),
     }
 
     this.toggleOption = this.toggleOption.bind(this);
@@ -46,12 +58,34 @@ class ComparePlayfield extends React.Component<ComparePlayfieldProps, ComparePla
     this.setState({ checked: [this.state.checked[1], id] });
   }
 
-  getOptionGroup(option: Option, grid: number[][]) {
+  getOptionGroup(option: Option, activePossibility: Piece) {
+    let beforeGrid: number[][] | null;
+    let nowGrid: number[][];
+
+    switch (this.state.compareState) {
+      case CompareState.START:
+        beforeGrid = null;
+        nowGrid = option.gridAfterNextPiece!;
+        break;
+      case CompareState.PLACE:
+        beforeGrid = option.gridAfterNextPiece;
+        nowGrid = option[activePossibility]!;
+        break;
+      case CompareState.CLEAR:
+        beforeGrid = null;
+        nowGrid = option[activePossibility]!;
+    }
+
+    if (nowGrid === null) {
+      return null;
+    }
+
     return <Grid container>
       <Grid xs={12}>
         <TetrisGrid
           onClick={() => this.props.chooseOption(this.props.activeComparison!.firstOption.id)}
-          grid={grid}
+          grid={nowGrid}
+          beforeGrid={beforeGrid}
           className="mini-grid"
           blockSizeInRem={0.75}
         />
@@ -104,8 +138,8 @@ class ComparePlayfield extends React.Component<ComparePlayfieldProps, ComparePla
         }
 
         return <>
-          { this.getOptionGroup(this.props.activeComparison.firstOption, firstGrid) }
-          { this.getOptionGroup(this.props.activeComparison.secondOption, secondGrid) }
+          { this.getOptionGroup(this.props.activeComparison.firstOption, this.props.activeComparison.activePiece) }
+          { this.getOptionGroup(this.props.activeComparison.secondOption, this.props.activeComparison.activePiece) }
           <div onClick={() => this.props.chooseOption(null)}>
             They're the same
           </div>
