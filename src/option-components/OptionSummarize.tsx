@@ -1,5 +1,4 @@
 import React from 'react';
-import classnames from 'classnames';
 import '../style/App.css';
 import { ListItem, List, Checkbox, IconButton, Grid, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, FormControlLabel } from '@material-ui/core';
 import Add from '@material-ui/icons/Add';
@@ -10,7 +9,7 @@ import { connect } from 'react-redux';
 import { RootState } from '../store';
 import { Option, AppState, OptionState, Comparison } from '../store/types';
 import TetrisGrid from '../reusable/tetris-grid';
-import Piece, { PieceList } from '../piece-enum';
+import Piece from '../piece-enum';
 import { Dispatch } from 'redux';
 import { setState, setPlayOptionsOption, addPlayOptionsOption, addComparison, setComparisonActivePiece, setActiveComparison, clearComparison } from '../store/actions';
 
@@ -54,7 +53,7 @@ class OptionSummarize extends React.Component<OptionSummarizeProps, OptionSummar
       gridState: GridState.START,
       beforeIntervalId: setInterval(() => this.setState({
         gridState: this.getNextGridState(this.state.gridState),
-      }), 1000),
+      }), 500),
     };
 
     this.toggleExpansion = this.toggleExpansion.bind(this);
@@ -84,7 +83,8 @@ class OptionSummarize extends React.Component<OptionSummarizeProps, OptionSummar
     }
   }
 
-  toggleExpansion(id: number) {
+  toggleExpansion(event: React.MouseEvent<HTMLDivElement>, id: number) {
+    event.stopPropagation();
     if (this.state.selectedOption === id) {
       this.setState({ selectedOption: null });
     } else {
@@ -92,7 +92,7 @@ class OptionSummarize extends React.Component<OptionSummarizeProps, OptionSummar
     }
   }
 
-  toggleChecked(event: React.MouseEvent<HTMLLabelElement>, id: number) {
+  toggleChecked(event: React.MouseEvent<HTMLButtonElement>, id: number) {
     event.stopPropagation();
 
     if (this.state.checked.includes(id)) {
@@ -106,11 +106,11 @@ class OptionSummarize extends React.Component<OptionSummarizeProps, OptionSummar
     }
 
     if (this.state.checked.length < 2) {
-      this.setState({ checked: [...this.state.checked, id] });
+      this.setState({ checked: [...this.state.checked, id].sort() });
       return;
     }
 
-    this.setState({ checked: [this.state.checked[1], id] });
+    this.setState({ checked: [this.state.checked[1], id].sort() });
   }
 
   showOption(option: Option) {
@@ -155,11 +155,10 @@ class OptionSummarize extends React.Component<OptionSummarizeProps, OptionSummar
     }
 
     return (
-      <ExpansionPanel expanded={this.state.selectedOption === option.id} onClick={() => this.toggleExpansion(option.id)}>
+      <ExpansionPanel key={option.id} expanded={this.state.selectedOption === option.id} onClick={(event) => this.toggleExpansion(event, option.id)}>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <FormControlLabel
-            onClick={(event) => this.toggleChecked(event, option.id)}
-            control={<Checkbox disabled={option.state !== OptionState.DONE} />}
+            control={<Checkbox onClick={(event) => this.toggleChecked(event, option.id)} disabled={option.state !== OptionState.DONE} />}
             label={`Option ${index + 1}`}
           />
           <IconButton onClick={() => this.props.goToOption(option.id)}>
@@ -186,7 +185,6 @@ class OptionSummarize extends React.Component<OptionSummarizeProps, OptionSummar
     const [option1, option2] = this.state.checked.length === 2 ? this.state.checked : [null, null];
 
     const compareMethod = this.state.checked.length === 2 ? () => this.props.addComparison(option1!, option2!) : undefined;
-
     return (
       <List>
         <ListItem key="compare" role={undefined} button onClick={compareMethod} disabled={!compareMethod}>

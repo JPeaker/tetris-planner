@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { RootState } from '../store';
 import { Tabs, Tab } from '@material-ui/core';
 import { getAppStateCategory, AppStateCategory, AppState, OptionState } from '../store/types';
-import { setState } from '../store/actions';
+import { setState, clearAllComparisons } from '../store/actions';
 import { Dispatch } from 'redux';
 
 interface TopBoxProps {
@@ -17,7 +17,7 @@ interface TopBoxProps {
 class TopBox extends React.Component<TopBoxProps> {
   render() {
     return (
-      <Tabs variant="fullWidth" width="10rem" value={this.props.category} className="top-box">
+      <Tabs variant="fullWidth" width="10rem" value={this.props.category === 2 ? 1 : this.props.category} className="top-box">
         <Tab
           value={AppStateCategory.SETUP}
           onClick={() => this.props.goToCategory(AppStateCategory.SETUP)} label="SETUP"
@@ -45,6 +45,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         dispatch(setState(AppState.SETUP_GRID));
         break;
       case AppStateCategory.OPTIONS:
+        dispatch(clearAllComparisons());
         dispatch(setState(AppState.OPTIONS_SUMMARIZE));
         break;
       case AppStateCategory.COMPARE:

@@ -5,14 +5,16 @@ import { connect } from 'react-redux';
 import { RootState } from '../store';
 import { AppState, Option, Comparison, OptionState } from '../store/types';
 import { addComparison, setState, setComparisonActivePiece, setComparisonPieceChoice, advanceComparisonActivePiece } from '../store/actions';
-import { ListItem, ListItemText, List, ListItemIcon, Checkbox, Grid } from '@material-ui/core';
-import Piece, { PieceList } from '../piece-enum';
+import { ListItem, ListItemText, List, ListItemIcon, Checkbox, Grid, Button } from '@material-ui/core';
+import Piece from '../piece-enum';
 import TetrisGrid from '../reusable/tetris-grid';
+import CompareSummarize from './CompareSummarize';
 
 interface ComparePlayfieldProps {
   state: AppState;
   options: Option[];
   activeComparison: Comparison | null;
+  nextPiece: Piece | null;
   addComparison: (firstOption: number, secondOption: number) => void;
   chooseOption: (id: number | null) => void;
 };
@@ -20,7 +22,7 @@ interface ComparePlayfieldProps {
 interface ComparePlayfieldState {
   checked: number[];
   compareState: CompareState;
-  beforeIntervalId: NodeJS.Timeout;
+  beforeIntervalId: NodeJS.Timeout | null;
 }
 
 enum CompareState {
@@ -36,12 +38,29 @@ class ComparePlayfield extends React.Component<ComparePlayfieldProps, ComparePla
     this.state = {
       checked: [],
       compareState: CompareState.START,
-      beforeIntervalId: setInterval(() => this.setState({
-        compareState: this.state.compareState === CompareState.START ? CompareState.PLACE : this.state.compareState === CompareState.PLACE ? CompareState.CLEAR : CompareState.START,
-      }), 1000),
+      beforeIntervalId: null
     }
 
     this.toggleOption = this.toggleOption.bind(this);
+    this.chooseOption = this.chooseOption.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({
+      beforeIntervalId: setInterval(() => this.props.state !== AppState.COMPARE_COMPLETE ? this.setState({
+        compareState: this.state.compareState === CompareState.START
+          ? CompareState.PLACE
+          : this.state.compareState === CompareState.PLACE
+            ? CompareState.CLEAR
+            : CompareState.START,
+      }) : undefined, 600),
+    });
+  }
+
+  componentWillUnmount() {
+    if (this.state.beforeIntervalId !== null) {
+      clearInterval(this.state.beforeIntervalId);
+    }
   }
 
   toggleOption(id: number) {
@@ -56,6 +75,13 @@ class ComparePlayfield extends React.Component<ComparePlayfieldProps, ComparePla
     }
 
     this.setState({ checked: [this.state.checked[1], id] });
+  }
+
+  chooseOption(id: number): void {
+    this.setState({
+      compareState: CompareState.START,
+    });
+    this.props.chooseOption(id);
   }
 
   getOptionGroup(option: Option, activePossibility: Piece) {
@@ -81,9 +107,9 @@ class ComparePlayfield extends React.Component<ComparePlayfieldProps, ComparePla
     }
 
     return <Grid container>
-      <Grid xs={12}>
+      <Grid item xs={12}>
         <TetrisGrid
-          onClick={() => this.props.chooseOption(this.props.activeComparison!.firstOption.id)}
+          onClick={() => this.chooseOption(option.id)}
           grid={nowGrid}
           beforeGrid={beforeGrid}
           className="mini-grid"
@@ -137,24 +163,49 @@ class ComparePlayfield extends React.Component<ComparePlayfieldProps, ComparePla
           return 'First or second grid is null on activeComparison for active piece';
         }
 
-        return <>
-          { this.getOptionGroup(this.props.activeComparison.firstOption, this.props.activeComparison.activePiece) }
-          { this.getOptionGroup(this.props.activeComparison.secondOption, this.props.activeComparison.activePiece) }
-          <div onClick={() => this.props.chooseOption(null)}>
-            They're the same
-          </div>
-        </>;
+        return <Grid
+          container
+          spacing={2}
+          style={{ marginTop: '2rem' }}
+          direction="column"
+          alignItems="center"
+          justify="center"
+        >
+          <Grid item xs={12}>
+            { this.getOptionGroup(this.props.activeComparison.firstOption, this.props.activeComparison.activePiece) }
+          </Grid>
+          <Grid item xs={12}>
+            { this.getOptionGroup(this.props.activeComparison.secondOption, this.props.activeComparison.activePiece) }
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              style={{ margin: '1rem 0.25rem' }}
+              size="small"
+              variant="contained"
+              onClick={() => this.props.chooseOption(this.props.activeComparison!.firstOption.id)}
+            >
+              Top Option
+            </Button>
+            <Button
+              style={{ margin: '1rem 0.25rem' }}
+              size="small"
+              variant="contained"
+              onClick={() => this.props.chooseOption(this.props.activeComparison!.secondOption.id)}
+            >
+              Bottom Option
+            </Button>
+            <Button
+              style={{ margin: '1rem 0.25rem' }}
+              size="small"
+              variant="contained"
+              onClick={() => this.props.chooseOption(null)}
+            >
+              Equal
+            </Button>
+          </Grid>
+        </Grid>;
       case AppState.COMPARE_COMPLETE:
-        const preferences = PieceList.map(piece => this.props.activeComparison![piece.value]);
-        const firstCount = preferences.filter(p => p === this.props.activeComparison!.firstOption.id).length;
-        const secondCount = preferences.filter(p => p === this.props.activeComparison!.secondOption.id).length;
-        if (firstCount > secondCount) {
-          return 'You preferred the first option';
-        } else if (firstCount === secondCount) {
-          return 'You preferred them equally';
-        } else {
-          return 'You preferred the second option';
-        }
+        return <CompareSummarize comparison={this.props.activeComparison!} />;
       default:
         return <>AGH</>
     }
@@ -167,6 +218,7 @@ const mapStateToProps = (state: RootState) => {
     state: state.state,
     options: state.options,
     activeComparison: comparison === undefined ? null : comparison,
+    nextPiece: state.nextPiece,
   };
 };
 
