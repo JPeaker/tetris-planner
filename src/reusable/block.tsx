@@ -20,9 +20,10 @@ function Block({ value, nearInvisible, slightlyHidden, showDiff, row, column, on
   return (
     <div
       key={column}
+      draggable="true"
       style={{ width }}
       onMouseEnter={onMouseEnter}
-      onClick={disabled ? () => {} : onClick}
+      onMouseDown={disabled ? () => {} : onClick}
       className={classnames({
         block: true,
         hidden: !nearInvisible && !slightlyHidden && !value,
@@ -31,6 +32,7 @@ function Block({ value, nearInvisible, slightlyHidden, showDiff, row, column, on
         'slightly-hidden': slightlyHidden || disabled,
         'show-diff': showDiff,
       })}
+      onDragEnter={onClick}
     />
   );
 }

@@ -10,8 +10,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <div className="background">
-          <img src={background} alt="" />
+        <div draggable="false" className="background">
+          <img draggable="false" src={background} alt="" />
         </div>
         <LocalStepper />
         <Playfield />
