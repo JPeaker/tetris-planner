@@ -4,6 +4,7 @@ import Piece from '../piece-enum';
 import { Grid } from '@material-ui/core';
 import TetrisGrid from './tetris-grid';
 import { getPieceGrid } from './move-piece';
+import choosePieceInputHandler from '../setup-components/choose-piece-input-handler';
 
 interface PieceSelectorProps {
   piece: Piece | null;
@@ -11,6 +12,28 @@ interface PieceSelectorProps {
 };
 
 class PieceSelector extends React.Component<PieceSelectorProps> {
+  constructor(props: PieceSelectorProps) {
+    super(props);
+
+    this.setPieceFromInput = this.setPieceFromInput.bind(this);
+  }
+
+  setPieceFromInput(event: KeyboardEvent): void {
+    const piece = choosePieceInputHandler(event);
+
+    if (piece !== null) {
+      this.props.setPiece(piece);
+    }
+  }
+
+  componentDidMount() {
+    document.addEventListener('keydown', this.setPieceFromInput);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.setPieceFromInput);
+  }
+
   drawPiece(piece: Piece, width: (6 | 12) = 6) {
     return (
       <Grid item xs={width} className="piece-selector-grid-item">
