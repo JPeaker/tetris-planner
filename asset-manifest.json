@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/tetris-planner/static/css/main.681b5449.chunk.css",
-    "main.js": "/tetris-planner/static/js/main.d7aab45c.chunk.js",
-    "main.js.map": "/tetris-planner/static/js/main.d7aab45c.chunk.js.map",
+    "main.js": "/tetris-planner/static/js/main.0d454de0.chunk.js",
+    "main.js.map": "/tetris-planner/static/js/main.0d454de0.chunk.js.map",
     "runtime-main.js": "/tetris-planner/static/js/runtime-main.d4093a68.js",
     "runtime-main.js.map": "/tetris-planner/static/js/runtime-main.d4093a68.js.map",
     "static/js/2.deb3708c.chunk.js": "/tetris-planner/static/js/2.deb3708c.chunk.js",
     "static/js/2.deb3708c.chunk.js.map": "/tetris-planner/static/js/2.deb3708c.chunk.js.map",
     "index.html": "/tetris-planner/index.html",
-    "precache-manifest.826b84d3676f0419dbac51347bc7e12b.js": "/tetris-planner/precache-manifest.826b84d3676f0419dbac51347bc7e12b.js",
+    "precache-manifest.8bf59b0ad8d57341769432ded8695c0d.js": "/tetris-planner/precache-manifest.8bf59b0ad8d57341769432ded8695c0d.js",
     "service-worker.js": "/tetris-planner/service-worker.js",
     "static/css/main.681b5449.chunk.css.map": "/tetris-planner/static/css/main.681b5449.chunk.css.map",
     "static/js/2.deb3708c.chunk.js.LICENSE.txt": "/tetris-planner/static/js/2.deb3708c.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.d4093a68.js",
     "static/js/2.deb3708c.chunk.js",
     "static/css/main.681b5449.chunk.css",
-    "static/js/main.d7aab45c.chunk.js"
+    "static/js/main.0d454de0.chunk.js"
   ]
 }
