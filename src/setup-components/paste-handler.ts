@@ -50,7 +50,16 @@ export default class PasteHandler {
         if (
           Math.max(pixelData[0], pixelData[1], pixelData[2]) > rgbEmptyThreshold
         ) {
-          board[r][c] = 1; //"rgba(" + pixelData.join(",") + ")";
+          let blockValue = 1;
+          const randomValue = Math.random();
+          if (randomValue > 5 / 7) {
+            blockValue = 1;
+          } else if (randomValue > 3 / 7) {
+            blockValue = 2;
+          } else {
+            blockValue = 3;
+          }
+          board[r][c] = blockValue;
         } else {
           board[r][c] = 0;
         }
