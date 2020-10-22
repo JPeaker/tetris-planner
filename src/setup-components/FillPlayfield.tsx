@@ -4,6 +4,7 @@ import '../style/App.css';
 import filledGrid from '../reusable/filled-grid';
 import TetrisGrid from '../reusable/tetris-grid';
 import { BlockProps } from '../reusable/block';
+import PasteHandler from './paste-handler';
 
 interface FillPlayfieldProps {
   grid: number[][];
@@ -12,6 +13,7 @@ interface FillPlayfieldProps {
 
 interface ComponentState {
   hoverBlock: { row: number, column: number } | null,
+  pasteHandler: PasteHandler | null,
 };
 
 class FillPlayfield extends React.Component<FillPlayfieldProps, ComponentState> {
@@ -19,12 +21,22 @@ class FillPlayfield extends React.Component<FillPlayfieldProps, ComponentState> 
     super(props);
 
     this.state = {
-      hoverBlock: null
+      hoverBlock: null,
+      pasteHandler: null,
     };
 
     this.setHoverBlock = this.setHoverBlock.bind(this);
     this.clickBlock = this.clickBlock.bind(this);
     this.getBlockProps = this.getBlockProps.bind(this);
+
+  }
+
+  componentDidMount() {
+    const pasteHandler = new PasteHandler();
+    const callback = (board: number[][]) => this.props.setGrid(board);
+    pasteHandler.setUpPasteability(callback);
+
+    this.setState({ pasteHandler });
   }
 
   setHoverBlock(row: number, column: number): void {
@@ -59,11 +71,16 @@ class FillPlayfield extends React.Component<FillPlayfieldProps, ComponentState> 
   }
 
   render() {
-    return <TetrisGrid
-      grid={this.props.grid}
-      getBlockProps={this.getBlockProps}
-      onMouseLeave={() => this.setState({ hoverBlock: null })}
-    />;
+    return <>
+      <input className="paste-box" id="paste-area" placeholder="Paste screenshot here" />
+      <img id="pasted-image" style={{ display: 'none' }} />
+      <canvas id="dummy-canvas" style={{ display: 'none' }} />
+      <TetrisGrid
+        grid={this.props.grid}
+        getBlockProps={this.getBlockProps}
+        onMouseLeave={() => this.setState({ hoverBlock: null })}
+      />
+    </>;
   }
 }
 

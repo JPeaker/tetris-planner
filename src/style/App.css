@@ -19,6 +19,12 @@ html {
   color: white;
 }
 
+.paste-box {
+  position: absolute;
+  left: calc(50% - 27.25rem);
+  top: calc(50% - 23.75rem);
+}
+
 .option-step-piece {
   padding: 0.25rem;
 }

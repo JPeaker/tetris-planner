@@ -49,16 +49,16 @@ class OptionStepper extends React.Component<OptionStepperProps> {
       <Stepper className="instructions" activeStep={this.props.state - 5} orientation="vertical">
         <Step key={AppState.OPTIONS_PLACE_PRIMARY_PIECE}>
           <StepLabel>Option { this.props.option.id + 1 }: Place first piece</StepLabel>
-          <StepContent>Put your first piece in what you think is the best position. Use the arrow keys to navigate, D to hard drop, and Space to lock it in place.</StepContent>
+          <StepContent>Put your first piece in what you think is the best position. Use the arrow keys to navigate, A/S to rotate, D to hard drop, and Space to lock it in place.</StepContent>
         </Step>
         <Step key={AppState.OPTIONS_PLACE_NEXT_PIECE}>
           <StepLabel>Option { this.props.option.id + 1 }: Place next piece</StepLabel>
-          <StepContent>Place your next piece in what you think is the best position. Use the arrow keys to navigate, D to hard drop, and Space to lock it in place.</StepContent>
+          <StepContent>Place your next piece in what you think is the best position. Use the arrow keys to navigate, A/S to rotate, , D to hard drop, and Space to lock it in place.</StepContent>
         </Step>
         <Step key={AppState.OPTIONS_PLACE_POSSIBILITY}>
           <StepLabel>Option { this.props.option.id + 1 }: Place all possible next pieces</StepLabel>
           <StepContent>
-            <div style={{ marginBottom: '1rem' }}>Use the arrow keys to navigate, D to hard drop, and Space to lock it in place.</div>
+            <div style={{ marginBottom: '1rem' }}>Use the arrow keys to navigate, A/S to rotate, , D to hard drop, and Space to lock it in place.</div>
             <Grid container justify="center">
               {
                 PieceList.map(({ value }: { value: Piece }) => (
