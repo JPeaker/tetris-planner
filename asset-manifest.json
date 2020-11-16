@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/tetris-planner/static/css/main.681b5449.chunk.css",
-    "main.js": "/tetris-planner/static/js/main.0d454de0.chunk.js",
-    "main.js.map": "/tetris-planner/static/js/main.0d454de0.chunk.js.map",
+    "main.js": "/tetris-planner/static/js/main.c8d3491b.chunk.js",
+    "main.js.map": "/tetris-planner/static/js/main.c8d3491b.chunk.js.map",
     "runtime-main.js": "/tetris-planner/static/js/runtime-main.d4093a68.js",
     "runtime-main.js.map": "/tetris-planner/static/js/runtime-main.d4093a68.js.map",
-    "static/js/2.deb3708c.chunk.js": "/tetris-planner/static/js/2.deb3708c.chunk.js",
-    "static/js/2.deb3708c.chunk.js.map": "/tetris-planner/static/js/2.deb3708c.chunk.js.map",
+    "static/js/2.e1ee5f9c.chunk.js": "/tetris-planner/static/js/2.e1ee5f9c.chunk.js",
+    "static/js/2.e1ee5f9c.chunk.js.map": "/tetris-planner/static/js/2.e1ee5f9c.chunk.js.map",
     "index.html": "/tetris-planner/index.html",
-    "precache-manifest.8bf59b0ad8d57341769432ded8695c0d.js": "/tetris-planner/precache-manifest.8bf59b0ad8d57341769432ded8695c0d.js",
+    "precache-manifest.4ae1c88cd181f17dc63518f3c94afd59.js": "/tetris-planner/precache-manifest.4ae1c88cd181f17dc63518f3c94afd59.js",
     "service-worker.js": "/tetris-planner/service-worker.js",
     "static/css/main.681b5449.chunk.css.map": "/tetris-planner/static/css/main.681b5449.chunk.css.map",
-    "static/js/2.deb3708c.chunk.js.LICENSE.txt": "/tetris-planner/static/js/2.deb3708c.chunk.js.LICENSE.txt"
+    "static/js/2.e1ee5f9c.chunk.js.LICENSE.txt": "/tetris-planner/static/js/2.e1ee5f9c.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.d4093a68.js",
-    "static/js/2.deb3708c.chunk.js",
+    "static/js/2.e1ee5f9c.chunk.js",
     "static/css/main.681b5449.chunk.css",
-    "static/js/main.0d454de0.chunk.js"
+    "static/js/main.c8d3491b.chunk.js"
   ]
 }
