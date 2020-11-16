@@ -1,5 +1,5 @@
+import { Piece } from "nes-tetris-representation/lib/piece-types";
 import { AppState } from "../store/types";
-import Piece from "../piece-enum";
 
 export default function inputHandler(
   event: KeyboardEvent,

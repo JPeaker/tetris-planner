@@ -5,19 +5,19 @@ import { connect } from 'react-redux';
 import { setGrid, setState, resetScenario, setPrimaryPiece, setNextPiece, resetScenarioExceptPrimaryPiece, initializePlayOptionsState } from '../store/actions';
 import FillPlayfield from './FillPlayfield';
 import AddHoles from './AddHoles';
-import Piece from '../piece-enum';
+import { Grid, Piece } from 'nes-tetris-representation/lib/piece-types';
 import { RootState } from '../store';
 import { AppState } from '../store/types';
 import inputHandler from './setup-input-handler';
 import PieceSelector from '../reusable/PieceSelector';
 
 interface AppProps {
-  grid: number[][];
+  grid: Grid;
   state: AppState;
   primaryPiece: Piece | null;
   nextPiece: Piece | null;
   setState: (state: AppState) => void;
-  setGrid: (grid: number[][]) => void;
+  setGrid: (grid: Grid) => void;
   setPrimaryPiece: (piece: Piece) => void;
   setNextPiece: (piece: Piece) => void;
   moveToPlayOptions: () => void;
@@ -74,7 +74,7 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   setState: (state: AppState) => dispatch(setState(state)),
-  setGrid: (grid: number[][]) => {
+  setGrid: (grid: Grid) => {
     dispatch(resetScenario());
     dispatch(setGrid(grid));
   },

@@ -1,10 +1,10 @@
 import React from 'react';
 import '../style/App.css';
-import Piece from '../piece-enum';
+import { Piece } from 'nes-tetris-representation/lib/piece-types';
 import { Grid } from '@material-ui/core';
 import TetrisGrid from './tetris-grid';
-import { getPieceGrid } from './move-piece';
 import choosePieceInputHandler from '../setup-components/choose-piece-input-handler';
+import { getPieceGrid } from 'nes-tetris-representation/lib/move-piece';
 
 interface PieceSelectorProps {
   piece: Piece | null;

@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import { RootState } from '../store';
 import { Option, Comparison } from '../store/types';
 import TetrisGrid from '../reusable/tetris-grid';
-import Piece from '../piece-enum';
+import { Piece, Grid as GridType } from 'nes-tetris-representation/lib/piece-types';
 import calculateComparison, { ComparisonChoice } from './calculate-comparison';
 import { Grid } from '@material-ui/core';
 
 interface CompareSummarizeProps {
   comparison: Comparison;
-  grid: number[][];
+  grid: GridType;
   primaryPiece: Piece | null;
   nextPiece: Piece | null;
 };
@@ -70,8 +70,8 @@ class CompareSummarize extends React.Component<CompareSummarizeProps, CompareSum
     const gridAfterFirstPieceBeforeClear = option.gridAfterFirstPieceBeforeClear || grid;
     const gridAfterNextPieceBeforeClear = option.gridAfterNextPieceBeforeClear || gridAfterFirstPiece;
 
-    let beforeGrid: number[][] = grid;
-    let stateGrid: number[][] = grid;
+    let beforeGrid: GridType = grid;
+    let stateGrid: GridType = grid;
 
     switch (this.state.gridState) {
       case GridState.START:

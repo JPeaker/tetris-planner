@@ -1,16 +1,15 @@
 import React from 'react';
 import _ from 'lodash';
 import '../style/App.css';
-import Piece from '../piece-enum';
-import { ActivePiece } from '../piece-types';
-import { movePiece, getPiece } from './move-piece';
+import { ActivePiece, Grid, Piece } from 'nes-tetris-representation/lib/piece-types';
 import inputHandler from '../input-handler';
 import TetrisGrid from './tetris-grid';
+import { getPiece, movePiece } from 'nes-tetris-representation/lib/move-piece';
 
 interface PlacePiecesProps {
-  grid: number[][];
+  grid: Grid;
   activePiece: Piece | null;
-  setPiece: (grid: number[][], gridBeforeClear: number[][]) => void;
+  setPiece: (grid: Grid, gridBeforeClear: Grid) => void;
   disabled?: boolean;
 };
 
@@ -59,7 +58,7 @@ class PlacePieces extends React.Component<PlacePiecesProps, ComponentState> {
     const { currentPiece } = this.state;
 
     if (currentPiece !== null) {
-      const newGrid = _.cloneDeep(grid);
+      const newGrid = _.cloneDeep(grid) as number[][];
       currentPiece.blocks.forEach(block => {
         newGrid[block.row][block.column] = block.value;
       });
@@ -73,7 +72,7 @@ class PlacePieces extends React.Component<PlacePiecesProps, ComponentState> {
         }
       });
 
-      this.props.setPiece(newGrid, gridAfterPlaceBeforeClear);
+      this.props.setPiece(newGrid as Grid, gridAfterPlaceBeforeClear as Grid);
     }
   }
 
@@ -86,7 +85,7 @@ class PlacePieces extends React.Component<PlacePiecesProps, ComponentState> {
   }
 
   render() {
-    const drawnGrid: number[][] = _.cloneDeep(this.props.grid);
+    const drawnGrid: Grid = _.cloneDeep(this.props.grid);
 
     if (this.state.currentPiece) {
       this.state.currentPiece.blocks.forEach(block => {

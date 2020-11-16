@@ -7156,6 +7156,11 @@ neo-async@^2.5.0, neo-async@^2.6.1:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
 
+nes-tetris-representation@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/nes-tetris-representation/-/nes-tetris-representation-1.3.1.tgz#b5b5c30bff61a85cb592725874ee58b0d38a9fee"
+  integrity sha512-NMJzMkt927sUXnmg6VacFEaL5Gd7Qfk/MKNGzOJeyQHYuZtL9qRval9l+RpXlCZB8bv5KMSrKwlXWh3l8NTYfg==
+
 next-tick@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"

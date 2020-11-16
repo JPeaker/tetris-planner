@@ -1,5 +1,4 @@
-import Piece from './piece-enum';
-import { ActivePiece } from './piece-types';
+import { ActivePiece, Grid, Piece } from "nes-tetris-representation/lib/piece-types";
 
 const numpadMap: { [key: string]: Piece } = {
   Numpad5: Piece.I,
@@ -14,10 +13,10 @@ const numpadMap: { [key: string]: Piece } = {
 export default function inputHandler(
   event: KeyboardEvent,
   currentPiece: ActivePiece | null,
-  grid: number[][],
+  grid: Grid,
   setPieceInPlace: () => void,
   getNewPiece: (piece: Piece) => ActivePiece,
-  movePiece: (grid: number[][], currentPiece: ActivePiece, newPiece: ActivePiece) => ActivePiece,
+  movePiece: (grid: Grid, currentPiece: ActivePiece, newPiece: ActivePiece) => ActivePiece,
   disabled?: boolean,
 ): null | ActivePiece {
   if (disabled) {

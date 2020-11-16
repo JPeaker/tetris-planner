@@ -1,4 +1,4 @@
-import Piece from '../piece-enum';
+import { Grid, Piece } from 'nes-tetris-representation/lib/piece-types';
 import { AppState, OptionState } from './types';
 
 export const RESET_SCENARIO = 'RESET_SCENARIO';
@@ -32,9 +32,9 @@ export function setState(state: AppState): ReduxAction {
 export const SET_GRID = 'SET_GRID';
 export interface SetGridAction {
   type: typeof SET_GRID;
-  grid: number[][];
+  grid: Grid;
 }
-export function setGrid(grid: number[][]): ReduxAction {
+export function setGrid(grid: Grid): ReduxAction {
   return {
     type: SET_GRID,
     grid,
@@ -100,10 +100,10 @@ export function setPlayOptionsOptionState(state: OptionState): ReduxAction {
 export const SET_PLAY_OPTIONS_OPTION_GRID_AFTER_FIRST_PIECE = 'SET_PLAY_OPTIONS_OPTION_GRID_AFTER_FIRST_PIECE';
 export interface SetPlayOptionsOptionGridAfterFirstPieceAction {
   type: typeof SET_PLAY_OPTIONS_OPTION_GRID_AFTER_FIRST_PIECE;
-  grid: number[][];
-  gridBeforeClear: number[][];
+  grid: Grid;
+  gridBeforeClear: Grid;
 };
-export function setPlayOptionsOptionGridAfterFirstPiece(grid: number[][], gridBeforeClear: number[][]): ReduxAction {
+export function setPlayOptionsOptionGridAfterFirstPiece(grid: Grid, gridBeforeClear: Grid): ReduxAction {
   return {
     type: SET_PLAY_OPTIONS_OPTION_GRID_AFTER_FIRST_PIECE,
     grid,
@@ -114,10 +114,10 @@ export function setPlayOptionsOptionGridAfterFirstPiece(grid: number[][], gridBe
 export const SET_PLAY_OPTIONS_OPTION_GRID_AFTER_NEXT_PIECE = 'SET_PLAY_OPTIONS_OPTION_GRID_AFTER_NEXT_PIECE';
 export interface SetPlayOptionsOptionGridAfterNextPieceAction {
   type: typeof SET_PLAY_OPTIONS_OPTION_GRID_AFTER_NEXT_PIECE;
-  grid: number[][];
-  gridBeforeClear: number[][];
+  grid: Grid;
+  gridBeforeClear: Grid;
 };
-export function setPlayOptionsOptionGridAfterNextPiece(grid: number[][], gridBeforeClear: number[][]): ReduxAction {
+export function setPlayOptionsOptionGridAfterNextPiece(grid: Grid, gridBeforeClear: Grid): ReduxAction {
   return {
     type: SET_PLAY_OPTIONS_OPTION_GRID_AFTER_NEXT_PIECE,
     grid,
@@ -141,10 +141,10 @@ export const SET_PLAY_OPTIONS_OPTION_GRID_AFTER_POSSIBILITY = 'SET_PLAY_OPTIONS_
 export interface SetPlayOptionsOptionGridAfterPossibilityAction {
   type: typeof SET_PLAY_OPTIONS_OPTION_GRID_AFTER_POSSIBILITY;
   piece: Piece;
-  grid: number[][];
-  gridBeforeClear: number[][];
+  grid: Grid;
+  gridBeforeClear: Grid;
 };
-export function setPlayOptionsOptionGridAfterPossibility(piece: Piece, grid: number[][], gridBeforeClear: number[][]): ReduxAction {
+export function setPlayOptionsOptionGridAfterPossibility(piece: Piece, grid: Grid, gridBeforeClear: Grid): ReduxAction {
   return {
     type: SET_PLAY_OPTIONS_OPTION_GRID_AFTER_POSSIBILITY,
     piece,

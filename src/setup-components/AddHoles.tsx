@@ -4,10 +4,11 @@ import '../style/App.css';
 import { BlockProps } from '../reusable/block';
 import TetrisGrid from '../reusable/tetris-grid';
 import filledGrid from '../reusable/filled-grid';
+import { Grid } from 'nes-tetris-representation/lib/piece-types';
 
 interface AddHolesProps {
-  grid: number[][];
-  setGrid: (grid: number[][]) => void;
+  grid: Grid;
+  setGrid: (grid: Grid) => void;
 };
 
 class AddHoles extends React.Component<AddHolesProps, ComponentState> {
