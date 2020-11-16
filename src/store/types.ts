@@ -1,4 +1,4 @@
-import Piece from '../piece-enum';
+import { Grid, Piece } from 'nes-tetris-representation/lib/piece-types';
 
 export enum AppStateCategory {
   SETUP,
@@ -31,18 +31,18 @@ export enum OptionState {
 export interface Option {
   id: number;
   state: OptionState;
-  gridAfterFirstPiece: number[][] | null;
-  gridAfterNextPiece: number[][] | null;
-  gridAfterFirstPieceBeforeClear: number[][] | null;
-  gridAfterNextPieceBeforeClear: number[][] | null;
+  gridAfterFirstPiece: Grid | null;
+  gridAfterNextPiece: Grid | null;
+  gridAfterFirstPieceBeforeClear: Grid | null;
+  gridAfterNextPieceBeforeClear: Grid | null;
   currentPossibility: Piece | null;
-  [Piece.I]: number[][] | null;
-  [Piece.T]: number[][] | null;
-  [Piece.O]: number[][] | null;
-  [Piece.L]: number[][] | null;
-  [Piece.J]: number[][] | null;
-  [Piece.S]: number[][] | null;
-  [Piece.Z]: number[][] | null;
+  [Piece.I]: Grid | null;
+  [Piece.T]: Grid | null;
+  [Piece.O]: Grid | null;
+  [Piece.L]: Grid | null;
+  [Piece.J]: Grid | null;
+  [Piece.S]: Grid | null;
+  [Piece.Z]: Grid | null;
 }
 
 export function getAppStateCategory(state: AppState): AppStateCategory {

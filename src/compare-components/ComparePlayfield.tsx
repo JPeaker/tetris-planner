@@ -6,7 +6,7 @@ import { RootState } from '../store';
 import { AppState, Option, Comparison, OptionState } from '../store/types';
 import { addComparison, setState, setComparisonActivePiece, setComparisonPieceChoice, advanceComparisonActivePiece } from '../store/actions';
 import { ListItem, ListItemText, List, ListItemIcon, Checkbox, Grid, Button } from '@material-ui/core';
-import Piece from '../piece-enum';
+import { Piece, Grid as GridType } from 'nes-tetris-representation/lib/piece-types';
 import TetrisGrid from '../reusable/tetris-grid';
 import CompareSummarize from './CompareSummarize';
 
@@ -85,8 +85,8 @@ class ComparePlayfield extends React.Component<ComparePlayfieldProps, ComparePla
   }
 
   getOptionGroup(option: Option, activePossibility: Piece) {
-    let beforeGrid: number[][] | null;
-    let nowGrid: number[][];
+    let beforeGrid: GridType | null;
+    let nowGrid: GridType;
 
     switch (this.state.compareState) {
       case CompareState.START:

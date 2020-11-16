@@ -1,13 +1,13 @@
+import { Grid } from 'nes-tetris-representation/lib/piece-types';
 import React from 'react';
 import '../style/Block.css';
-import Block from './block';
-import { BlockProps } from './block';
+import Block, { BlockProps } from './block';
 
 type GetBlockFunction = (row: number, column: number, value: number) => Partial<BlockProps>;
 
 interface TetrisGridProps {
-  grid: number[][];
-  beforeGrid?: number[][] | null;
+  grid: Grid;
+  beforeGrid?: Grid | null;
   getBlockProps?: GetBlockFunction;
   blockSizeInRem?: number;
   onClick?: () => void;

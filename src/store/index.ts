@@ -1,4 +1,4 @@
-import Piece, { PieceList } from '../piece-enum';
+import { Grid, Piece, PieceList } from 'nes-tetris-representation/lib/piece-types';
 import {
   ReduxAction,
   SET_STATE,
@@ -27,7 +27,7 @@ import { AppState, Option, OptionState, Comparison } from './types';
 
 export interface RootState {
   state: AppState,
-  grid: number[][],
+  grid: Grid,
   primaryPiece: Piece | null,
   nextPiece: Piece | null,
   activeOptionId: number | null,
@@ -47,7 +47,7 @@ for (var i = 0; i < 22; i++) {
 
 export const DefaultState: RootState = {
   state: AppState.SETUP_GRID,
-  grid,
+  grid: grid as Grid,
   primaryPiece: null,
   nextPiece: null,
   activeOptionId: null,

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { RootState } from '../store';
 import { AppState } from '../store/types';
 import { setState, initializePlayOptionsState } from '../store/actions';
-import Piece from '../piece-enum';
+import { Piece } from 'nes-tetris-representation/lib/piece-types';
 
 interface AppProps {
   state: AppState;

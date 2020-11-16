@@ -1,4 +1,6 @@
-const filledGrid: number[][] = [
+import { Grid } from "nes-tetris-representation/lib/piece-types";
+
+const filledGrid: Grid = [
   [2, 2, 2, 2, 3, 2, 2, 2, 2, 2],
   [2, 2, 2, 3, 3, 3, 3, 1, 1, 2],
   [3, 3, 3, 3, 3, 3, 3, 1, 1, 1],

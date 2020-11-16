@@ -4,11 +4,12 @@ import '../style/App.css';
 import filledGrid from '../reusable/filled-grid';
 import TetrisGrid from '../reusable/tetris-grid';
 import { BlockProps } from '../reusable/block';
-import PasteHandler from './paste-handler';
+import { Grid } from 'nes-tetris-representation/lib/piece-types';
+import PasteHandler from 'nes-tetris-representation/lib/paste-handler';
 
 interface FillPlayfieldProps {
-  grid: number[][];
-  setGrid: (grid: number[][]) => void;
+  grid: Grid;
+  setGrid: (grid: Grid) => void;
 };
 
 interface ComponentState {
@@ -32,8 +33,8 @@ class FillPlayfield extends React.Component<FillPlayfieldProps, ComponentState> 
   }
 
   componentDidMount() {
-    const pasteHandler = new PasteHandler();
-    const callback = (board: number[][]) => this.props.setGrid(board);
+    const pasteHandler = new PasteHandler('paste-area', 'pasted-image', 'dummy-canvas');
+    const callback = (board: Grid) => this.props.setGrid(board);
     pasteHandler.setUpPasteability(callback);
 
     this.setState({ pasteHandler });

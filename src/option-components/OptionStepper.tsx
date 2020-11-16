@@ -7,9 +7,9 @@ import { connect } from 'react-redux';
 import { RootState } from '../store';
 import { AppState, OptionState, Option } from '../store/types';
 import { setState, setPlayOptionsOptionPossibility, setPlayOptionsOptionState, setPlayOptionsOption } from '../store/actions';
-import Piece, { PieceList } from '../piece-enum';
+import { Piece, PieceList, Grid as GridType } from 'nes-tetris-representation/lib/piece-types';
 import TetrisGrid from '../reusable/tetris-grid';
-import { getPieceGrid } from '../reusable/move-piece';
+import { getPieceGrid } from 'nes-tetris-representation/lib/move-piece';
 
 interface OptionStepperProps {
   state: AppState;
@@ -21,13 +21,13 @@ interface OptionStepperProps {
 };
 
 type PossibilityGrid = {
-  [Piece.I]: null | number[][],
-  [Piece.T]: null | number[][],
-  [Piece.O]: null | number[][],
-  [Piece.J]: null | number[][],
-  [Piece.L]: null | number[][],
-  [Piece.Z]: null | number[][],
-  [Piece.S]: null | number[][],
+  [Piece.I]: null | GridType,
+  [Piece.T]: null | GridType,
+  [Piece.O]: null | GridType,
+  [Piece.J]: null | GridType,
+  [Piece.L]: null | GridType,
+  [Piece.Z]: null | GridType,
+  [Piece.S]: null | GridType,
 };
 
 class OptionStepper extends React.Component<OptionStepperProps> {
