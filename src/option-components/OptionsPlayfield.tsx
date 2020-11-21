@@ -2,6 +2,7 @@ import React from 'react';
 import { Dispatch } from 'redux';
 import '../style/App.css';
 import { connect } from 'react-redux';
+import { Grid, Piece, PieceList, PlacePieces } from 'nes-tetris-representation';
 import {
   setState,
   setPlayOptionsOptionState,
@@ -10,11 +11,10 @@ import {
   setPlayOptionsOptionGridAfterPossibility,
   setPlayOptionsOptionPossibility
 } from '../store/actions';
-import PlacePieces from '../reusable/PlacePieces';
 import OptionSummarize from './OptionSummarize';
-import { Grid, Piece, PieceList } from 'nes-tetris-representation/lib/piece-types';
 import { RootState } from '../store';
 import { AppState, OptionState, Option } from '../store/types';
+import inputHandler from '../input-handler';
 
 interface AppProps {
   grid: Grid;
@@ -42,6 +42,7 @@ function getPlayfield(
     activePiece={activePiece}
     setPiece={setPiece}
     disabled={disabled}
+    inputHandler={inputHandler}
   />;
 }
 

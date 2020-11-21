@@ -8,8 +8,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { connect } from 'react-redux';
 import { RootState } from '../store';
 import { Option, AppState, OptionState, Comparison } from '../store/types';
-import TetrisGrid from '../reusable/tetris-grid';
-import { Piece, Grid as GridType } from 'nes-tetris-representation/lib/piece-types';
+import { Piece, Grid as GridType, TetrisGrid } from 'nes-tetris-representation';
 import { Dispatch } from 'redux';
 import { setState, setPlayOptionsOption, addPlayOptionsOption, addComparison, setComparisonActivePiece, setActiveComparison, clearComparison } from '../store/actions';
 

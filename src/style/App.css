@@ -92,56 +92,6 @@ html {
   color: white;
 }
 
-.next-box.grid {
-  text-align: center;
-  display: inline-block;
-}
-
-.piece-selector-selectable-piece {
-  display: inline-block;
-  padding: 1rem;
-  border-radius: 0.5rem;
-}
-
-.option-summarize-selectable-piece {
-  /* padding: 0.1rem; */
-  border-radius: 0.125rem;
-}
-
-.selectable-piece {
-  border: 1px solid white;
-  cursor: pointer;
-}
-
-.selected-piece {
-  border: 1px solid green;
-}
-
-.piece-selector-grid-item {
-  text-align: center !important;
-  margin-top: 2rem !important;
-  margin-bottom: 2rem !important;
-}
-
-.state-text {
-  font-size: 4rem;
-}
-
-.option-summarize-container {
-  color: white;
-  text-align: center;
-}
-
-.option-complete {
-  padding: 1rem;
-  border: 1px solid green;
-  border-radius: 0.5rem;
-}
-
-.option-summarize-full-grid {
-  text-align: center;
-}
-
 .mini-grid {
   border: 1px dotted grey;
 }

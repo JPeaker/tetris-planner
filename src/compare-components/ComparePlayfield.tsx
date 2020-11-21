@@ -6,9 +6,8 @@ import { RootState } from '../store';
 import { AppState, Option, Comparison, OptionState } from '../store/types';
 import { addComparison, setState, setComparisonActivePiece, setComparisonPieceChoice, advanceComparisonActivePiece } from '../store/actions';
 import { ListItem, ListItemText, List, ListItemIcon, Checkbox, Grid, Button } from '@material-ui/core';
-import { Piece, Grid as GridType } from 'nes-tetris-representation/lib/piece-types';
-import TetrisGrid from '../reusable/tetris-grid';
 import CompareSummarize from './CompareSummarize';
+import { Piece, Grid as GridType, TetrisGrid } from 'nes-tetris-representation';
 
 interface ComparePlayfieldProps {
   state: AppState;

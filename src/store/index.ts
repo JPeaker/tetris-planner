@@ -1,4 +1,4 @@
-import { Grid, Piece, PieceList } from 'nes-tetris-representation/lib/piece-types';
+import { Grid, Piece, PieceList } from 'nes-tetris-representation';
 import {
   ReduxAction,
   SET_STATE,

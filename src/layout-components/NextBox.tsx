@@ -2,9 +2,7 @@ import React from 'react';
 import '../style/App.css';
 import { connect } from 'react-redux';
 import { RootState } from '../store';
-import { Piece, PieceList } from 'nes-tetris-representation/lib/piece-types';
-import TetrisGrid from '../reusable/tetris-grid';
-import { getPieceGrid } from 'nes-tetris-representation/lib/move-piece';
+import { Piece, PieceList, getPieceGrid, TetrisGrid } from 'nes-tetris-representation';
 import { AppState } from '../store/types';
 
 interface NextBoxProps {

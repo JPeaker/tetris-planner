@@ -1,11 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import '../style/App.css';
-import filledGrid from '../reusable/filled-grid';
-import TetrisGrid from '../reusable/tetris-grid';
-import { BlockProps } from '../reusable/block';
-import { Grid } from 'nes-tetris-representation/lib/piece-types';
-import PasteHandler from 'nes-tetris-representation/lib/paste-handler';
+import { Grid, BlockProps, filledGrid, setUpPasting, TetrisGrid } from 'nes-tetris-representation';
 
 interface FillPlayfieldProps {
   grid: Grid;
@@ -14,7 +10,6 @@ interface FillPlayfieldProps {
 
 interface ComponentState {
   hoverBlock: { row: number, column: number } | null,
-  pasteHandler: PasteHandler | null,
 };
 
 class FillPlayfield extends React.Component<FillPlayfieldProps, ComponentState> {
@@ -23,7 +18,6 @@ class FillPlayfield extends React.Component<FillPlayfieldProps, ComponentState> 
 
     this.state = {
       hoverBlock: null,
-      pasteHandler: null,
     };
 
     this.setHoverBlock = this.setHoverBlock.bind(this);
@@ -33,11 +27,14 @@ class FillPlayfield extends React.Component<FillPlayfieldProps, ComponentState> 
   }
 
   componentDidMount() {
-    const pasteHandler = new PasteHandler('paste-area', 'pasted-image', 'dummy-canvas');
     const callback = (board: Grid) => this.props.setGrid(board);
-    pasteHandler.setUpPasteability(callback);
 
-    this.setState({ pasteHandler });
+    setUpPasting(
+      document.getElementById('paste-area') as HTMLDivElement,
+      document.getElementById('pasted-image') as HTMLImageElement,
+      document.getElementById('dummy-canvas') as HTMLCanvasElement,
+      callback,
+    );
   }
 
   setHoverBlock(row: number, column: number): void {
@@ -74,7 +71,7 @@ class FillPlayfield extends React.Component<FillPlayfieldProps, ComponentState> 
   render() {
     return <>
       <input className="paste-box" id="paste-area" placeholder="Paste screenshot here" />
-      <img id="pasted-image" style={{ display: 'none' }} />
+      <img alt="" id="pasted-image" style={{ display: 'none' }} />
       <canvas id="dummy-canvas" style={{ display: 'none' }} />
       <TetrisGrid
         grid={this.props.grid}
