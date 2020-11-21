@@ -19,7 +19,7 @@
     "@types/react-redux": "^7.1.9",
     "@types/redux": "^3.6.0",
     "classnames": "^2.2.6",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "nes-tetris-representation": "^1.4.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
