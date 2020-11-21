@@ -1,22 +1,25 @@
 {
   "files": {
-    "main.css": "/tetris-planner/static/css/main.681b5449.chunk.css",
-    "main.js": "/tetris-planner/static/js/main.c8d3491b.chunk.js",
-    "main.js.map": "/tetris-planner/static/js/main.c8d3491b.chunk.js.map",
-    "runtime-main.js": "/tetris-planner/static/js/runtime-main.d4093a68.js",
-    "runtime-main.js.map": "/tetris-planner/static/js/runtime-main.d4093a68.js.map",
-    "static/js/2.e1ee5f9c.chunk.js": "/tetris-planner/static/js/2.e1ee5f9c.chunk.js",
-    "static/js/2.e1ee5f9c.chunk.js.map": "/tetris-planner/static/js/2.e1ee5f9c.chunk.js.map",
+    "main.css": "/tetris-planner/static/css/main.4998b036.chunk.css",
+    "main.js": "/tetris-planner/static/js/main.82015401.chunk.js",
+    "main.js.map": "/tetris-planner/static/js/main.82015401.chunk.js.map",
+    "runtime-main.js": "/tetris-planner/static/js/runtime-main.326fcbf2.js",
+    "runtime-main.js.map": "/tetris-planner/static/js/runtime-main.326fcbf2.js.map",
+    "static/css/2.281016e5.chunk.css": "/tetris-planner/static/css/2.281016e5.chunk.css",
+    "static/js/2.32e0c37b.chunk.js": "/tetris-planner/static/js/2.32e0c37b.chunk.js",
+    "static/js/2.32e0c37b.chunk.js.map": "/tetris-planner/static/js/2.32e0c37b.chunk.js.map",
     "index.html": "/tetris-planner/index.html",
-    "precache-manifest.4ae1c88cd181f17dc63518f3c94afd59.js": "/tetris-planner/precache-manifest.4ae1c88cd181f17dc63518f3c94afd59.js",
+    "precache-manifest.c2def0efba8441dd9dac42996d092e75.js": "/tetris-planner/precache-manifest.c2def0efba8441dd9dac42996d092e75.js",
     "service-worker.js": "/tetris-planner/service-worker.js",
-    "static/css/main.681b5449.chunk.css.map": "/tetris-planner/static/css/main.681b5449.chunk.css.map",
-    "static/js/2.e1ee5f9c.chunk.js.LICENSE.txt": "/tetris-planner/static/js/2.e1ee5f9c.chunk.js.LICENSE.txt"
+    "static/css/2.281016e5.chunk.css.map": "/tetris-planner/static/css/2.281016e5.chunk.css.map",
+    "static/css/main.4998b036.chunk.css.map": "/tetris-planner/static/css/main.4998b036.chunk.css.map",
+    "static/js/2.32e0c37b.chunk.js.LICENSE.txt": "/tetris-planner/static/js/2.32e0c37b.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.d4093a68.js",
-    "static/js/2.e1ee5f9c.chunk.js",
-    "static/css/main.681b5449.chunk.css",
-    "static/js/main.c8d3491b.chunk.js"
+    "static/js/runtime-main.326fcbf2.js",
+    "static/css/2.281016e5.chunk.css",
+    "static/js/2.32e0c37b.chunk.js",
+    "static/css/main.4998b036.chunk.css",
+    "static/js/main.82015401.chunk.js"
   ]
 }
