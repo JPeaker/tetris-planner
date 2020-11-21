@@ -5,11 +5,10 @@ import { connect } from 'react-redux';
 import { setGrid, setState, resetScenario, setPrimaryPiece, setNextPiece, resetScenarioExceptPrimaryPiece, initializePlayOptionsState } from '../store/actions';
 import FillPlayfield from './FillPlayfield';
 import AddHoles from './AddHoles';
-import { Grid, Piece } from 'nes-tetris-representation/lib/piece-types';
+import { Grid, Piece, PieceSelector } from 'nes-tetris-representation';
 import { RootState } from '../store';
 import { AppState } from '../store/types';
 import inputHandler from './setup-input-handler';
-import PieceSelector from '../reusable/PieceSelector';
 
 interface AppProps {
   grid: Grid;

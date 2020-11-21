@@ -1,4 +1,4 @@
-import { Grid, Piece } from 'nes-tetris-representation/lib/piece-types';
+import { Grid, Piece } from 'nes-tetris-representation';
 
 export enum AppStateCategory {
   SETUP,

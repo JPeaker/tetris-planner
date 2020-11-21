@@ -1,4 +1,4 @@
-import { Piece } from "nes-tetris-representation/lib/piece-types";
+import { Piece } from "nes-tetris-representation";
 import { AppState } from "../store/types";
 
 export default function inputHandler(

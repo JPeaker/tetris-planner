@@ -1,5 +1,5 @@
 import { Comparison } from '../store/types';
-import { Piece, PieceList } from 'nes-tetris-representation/lib/piece-types';
+import { Piece, PieceList } from 'nes-tetris-representation';
 
 export enum ComparisonChoice {
   FIRST,

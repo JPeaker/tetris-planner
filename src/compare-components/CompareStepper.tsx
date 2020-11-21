@@ -2,12 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import '../style/App.css';
-import TetrisGrid from '../reusable/tetris-grid';
 import { Grid } from '@material-ui/core';
 import { RootState } from '../store';
 import { AppState } from '../store/types';
-import { Piece, PieceList } from 'nes-tetris-representation/lib/piece-types';
-import { getPieceGrid } from 'nes-tetris-representation/lib/move-piece';
+import { Piece, PieceList, getPieceGrid, TetrisGrid } from 'nes-tetris-representation';
 
 interface CompareStepperProps {
   activePiece: Piece | null;

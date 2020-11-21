@@ -1,6 +1,6 @@
 {
   "name": "tetris-planner",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "Josh Peaker",
   "homepage": "http://jpeaker.github.io/tetris-planner",
   "private": false,
@@ -20,7 +20,7 @@
     "@types/redux": "^3.6.0",
     "classnames": "^2.2.6",
     "lodash": "^4.17.15",
-    "nes-tetris-representation": "^1.3.1",
+    "nes-tetris-representation": "^1.4.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",

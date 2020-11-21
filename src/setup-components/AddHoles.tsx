@@ -1,10 +1,7 @@
 import React, { ComponentState } from 'react';
 import _ from 'lodash';
 import '../style/App.css';
-import { BlockProps } from '../reusable/block';
-import TetrisGrid from '../reusable/tetris-grid';
-import filledGrid from '../reusable/filled-grid';
-import { Grid } from 'nes-tetris-representation/lib/piece-types';
+import { Grid, BlockProps, filledGrid, TetrisGrid } from 'nes-tetris-representation';
 
 interface AddHolesProps {
   grid: Grid;

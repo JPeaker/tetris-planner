@@ -3,8 +3,7 @@ import '../style/App.css';
 import { connect } from 'react-redux';
 import { RootState } from '../store';
 import { Option, Comparison } from '../store/types';
-import TetrisGrid from '../reusable/tetris-grid';
-import { Piece, Grid as GridType } from 'nes-tetris-representation/lib/piece-types';
+import { Piece, Grid as GridType, TetrisGrid } from 'nes-tetris-representation';
 import calculateComparison, { ComparisonChoice } from './calculate-comparison';
 import { Grid } from '@material-ui/core';
 
